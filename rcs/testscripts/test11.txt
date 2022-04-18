@@ -1,0 +1,7 @@
+createfield -t storehouse
+createelements n20a20 ns100ns100 -s STH1
+createvirologist STH1
+createelements n20a20 ns20as20 -v V1
+startturn V1
+search
+pickupmaterial

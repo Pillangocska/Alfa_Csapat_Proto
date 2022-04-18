@@ -1,0 +1,7 @@
+createfield
+createfield F1
+createvirologist F1
+createagent virus paralyze V1
+startturn V1
+useagent PV1 V1
+move F2

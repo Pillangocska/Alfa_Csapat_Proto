@@ -1,0 +1,6 @@
+createfield safehouse
+createvirologist F1
+createequipment bag -v V1
+startturn V1
+toggle B1
+toggle B1
