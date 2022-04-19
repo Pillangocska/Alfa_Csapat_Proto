@@ -51,4 +51,16 @@ public class ElementBank {
     public int getNucleotide() {
         return  nucleotide;
     }
+
+    public void setAminoAcid(int num) {
+        aminoAcid = num;
+    }
+
+    public void setNucleotide(int num) {
+        nucleotide = num;
+    }
+
+    public void removeAll() {
+        nucleotide = aminoAcid = 0;
+    }
 }
