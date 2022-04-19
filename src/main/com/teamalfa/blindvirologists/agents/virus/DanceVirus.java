@@ -3,6 +3,7 @@ package main.com.teamalfa.blindvirologists.agents.virus;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DanceVirus extends Virus {
 
