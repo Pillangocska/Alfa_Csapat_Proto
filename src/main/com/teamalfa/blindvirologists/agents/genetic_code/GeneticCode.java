@@ -11,5 +11,5 @@ import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 abstract public class GeneticCode {
     abstract public Virus createVirus(ElementBank elementBank);
     abstract public Vaccine createVaccine(ElementBank elementBank);
-    public void autoInfect(Virologist v) {}
+    public void autoInfect(Virologist virologist){  }
 }
