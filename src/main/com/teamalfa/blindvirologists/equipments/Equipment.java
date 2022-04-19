@@ -4,23 +4,29 @@ import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 abstract public class Equipment {
     protected Virologist virologist;
-
+    /**
+     * This calls the virologists removeWorn function
+     * and so the passive equipment will be removed from
+     * the virologists bag
+     * */
     public void unEquip(){
-        AController.printCall(this, "unEquip", null);
         virologist.removeWorn(this);
-        AController.printReturn(null);
     }
-
+    /**
+     * This calls the virologists addWorn function
+     * so the equipment can be added to the virologists bag
+     * */
     public void equip(){
-        AController.printCall(this, "equip", null);
         virologist.addWorn(this);
-        AController.printReturn(null);
     }
-
+    /**
+     * Setting the virologist who owns the equipment
+     * */
     public void setVirologist(Virologist v) {this.virologist = v;}
-
+    /**
+     * @return false as default
+     * */
     public boolean protect() {
-        AController.printCall(this, "protect", null);
-        return (Boolean) AController.printReturn(false);
+        return false;
     }
 }
