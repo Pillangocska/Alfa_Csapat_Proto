@@ -244,4 +244,39 @@ public class Virologist {
     public ArrayList<Equipment> getWornEquipment() {
         return wornEquipment;
     }
+
+    public void destroy() {
+        field.destory();
+    }
+
+    public void die() {
+        //todo, ehhez túl este van
+    }
+
+    public void turntoBear()
+    {
+        //todo
+    }
+
+    public void toss(Equipment e){
+        if(!(wornEquipment.contains(e))){
+            Virologist v = backpack.getVirologist();
+            Field f = v.getField();
+            if(f.canChangeEquipment()){
+                backpack.getEquipmentPocket().getEquipmentHolder().remove(e);
+                f.add(e);
+            }
+        }
+    }
+
+    public void toggle(Equipment e){
+        Virologist v = backpack.getVirologist();
+        Field f = v.getField();
+        if(f.canChangeEquipment()){
+            if(wornEquipment.contains(e))
+                e.unEquip();
+            else
+                e.equip();
+        }
+    }
 }

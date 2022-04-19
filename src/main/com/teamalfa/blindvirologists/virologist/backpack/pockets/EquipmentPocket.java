@@ -43,29 +43,6 @@ public class EquipmentPocket extends Pocket{
         return ret;
     }
 
-    public void toggle(Equipment e){
-        Virologist v = backpack.getVirologist();
-        Field f = v.getField();
-        if(f.canChangeEquipment()){
-            if(backpack.getVirologist().getWornEquipment().contains(e))
-                e.unEquip();
-            else
-                e.equip();
-        }
-    }
-
-
-    public void toss(Equipment e){
-        if(!(backpack.getVirologist().getWornEquipment().contains(e))){
-            Virologist v = backpack.getVirologist();
-            Field f = v.getField();
-            if(f.canChangeEquipment()){
-                equipmentHolder.remove(e);
-                f.add(e);
-            }
-        }
-    }
-
     @Override
     public int getCurrentSize() {
         return equipmentHolder.size();

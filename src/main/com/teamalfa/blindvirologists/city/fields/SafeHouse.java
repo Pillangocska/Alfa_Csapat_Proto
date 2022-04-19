@@ -12,22 +12,13 @@ public class SafeHouse extends Field{
         equipments = new ArrayList<>();
     }
 
-    /**
-     * Only for the TestCases in the Skeleton.
-     */
-    public void registerChoices() {
-        AController.registerObject(null, equipments, "equipments");
-    }
 
     /**
      * Adds an equipment to the SafeHouse.
      * @param equipment The equipment that was dropped down to the SafeHouse.
      */
     public void add(Equipment equipment) {
-        AController.printCall(this, "add", new Object[]{equipment});
         equipments.add(equipment);
-        AController.registerObject(null, equipments, "equipments");
-        AController.printReturn(null);
     }
 
     /**
@@ -35,9 +26,7 @@ public class SafeHouse extends Field{
      * @param equipment The equipment that was picke up from the SafeHouse.
      */
     public void remove(Equipment equipment) {
-        AController.printCall(this, "remove", new Object[]{equipment});
         equipments.remove(equipment);
-        AController.printReturn(null);
     }
 
     /**
@@ -47,22 +36,11 @@ public class SafeHouse extends Field{
      */
     @Override
     public void searchedBy(Virologist virologist) {
-        AController.printCall(virologist, "searchedBy", new Object[]{virologist});
-        virologist.getBackpack().add((Equipment) AController.askMultiChoice("equipment", migrateChoices(equipments)));
-        AController.printReturn(null);
-    }
-
-    private ArrayList<Object> migrateChoices(ArrayList<Equipment> equipments) {
-        ArrayList<Object> choices = new ArrayList<>();
-        for(Equipment equipment : equipments)
-            choices.add(equipment);
-        return choices;
+        //todo
     }
 
     @Override
     public boolean canChangeEquipment(){
-        AController.printCall(this, "canChangeEquipment", null);
-
-        return (boolean) AController.printReturn(true);
+        return true;
     }
 }
