@@ -9,7 +9,7 @@ public class DetRandom extends MyRandom{
     }
 
     @Override
-    public boolean YorN() {
+    public boolean YorN(double num) {
         return choice;
     }
 
