@@ -1,0 +1,6 @@
+createfield
+createvirologist F1
+createvirologist F1
+createequipment cloak -v V2
+startturn C1
+rob V2 C1

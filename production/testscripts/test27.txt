@@ -1,0 +1,11 @@
+createfield safehouse
+createvirologist F1
+createequipment gloves -v V1
+createequipment cloak -v V1
+createequipment bag -v V1
+createequipment axe -v V1
+startturn V1
+toggle G1
+toggle C1
+toggle B1
+toggle A1

@@ -1,0 +1,15 @@
+createfield field
+createvirologist F1
+createvirologist F1
+createequipment gloves -v V1
+createagent virus dance V1
+createagent virus dance V1
+createagent virus dance V1
+startturn V1
+toggle G1
+useagent DV1 V1
+useagent DV2 V1
+useagent DV3 V1
+useequipment G1 V2
+useequipment G1 V2
+useequipment G1 V2

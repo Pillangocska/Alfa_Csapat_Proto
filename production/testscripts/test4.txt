@@ -1,0 +1,7 @@
+createfield -t laboratory
+createvirologist L1
+creategeneticcode dance -v V1
+creategeneticcode dance -l L1
+startturn V1
+search
+learngeneticcode
