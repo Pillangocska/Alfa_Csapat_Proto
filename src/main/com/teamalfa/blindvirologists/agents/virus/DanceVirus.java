@@ -1,19 +1,21 @@
 package main.com.teamalfa.blindvirologists.agents.virus;
 
 import main.com.teamalfa.blindvirologists.city.fields.Field;
+import main.com.teamalfa.blindvirologists.random.MyRandom;
+import main.com.teamalfa.blindvirologists.random.TrueRandom;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class DanceVirus extends Virus {
 
-    public Random random;
+    public MyRandom random;
 
     public DanceVirus(){
         this.random = new TrueRandom();
     }
 
-    public void setRandom(Random random){
+    public void setRandom(MyRandom random){
         this.random = random;
     }
 
@@ -26,7 +28,7 @@ public class DanceVirus extends Virus {
      */
     @Override
     public Field affectMovement(Field current) {
-        int r = random.PickRandom();
+        int r = random.PickRandom(current.getNeighbours().size());
         return current.getNeighbours().get(r);
     }
 
