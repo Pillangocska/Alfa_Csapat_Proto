@@ -1,7 +1,6 @@
 
 package main.com.teamalfa.blindvirologists.agents;
 
-import main.com.teamalfa.blindvirologists.AController;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;

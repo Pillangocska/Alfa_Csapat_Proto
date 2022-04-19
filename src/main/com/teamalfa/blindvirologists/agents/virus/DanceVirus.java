@@ -1,6 +1,5 @@
 package main.com.teamalfa.blindvirologists.agents.virus;
 
-import main.com.teamalfa.blindvirologists.AController;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 
 import java.util.ArrayList;

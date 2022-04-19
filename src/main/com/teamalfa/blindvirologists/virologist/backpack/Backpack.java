@@ -1,6 +1,5 @@
 package main.com.teamalfa.blindvirologists.virologist.backpack;
 
-import main.com.teamalfa.blindvirologists.AController;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
@@ -28,37 +27,23 @@ public class Backpack {
         this.virologist = virologist;
     }
 
-    public void registerObjects() {
-        AController.registerObject(this, equipmentPocket, "eqPocket"); equipmentPocket.registerObjects();
-        AController.registerObject(this, agentPocket, "agPocket"); agentPocket.registerObjects();
-        AController.registerObject(this, elementBank, "elBank");
-        AController.registerObject(this, geneticCodePocket, "gcPocket");
-    }
-
     public void add(Equipment equipment) {
-        AController.printCall(this, "add", new Object[]{equipment});
         if(equipmentPocket.add(equipment)){
             SafeHouse safeHouse = (SafeHouse) virologist.getField();
             safeHouse.remove(equipment);
         }
-        AController.printReturn(null);
     }
 
     public void add(GeneticCode geneticCode) {
-        AController.printCall(this,"add", new Object[]{geneticCode});
         geneticCodePocket.add(geneticCode);
-        AController.printReturn(null);
     }
 
     public void add(ElementBank elements) {
-        AController.printCall(this, "add", new Object[]{elements});
         ElementBank added = elementBank.add(elements);
         elements.remove(added);
-        AController.printReturn(null);
     }
 
     public void createVirus(GeneticCode geneticCode) {
-        AController.printCall(this, "createVirus", new Object[]{geneticCode});
         Virus virus = geneticCode.createVirus(elementBank);
         if(virus != null) {
             agentPocket.addAgent(virus);
@@ -66,18 +51,15 @@ public class Backpack {
     }
 
     public void createVaccine(GeneticCode geneticCode) {
-        AController.printCall(this, "createVaccine", new Object[]{geneticCode});
         Vaccine vaccine = geneticCode.createVaccine(elementBank);
         if(vaccine != null) {
             agentPocket.addAgent(vaccine);
         }
-        AController.printReturn(null);
     }
 
 
     public Virologist getVirologist() {
-        AController.printCall(this, "getVirologist", null);
-        return (Virologist) AController.printReturn(virologist);
+        return virologist;
     }
 
     public EquipmentPocket getEquipmentPocket(){
@@ -91,8 +73,7 @@ public class Backpack {
     }
 
     public ElementBank getElementBank() {
-        AController.printCall(this, "getElementBank", null);
-        return (ElementBank) AController.printReturn(elementBank);
+        return (ElementBank) elementBank;
     }
 
     public ArrayList<Object> getAgents() {

@@ -1,6 +1,5 @@
 package main.com.teamalfa.blindvirologists.equipments;
 
-import main.com.teamalfa.blindvirologists.AController;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 abstract public class Equipment {

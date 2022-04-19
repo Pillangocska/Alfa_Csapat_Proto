@@ -1,6 +1,5 @@
 package main.com.teamalfa.blindvirologists.city.fields;
 
-import main.com.teamalfa.blindvirologists.AController;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
