@@ -1,8 +1,6 @@
 package main.com.teamalfa.blindvirologists.agents.genetic_code;
-import main.com.teamalfa.blindvirologists.AController;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.virus.AmnesiaVirus;
-import main.com.teamalfa.blindvirologists.agents.virus.ParalyzeVirus;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
 public class AmnesiaCode extends GeneticCode {

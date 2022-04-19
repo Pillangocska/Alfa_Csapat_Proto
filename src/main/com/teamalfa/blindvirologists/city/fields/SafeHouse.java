@@ -1,6 +1,5 @@
 package main.com.teamalfa.blindvirologists.city.fields;
 
-import main.com.teamalfa.blindvirologists.AController;
 import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 

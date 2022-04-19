@@ -1,10 +1,8 @@
 package main.com.teamalfa.blindvirologists.virologist;
 
-import main.com.teamalfa.blindvirologists.AController;
 import main.com.teamalfa.blindvirologists.agents.Agent;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
-import main.com.teamalfa.blindvirologists.agents.virus.AmnesiaVirus;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
 import main.com.teamalfa.blindvirologists.agents.virus.VirusComparator;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
@@ -29,31 +27,19 @@ public class Virologist {
         backpack = new Backpack(this);
     }
 
-    /**
-     * This method registers the Virologist object's into the Controller class.
-     */
-    public void registerObjects() {
-        AController.registerObject(this, protectionBank, "protectionBank");
-        AController.registerObject(this, activeViruses, "activeViruses");
-        AController.registerObject(this, backpack, "backpack");
 
-        // register nested objects
-        backpack.registerObjects();
-    }
 
     //getters setters
 
     public Field getField() {
-        AController.printCall(this, "getField", null);
-        return (Field) AController.printReturn(field);
+        return field;
     }
     public void setField(Field f){
         this.field = f;
     }
 
     public Backpack getBackpack() {
-        AController.printCall(this, "getBackpack", null);
-        return (Backpack) AController.printReturn(backpack);
+        return backpack;
     }
 
     /**
@@ -66,8 +52,6 @@ public class Virologist {
      * @param destination the field the virologist would like to step onto.
      */
     public void move(Field destination) {
-        AController.printCall(this, "move", new Object[]{destination});
-
         Field modified = null;
 
         if(!activeViruses.isEmpty()) modified = activeViruses.get(0).affectMovement(field);
@@ -76,16 +60,10 @@ public class Virologist {
         field.remove(this);
         destination.accept(this);
         field = destination;
-
-        AController.printReturn(null);
     }
 
     public void use(ActiveEquipment a, Virologist v) {
-        AController.printCall(this, "use", new Object[]{a, v});
-        if(!AController.askYesOrNo("Is the equipment on cooldown?")) {
-            a.use(v);
-        }
-        AController.printReturn(null);
+        a.use(v);
     }
 
     /**
@@ -95,10 +73,8 @@ public class Virologist {
      * @param v The virologist the agent is used on.
      */
     public void use(Agent a, Virologist v){
-        AController.printCall(this, "use", new Object[] {a, v});
         if (a != null && !checkUsageAffect())
             a.apply(v);
-        AController.printReturn(null);
     }
 
     public void learn(GeneticCode gc) {
@@ -112,13 +88,11 @@ public class Virologist {
      * @return the virologist backpack, if the virologist is paralyzed, null if the virologist is not paralyzed.
      */
     public Backpack robbed() {
-        AController.printCall(this, "robbed", null);
         if(!(activeViruses.isEmpty())){
             if(activeViruses.get(0).affectRobbability()){
-                return (Backpack) AController.printReturn(this.backpack);
+                return backpack;
             }
         }
-        AController.printReturn( "null");
         return null;
     }
 
@@ -128,9 +102,7 @@ public class Virologist {
      * @param v The virologist that is being robbed.
      */
     public void rob(Virologist v) {
-        AController.printCall(this, "rob", new Object[] {v});
         v.robbed();
-        AController.printReturn(null);
     }
 
     /**
@@ -139,9 +111,6 @@ public class Virologist {
      * @return true if rhe infection was successful, otherwise it returns false.
      */
     public boolean infectedBy(Virus virus) {
-        // print method call
-        AController.printCall(this, "infectedBy", new Object[]{virus});
-
         Boolean ret = true;
 
         // check if protected by any vaccine
@@ -155,8 +124,7 @@ public class Virologist {
         }
         activeViruses.add(virus);
 
-        // print return value to console
-        return (Boolean) AController.printReturn(ret);
+        return ret;
     }
 
     /**
@@ -164,14 +132,8 @@ public class Virologist {
      * @param vaccine The vaccine that gets injected to the virologist.
      */
     public void protectedBy(Vaccine vaccine) {
-        AController.printCall(this, "protectedBy", new Object[]{vaccine});
-
         GeneticCode geneticcode = vaccine.getGeneticCode();
-        AController.printCall(this, "addProtection", new Object[]{geneticcode});
         protectionBank.add(geneticcode);
-        AController.printReturn(null);
-
-        AController.printReturn(null);
     }
 
     /**
@@ -179,9 +141,7 @@ public class Virologist {
      * @param virus The expired virus.
      */
     public void removeVirus(Virus virus) {
-        AController.printCall(this, "removeVirus", new Object[]{virus});
         activeViruses.remove(virus);
-        AController.printReturn(null);
     }
 
     /**
@@ -197,9 +157,7 @@ public class Virologist {
      * It calls the current field's searchedBy method.
      */
     public void search() {
-        AController.printCall(this, "search", null);
         field.searchedBy(this);
-        AController.printReturn(null);
     }
 
     //todo searchForVirologist
@@ -210,15 +168,11 @@ public class Virologist {
      * @return true, if it blocks the action, otherwise it returns false.
      */
     private boolean checkUsageAffect() {
-        AController.printCall(this, "checkUsageAffect", null);
 
         if(activeViruses.isEmpty()){
-            AController.printReturn(false);
             return false;
         }
-
-
-        return (Boolean) AController.printReturn(activeViruses.get(0).affectUsage());
+        return activeViruses.get(0).affectUsage();
     }
 
     /**
@@ -241,11 +195,7 @@ public class Virologist {
      * @param equipment The equipment the virologist removed.
      */
     public void removeWorn(Equipment equipment) {
-        AController.printCall(this, "removeWorn", new Object[]{equipment});
-
         wornEquipment.remove(equipment);
-
-        AController.printReturn(null);
     }
 
     /**
@@ -253,13 +203,9 @@ public class Virologist {
      * it adds the equipment from the wornEquipments list.
      * @param equipment The equipment the virologist added.
      */
-    public void addWorn(Equipment equipment) {
-        AController.printCall(this, "addWorn", new Object[]{equipment});
-
+    public void addWorn(Equipment equipment){
         if(wornEquipment.size() < 3)
             wornEquipment.add(equipment);
-
-        AController.printReturn(null);
     }
 
     /**
@@ -293,5 +239,9 @@ public class Virologist {
         for(Virus virus : activeViruses)
             objects.add(virus);
         return objects;
+    }
+
+    public ArrayList<Equipment> getWornEquipment() {
+        return wornEquipment;
     }
 }
