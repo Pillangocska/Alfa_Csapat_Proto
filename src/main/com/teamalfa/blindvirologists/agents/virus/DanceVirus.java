@@ -6,17 +6,16 @@ import java.util.ArrayList;
 
 public class DanceVirus extends Virus {
 
-    /**
-     * This method is responsible for picking a random Field that neighbours the Field the Virologist
-     * is standing on at the moment.
-     * @param neighbours The neighbouring fields.
-     * @return The random chosen Field.
-     */
-    private Field pickRandom(ArrayList<Field> neighbours) {
+    public Random random;
 
-        AController.printCall(this, "pickRandom", new Object[]{neighbours});
-        return (Field) AController.printReturn(AController.askMultiChoice("destination field", migrateChoices(neighbours)));
+    public DanceVirus(){
+        this.random = new TrueRandom();
     }
+
+    public void setRandom(Random random){
+        this.random = random;
+    }
+
 
     /**
      * This method makes the Virologist move to a random Field instead of the chosen one.
@@ -26,19 +25,8 @@ public class DanceVirus extends Virus {
      */
     @Override
     public Field affectMovement(Field current) {
-        AController.printCall(this, "affectMovement", new Object[]{current});
-        return (Field) AController.printReturn(pickRandom(current.getNeighbours()));
+        int r = random.PickRandom();
+        return current.getNeighbours().get(r);
     }
 
-    /**
-     * Helper method, creates an ArrayList<Object> from an ArrayList<Field> for the choices.
-     * @param neighbours The starter List.
-     * @return The end result List.
-     */
-    private ArrayList<Object> migrateChoices(ArrayList<Field> neighbours) {
-        ArrayList<Object> choices = new ArrayList<>();
-        for(Field field : neighbours)
-            choices.add(field);
-        return choices;
-    }
 }

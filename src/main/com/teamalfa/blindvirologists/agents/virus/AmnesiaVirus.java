@@ -12,11 +12,9 @@ public class AmnesiaVirus extends Virus {
      */
     @Override
     public void apply(Virologist target) {
-        AController.printCall(this, "apply", new Object[]{target});
         if (target.infectedBy(this)) {
             this.target = target;
             this.target.getBackpack().deleteAllGeneticCodes();
         }
-        AController.printReturn(null);
     }
 }
