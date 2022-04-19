@@ -13,8 +13,7 @@ public class ParalyzeVirus extends Virus {
      */
     @Override
     public Field affectMovement(Field current) {
-        AController.printCall(this, "affectMovement", new Object[] {current});
-        return (Field) AController.printReturn(current);
+        return current;
     }
 
     /**
@@ -23,8 +22,7 @@ public class ParalyzeVirus extends Virus {
      */
     @Override
     public boolean affectUsage() {
-        AController.printCall(this, "affectUsage", null);
-        return (Boolean) AController.printReturn(true);
+        return true;
     }
 
     /**
@@ -33,7 +31,6 @@ public class ParalyzeVirus extends Virus {
      */
     @Override
     public boolean affectRobbability() {
-        AController.printCall(this, "affectRobbability", null);
-        return (boolean) AController.printReturn(true);
+        return true;
     }
 }

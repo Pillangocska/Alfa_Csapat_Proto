@@ -17,17 +17,13 @@ abstract public class Virus extends Agent {
      */
     @Override
     public void apply(Virologist target) {
-        AController.printCall(this, "apply", new Object[]{target});
         if (target.infectedBy(this)) {
             this.addVirologist(target);
         }
-        AController.printReturn(null);
     }
 
     public void addVirologist(Virologist v){
-        AController.printCall(this, "addVirologist", new Object[] {v});
         this.target = v;
-        AController.printReturn(null);
     }
 
     /**
@@ -36,8 +32,7 @@ abstract public class Virus extends Agent {
      * @return false
      */
     public boolean affectUsage() {
-        AController.printCall(this, "affectUsage", null);
-        return (boolean) AController.printReturn(false);
+        return false;
     }
 
     /**
@@ -46,9 +41,8 @@ abstract public class Virus extends Agent {
      * @return false
      */
     public boolean affectRobbability() {
-        AController.printCall(this, "affectRobbability", null);
 
-        return (boolean) AController.printReturn(false);
+        return false;
     }
 
     /**
@@ -57,9 +51,6 @@ abstract public class Virus extends Agent {
      * @return null
      */
     public Field affectMovement(Field current) {
-        AController.printCall(this, "affectMovement", new Object[]{current});
-
-        AController.printReturn("null");
         return null;
     }
 
