@@ -15,13 +15,7 @@ public class Vaccine extends Agent {
      */
     @Override
     public void apply(Virologist target) {
-        // print method call
-        AController.printCall(this, "apply", new Object[]{target});
-
         target.protectedBy(this);
         this.target = target;
-
-        // since printReturn handles the tab depth counter need to be called
-        AController.printReturn(null);
     }
 }

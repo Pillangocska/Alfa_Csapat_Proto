@@ -14,24 +14,13 @@ abstract public class Agent {
         cost = new ElementBank(0,0);
     }
 
-    public void registerObjects() {
-        // register nested object names  to controller
-        AController.registerObject(this, cost, "cost");
-    }
-
     public GeneticCode getGeneticCode() {
-        // print method call
-        AController.printCall(this, "getGeneticCode", null);
-        // print return value
-        return (GeneticCode) AController.printReturn(geneticCode);
+        return geneticCode;
     }
 
     abstract public void apply(Virologist target);
 
     public ElementBank getCost() {
-        // print method call
-        AController.printCall(this, "getCost", null);
-        // print return value
-        return (ElementBank) AController.printReturn(cost);
+        return cost;
     }
 }

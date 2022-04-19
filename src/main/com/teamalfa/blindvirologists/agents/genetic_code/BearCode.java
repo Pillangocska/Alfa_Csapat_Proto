@@ -3,6 +3,7 @@ package main.com.teamalfa.blindvirologists.agents.genetic_code;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
+import main.com.teamalfa.blindvirologists.agents.virus.BearVirus;
 
 public class BearCode extends GeneticCode {
     /**
