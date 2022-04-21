@@ -536,7 +536,7 @@ public class Controller {
         System.out.println();
     }
 
-    // EZT NEM ÉRTEM, HOGY HOGY KÉNE MŰKÖDNIE!
+    // EZT NEM ÉRTEM, HOGY HOGY KÉNE MŰKÖDNIE! todo
     public void setrandom(String outcome, int choiceType) {
         System.out.println(outcome);
         System.out.println(choiceType);
