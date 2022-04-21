@@ -43,7 +43,7 @@ public class Game implements Steppable{
             for(Virologist enemy : bears.get(i).searchForVirologist()) {
                 bears.get(i).use(new BearVirus(), enemy);
             }
-            bears.get(i).getField().destory();
+            bears.get(i).getField().destroy();
         }
     }
 
