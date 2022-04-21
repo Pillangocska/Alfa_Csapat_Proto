@@ -164,8 +164,6 @@ public class Virologist {
         field.searchedBy(this);
     }
 
-    //todo searchForVirologist
-
     /**
      * This method is called when the Virologist does some kind of action,
      * it checks if the virologist is affected by anything that would block the virologist from doing the action.

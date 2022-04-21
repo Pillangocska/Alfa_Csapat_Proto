@@ -219,7 +219,8 @@ public class Controller {
                 if (choice >= 1 && choice <= 38) {
                     // if the user's choice is valid read the test script from the corresponding file
                     runscript("rcs\\testscripts\\test" + userInput + ".txt");
-                } else {
+                }
+                else {
                     // if the user's choice is invalid start the read process all over
                     throw new NumberFormatException("Invalid input! Enter a number between 0 and 38!");
                 }
