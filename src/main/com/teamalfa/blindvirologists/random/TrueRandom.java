@@ -15,7 +15,7 @@ public class TrueRandom extends MyRandom{
 
     @Override
     public int PickRandom(int num) {
-        Random r = new Random();
-        return r.nextInt(num);
+            Random r = new Random();
+            return r.nextInt(num);
     }
 }

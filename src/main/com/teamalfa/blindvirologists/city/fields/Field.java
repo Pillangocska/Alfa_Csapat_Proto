@@ -27,6 +27,7 @@ public class Field {
     //Adding and removing a virologist
     public void accept(Virologist virologist){
         virologists.add(virologist);
+        virologist.setField(this);
     }
 
     public void remove(Virologist virologist){
@@ -35,7 +36,7 @@ public class Field {
 
     //Gives back the virologists on the field
     //except the one calling it todo
-    public List<Virologist> searchForVirologist(){ return null; }
+    public ArrayList<Virologist> searchForVirologist(){ return virologists; }
 
     /**
      * This method is called when a virologist searches a Field.
