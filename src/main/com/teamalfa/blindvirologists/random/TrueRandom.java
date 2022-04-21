@@ -8,9 +8,7 @@ public class TrueRandom extends MyRandom{
     public boolean YorN(double num) {
         Random r = new Random();
         double tmp = 100 * r.nextDouble();
-        if(tmp >= num)
-            return true;
-        return false;
+        return tmp >= num;
     }
 
     @Override

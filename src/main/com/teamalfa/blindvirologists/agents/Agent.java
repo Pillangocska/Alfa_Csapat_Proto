@@ -1,4 +1,3 @@
-
 package main.com.teamalfa.blindvirologists.agents;
 
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;

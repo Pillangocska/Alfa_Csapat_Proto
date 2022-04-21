@@ -7,7 +7,7 @@ import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import java.util.ArrayList;
 
 public class Game implements Steppable{
-    private static Game instance = null;
+    private static Game instance;
     private ArrayList<Virologist> bears;
 
     static {
@@ -37,13 +37,13 @@ public class Game implements Steppable{
     }
 
     public void controlBears() {
-        for(int i = 0; i < bears.size(); i++){
-            Field f = bears.get(i).getField();
-            bears.get(i).move(f);
-            for(Virologist enemy : bears.get(i).searchForVirologist()) {
-                bears.get(i).use(new BearVirus(), enemy);
+        for (Virologist bear : bears) {
+            Field f = bear.getField();
+            bear.move(f);
+            for (Virologist enemy : bear.searchForVirologist()) {
+                bear.use(new BearVirus(), enemy);
             }
-            bears.get(i).getField().destroy();
+            bear.getField().destroy();
         }
     }
 

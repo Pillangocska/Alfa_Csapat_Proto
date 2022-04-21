@@ -5,12 +5,11 @@ import main.com.teamalfa.blindvirologists.equipments.Cloak;
 import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.Axe;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.Gloves;
-import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 import java.util.ArrayList;
 
 public class City {
-    private static City instance = null;
+    private static City instance;
     private ArrayList<Equipment> allEquipment = new ArrayList<>();
 
     static {
