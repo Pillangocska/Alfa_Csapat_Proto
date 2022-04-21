@@ -14,6 +14,13 @@ public class ElementBank {
 
     }
 
+    public ElementBank(int nucleoQuantity, int aminoQuantity, int nucleoSize, int aminoSize) {
+        nucleotide = nucleoQuantity;
+        aminoAcid = aminoQuantity;
+        nucleotideMaxSize = nucleoSize;
+        aminoAcidMaxSize = aminoSize;
+    }
+
     public void increaseMaxSize(int extraSize) {
         aminoAcidMaxSize += extraSize;
         nucleotideMaxSize += extraSize;

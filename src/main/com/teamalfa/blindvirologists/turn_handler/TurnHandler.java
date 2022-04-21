@@ -8,6 +8,7 @@ public class TurnHandler {
     private static TurnHandler instance = null;
     private final ArrayList<Steppable> steppables;
     private ArrayList<Virologist> order;
+    private Virologist activeVirologist; // the virologist, who's turn is active
 
     // Needed for singleton design pattern.
     static {
@@ -40,5 +41,9 @@ public class TurnHandler {
 
     private void reOrderVirologists() {
 
+    }
+
+    public Virologist getActiveVirologist() {
+        return activeVirologist;
     }
 }

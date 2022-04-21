@@ -15,10 +15,12 @@ public class AgentPocket extends Pocket{
         maxSize = 7;
     }
 
-    public void addAgent(Agent agent) {
+    public boolean addAgent(Agent agent) {
         if(agentHolder.size() < maxSize) {
             agentHolder.add(agent);
+            return true;
         }
+        return false;
     }
 
     public void removeAgent(Agent a) {
