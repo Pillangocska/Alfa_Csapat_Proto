@@ -5,7 +5,7 @@ import main.com.teamalfa.blindvirologists.agents.genetic_code.*;
 import java.util.ArrayList;
 
 public class GeneticCodeBank {
-    private static GeneticCodeBank instance = null;
+    private static GeneticCodeBank instance;
     private ArrayList<GeneticCode> codes;
 
     private GeneticCodeBank() {

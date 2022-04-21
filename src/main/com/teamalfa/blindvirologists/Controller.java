@@ -182,9 +182,9 @@ public class Controller {
 
     /**
      * Creates a custom ElementBank and places it in the given storehouse, or in the given virologist's backpack.
-     * @param nucleoQuantity The amount of nucleotids in the elementbank.
+     * @param nucleoQuantity The amount of nucleotides in the elementbank.
      * @param aminoQuantity The amount of aminoacids in the elementbank.
-     * @param nucleoSize The max amount of nucleotids in the elementbank.
+     * @param nucleoSize The max amount of nucleotides in the elementbank.
      * @param aminoSize The max amount of amino acids in the elementbank
      * @param virologistID The target virologist's ID. Either this, or storehouseID must be null.
      * @param storehouseID The target storehouse's ID. Either this, or virologistID must be null.
@@ -646,7 +646,6 @@ public class Controller {
                 if (len == 1)
                     status(new String[] {});
                 else {
-                    // tudom, hogy ez így csúnya, sry :D
                     String[] IDs = Arrays.copyOfRange(parts, 1, len);
                     for (var id : IDs)
                         id = id.toUpperCase();

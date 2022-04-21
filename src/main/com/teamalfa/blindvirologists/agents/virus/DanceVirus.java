@@ -4,9 +4,6 @@ import main.com.teamalfa.blindvirologists.city.fields.Field;
 import main.com.teamalfa.blindvirologists.random.MyRandom;
 import main.com.teamalfa.blindvirologists.random.TrueRandom;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class DanceVirus extends Virus {
 
     public MyRandom random;
