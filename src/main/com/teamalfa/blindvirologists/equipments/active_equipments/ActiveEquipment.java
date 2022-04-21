@@ -24,4 +24,6 @@ abstract public class ActiveEquipment extends Equipment {
         //todo
     }
 
+    public abstract void wornOut();
+
 }
