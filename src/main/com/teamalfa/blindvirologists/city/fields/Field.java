@@ -59,7 +59,7 @@ public class Field {
     }
 
     /**
-     * doesnt do anything
+     * doesn't do anything
      * @param e the equipment that gets put down to the field.
      */
     public void add(Equipment e) { }
@@ -74,6 +74,9 @@ public class Field {
             neighbour.setNeighbour(this);
         }
     }
-
+    /**
+     * doesn't do anything
+     * only have effect in StoreHouse
+     */
     public void destroy() {}
 }

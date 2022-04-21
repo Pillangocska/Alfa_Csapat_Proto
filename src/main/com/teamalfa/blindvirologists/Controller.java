@@ -437,7 +437,7 @@ public class Controller {
         try {
             script = new String(Files.readAllBytes(Paths.get(fullPath)));
         } catch (IOException e) {
-            System.out.println("An error occured while reading a testscript from " + fullPath + "!");
+            System.out.println("An error occurred while reading a testscript from " + fullPath + "!");
         }
 
         String[] lines = script.split("\n");
