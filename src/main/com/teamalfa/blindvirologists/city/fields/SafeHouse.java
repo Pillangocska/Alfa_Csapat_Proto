@@ -43,4 +43,8 @@ public class SafeHouse extends Field{
     public boolean canChangeEquipment(){
         return true;
     }
+
+    public ArrayList<Equipment> getEquipments() {
+        return equipments;
+    }
 }
