@@ -30,5 +30,9 @@ public class City {
 
     public void GenerateMap() {}
 
+    public void showMap() {
+
+    }
+
 
 }
