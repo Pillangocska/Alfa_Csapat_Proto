@@ -10,6 +10,10 @@ public class Bag extends Equipment{
         extraSize = size;
     }
 
+    public Bag() {
+        extraSize = 20;
+    }
+
     public void equip(){
         Backpack b = virologist.getBackpack();
         ElementBank e = b.getElementBank();
