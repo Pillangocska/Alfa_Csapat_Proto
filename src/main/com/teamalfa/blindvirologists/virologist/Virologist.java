@@ -248,7 +248,7 @@ public class Virologist {
     }
 
     public void destroy() {
-        field.destory();
+        field.destroy();
     }
 
     public void die() {
