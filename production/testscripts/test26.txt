@@ -1,0 +1,7 @@
+createfield safehouse
+createvirologist F1
+createequipment bag -v V1
+createagent virus paralyze V1
+startturn V1
+useagent PV1 V1
+toggle B1

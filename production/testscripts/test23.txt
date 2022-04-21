@@ -1,0 +1,7 @@
+createfield safehouse
+createvirologist F1
+createelements n10a10 n20a20 -v V1
+creategeneticcode amnesia -v V1
+startturn V1
+crafteagent vaccine amnesia
+useagent AV1 V1
