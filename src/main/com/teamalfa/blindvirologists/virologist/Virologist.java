@@ -238,11 +238,8 @@ public class Virologist {
         Collections.sort(activeViruses, new VirusComparator());
     }
 
-    public ArrayList<Object> getViruses() {
-        ArrayList<Object> objects = new ArrayList<>();
-        for(Virus virus : activeViruses)
-            objects.add(virus);
-        return objects;
+    public ArrayList<Virus> getViruses() {
+        return activeViruses;
     }
 
     public ArrayList<Equipment> getWornEquipment() {
