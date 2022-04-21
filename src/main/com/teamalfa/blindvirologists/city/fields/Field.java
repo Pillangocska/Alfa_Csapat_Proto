@@ -3,7 +3,6 @@ import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Field {
     //Virologists on the field
@@ -70,5 +69,5 @@ public class Field {
         this.neighbours = neighbours;
     }
 
-    public void destory() {}
+    public void destroy() {}
 }
