@@ -13,8 +13,8 @@ public class Gloves extends ActiveEquipment {
         cooldown = 0;
     }
 
-    public void setCoolDownDuration(int num) {
-        cooldownDuration = num;
+    public void setUseTime(int num) {
+        usetime = num;
     }
 
     public void setUsedVirus(Virus virus) {
