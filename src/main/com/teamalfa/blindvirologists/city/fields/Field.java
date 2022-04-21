@@ -3,7 +3,6 @@ import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Field {
     //Virologists on the field
@@ -11,9 +10,11 @@ public class Field {
     //Neighbouring fields
     protected ArrayList<Field> neighbours = new ArrayList<>();
 
-    //Constructor todo
-    public Field(){
-
+    //Constructor without parameter
+    public Field(){ }
+    //Constructor with neighbours
+    public Field(ArrayList<Field> nbrs){
+        this.setNeighbours(nbrs);
     }
 
     //Getters&Setters
@@ -34,9 +35,12 @@ public class Field {
         virologists.remove(virologist);
     }
 
-    //Gives back the virologists on the field
-    //except the one calling it todo
-    public ArrayList<Virologist> searchForVirologist(){ return virologists; }
+    /**Gives back the virologists on the field
+     * except the one calling it
+     */
+    public ArrayList<Virologist> searchForVirologist(){
+        return virologists; 
+    }
 
     /**
      * This method is called when a virologist searches a Field.
@@ -51,8 +55,6 @@ public class Field {
      * @return false
      */
     public boolean canChangeEquipment() {
-        // print method call
-        // print return value
         return false;
     }
 
@@ -68,7 +70,10 @@ public class Field {
 
     public void setNeighbours(ArrayList<Field> neighbours) {
         this.neighbours = neighbours;
+        for (Field neighbour : neighbours) {
+            neighbour.setNeighbour(this);
+        }
     }
 
-    public void destory() {}
+    public void destroy() {}
 }
