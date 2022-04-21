@@ -1,6 +1,5 @@
 package main.com.teamalfa.blindvirologists.city.fields;
 
-import main.com.teamalfa.blindvirologists.AController;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
@@ -14,14 +13,14 @@ public class Laboratory extends Field{
      */
     @Override
     public void searchedBy(Virologist virologist) {
-        // print method call
-        AController.printCall(this, "searchedBy", new Object[]{virologist});
-
-        virologist.getBackpack().add(geneticCode);
-
-        // print return value
-        AController.printReturn(null);
+        //ezek amúgy most mit csinálnak todo
     }
+
+    @Override
+    public void accept(Virologist v) {
+        geneticCode.autoInfect(v);
+    }
+
     public void setGeneticCode(GeneticCode geneticCode) {
         this.geneticCode = geneticCode;
     }
