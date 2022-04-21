@@ -15,7 +15,7 @@ public class TurnHandler {
       instance = new TurnHandler();
     }
 
-    public TurnHandler(){
+    private TurnHandler(){
         steppables = new ArrayList<>();
         order = new ArrayList<>();
     }
@@ -35,8 +35,20 @@ public class TurnHandler {
         steppables.add(steppable);
     }
 
+    public void accept(Virologist virologist) {
+        order.add(virologist);
+    }
+
     public void remove(Steppable steppable) {
         steppables.remove(steppable);
+    }
+
+    public void remove(Virologist virologist) {
+        order.remove(virologist);
+    }
+
+    public ArrayList<Virologist> GetOrder() {
+        return order;
     }
 
     private void reOrderVirologists() {

@@ -1,5 +1,9 @@
 package main.com.teamalfa.blindvirologists;
 
+import main.com.teamalfa.blindvirologists.city.fields.Field;
+import main.com.teamalfa.blindvirologists.turn_handler.Game;
+import main.com.teamalfa.blindvirologists.virologist.Virologist;
+
 import java.util.Scanner;
 
 public class Main {

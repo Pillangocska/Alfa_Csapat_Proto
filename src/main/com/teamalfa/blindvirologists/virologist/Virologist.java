@@ -8,6 +8,8 @@ import main.com.teamalfa.blindvirologists.agents.virus.VirusComparator;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.ActiveEquipment;
+import main.com.teamalfa.blindvirologists.turn_handler.Game;
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.backpack.Backpack;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class Virologist {
         protectionBank = new ArrayList<>();
         activeViruses = new ArrayList<>();
         backpack = new Backpack(this);
+
+        TurnHandler.getInstance().accept(this);
     }
 
 
@@ -124,7 +128,7 @@ public class Virologist {
                 if(equipment.protect())
                     ret = false;
         }
-        activeViruses.add(virus);
+        //activeViruses.add(virus);
 
         return ret;
     }
@@ -252,12 +256,19 @@ public class Virologist {
     }
 
     public void die() {
-        //todo, ehhez túl este van
+        if(TurnHandler.getInstance().GetOrder().contains(this)) {
+            TurnHandler.getInstance().remove(this);
+        }
+        else {
+            Game.getInstance().remove(this);
+        }
     }
 
-    public void turntoBear()
-    {
-        //todo
+    public void turntoBear() {
+        if(!(Game.getInstance().getBears().contains(this))) {
+            TurnHandler.getInstance().remove(this);
+            Game.getInstance().accept(this);
+        }
     }
 
     public boolean toss(Equipment e){
@@ -282,5 +293,9 @@ public class Virologist {
             else
                 e.equip();
         }
+    }
+
+    public ArrayList<Virologist> searchForVirologist() {
+        return field.searchForVirologist();
     }
 }
