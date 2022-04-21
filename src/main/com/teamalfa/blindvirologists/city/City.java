@@ -28,11 +28,7 @@ public class City {
         allEquipment.add(new Bag(50));
     }
 
-    public void GenerateMap() {}
-
-    public void showMap() {
-
+    public void GenerateMap() {
+        //todo majd amikor a grafikust csinaljuk
     }
-
-
 }
