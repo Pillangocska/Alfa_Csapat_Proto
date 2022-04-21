@@ -5,17 +5,29 @@ import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 public class Gloves extends ActiveEquipment {
 
+    private Virus usedVirus = null;
+
     public Gloves() {
+        cooldownDuration = 3;
         usetime = 3;
+        cooldown = 0;
+    }
+
+    public void setCoolDownDuration(int num) {
+        cooldownDuration = num;
+    }
+
+    public void setUsedVirus(Virus virus) {
+        usedVirus = virus;
     }
 
     public void use(Virologist target){
-        Virus toUse = null; //todo
-        if(toUse != null && usetime > 0) {
-            virologist.removeVirus(toUse);
-            toUse.apply(target);
+        if(usedVirus != null && usetime > 0 && cooldown == 0) {
+            virologist.removeVirus(usedVirus);
+            usedVirus.apply(target);
             startCooldown();
             usetime--;
+            usedVirus = null;
         }
         else if(usetime == 0) {
             wornOut();
