@@ -24,4 +24,8 @@ public class Laboratory extends Field{
     public void setGeneticCode(GeneticCode geneticCode) {
         this.geneticCode = geneticCode;
     }
+
+    public GeneticCode getGeneticCode() {
+        return geneticCode;
+    }
 }

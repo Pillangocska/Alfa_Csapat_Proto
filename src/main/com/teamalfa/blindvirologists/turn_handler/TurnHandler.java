@@ -58,4 +58,8 @@ public class TurnHandler {
     public Virologist getActiveVirologist() {
         return activeVirologist;
     }
+
+    public void setActiveVirologist(Virologist v) {
+        activeVirologist = v;
+    }
 }
