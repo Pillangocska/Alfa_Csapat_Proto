@@ -16,7 +16,7 @@ abstract public class Virus extends Agent {
     @Override
     public void apply(Virologist target) {
         if (target.infectedBy(this)) {
-            this.addVirologist(target);
+            this.target = target;
         }
     }
 
