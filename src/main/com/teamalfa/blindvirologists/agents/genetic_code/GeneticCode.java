@@ -9,6 +9,7 @@ import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
  *  further viruses and vaccines should implement all these functions
  */
 abstract public class GeneticCode {
+    protected String type;
     abstract public Virus createVirus(ElementBank elementBank);
     abstract public Vaccine createVaccine(ElementBank elementBank);
     public void autoInfect(Virologist virologist){  }
