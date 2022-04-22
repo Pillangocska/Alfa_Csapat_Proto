@@ -6,6 +6,10 @@ import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
 public class DanceCode extends GeneticCode{
 
+    public DanceCode(){
+        this.type = "dance";
+    }
+
     /**
      * This method creates a Virus with the dance geneticcode.
      * @return The DanceVirus that has been created.

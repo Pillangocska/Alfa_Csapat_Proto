@@ -5,6 +5,10 @@ import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
 public class ParalyzeCode extends GeneticCode{
 
+    public ParalyzeCode(){
+        this.type = "paralyze";
+    }
+
     /**
      * This method creates a Virus with the paralyze geneticcode.
      * @return The ParalyzeVirus that has been created.

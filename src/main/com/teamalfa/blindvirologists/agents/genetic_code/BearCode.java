@@ -6,6 +6,11 @@ import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
 public class BearCode extends GeneticCode {
+
+    public BearCode(){
+        this.type = "bear";
+    }
+
     /**
      * This method creates a Virus with the bear geneticcode.
      *
