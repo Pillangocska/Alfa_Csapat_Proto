@@ -1,5 +1,6 @@
 package main.com.teamalfa.blindvirologists.agents.virus;
 
+import main.com.teamalfa.blindvirologists.agents.genetic_code.DanceCode;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 import main.com.teamalfa.blindvirologists.random.MyRandom;
 import main.com.teamalfa.blindvirologists.random.TrueRandom;
@@ -10,6 +11,7 @@ public class DanceVirus extends Virus {
 
     public DanceVirus(){
         this.random = new TrueRandom();
+        geneticCode = new DanceCode();
     }
 
     public void setRandom(MyRandom random){
