@@ -13,4 +13,16 @@ abstract public class GeneticCode {
     abstract public Virus createVirus(ElementBank elementBank);
     abstract public Vaccine createVaccine(ElementBank elementBank);
     public void autoInfect(Virologist virologist){  }
+    public String getType() { return type; }
+    @Override
+    public boolean equals(Object obj) {
+        // if compared to self true
+        if(obj == this) return true;
+        // if not genetic code false
+        if(!(obj instanceof GeneticCode)) return false;
+
+        // now it's safe to cast
+        GeneticCode code = (GeneticCode) obj;
+        return code.getType() == type;
+    }
 }
