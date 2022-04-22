@@ -213,7 +213,7 @@ public class Virologist {
     }
 
     /**
-     * This method is called when the Virologist starts wearing an activeequipment,
+     * This method is called when the Virologist starts wearing an active equipment,
      * it adds the activeequipment from the ActiveEquipments list.
      * @param activeEquipment The activeequipment the virologist added.
      */
