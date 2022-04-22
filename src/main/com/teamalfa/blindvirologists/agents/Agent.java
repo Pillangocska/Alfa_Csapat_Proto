@@ -17,9 +17,17 @@ abstract public class Agent {
         return geneticCode;
     }
 
+    public void setGeneticCode(GeneticCode code) {
+        geneticCode = code;
+    }
+
     abstract public void apply(Virologist target);
 
     public ElementBank getCost() {
         return cost;
+    }
+
+    public Virologist getTarget() {
+        return target;
     }
 }
