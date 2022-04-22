@@ -38,4 +38,9 @@ public class Gloves extends ActiveEquipment {
         virologist.removeWorn(this);
         virologist.removeActive(this);
     }
+
+    @Override
+    public void wornOut() {
+        // TODO:
+    }
 }
