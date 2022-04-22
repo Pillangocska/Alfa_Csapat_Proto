@@ -27,11 +27,13 @@ public class Backpack {
         this.virologist = virologist;
     }
 
-    public void add(Equipment equipment) {
+    public boolean add(Equipment equipment) {
         if(equipmentPocket.add(equipment)){
             SafeHouse safeHouse = (SafeHouse) virologist.getField();
             safeHouse.remove(equipment);
+            return true;
         }
+        return false;
     }
 
     public void add(GeneticCode geneticCode) {

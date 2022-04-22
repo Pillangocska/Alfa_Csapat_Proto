@@ -77,10 +77,12 @@ public class Virologist {
             a.apply(v);
     }
 
-    public void learn(GeneticCode gc) {
+    public boolean learn(GeneticCode gc) {
         if(!(this.checkUsageAffect())) {
             backpack.add(gc);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -258,15 +260,17 @@ public class Virologist {
         //todo
     }
 
-    public void toss(Equipment e){
+    public boolean toss(Equipment e){
         if(!(wornEquipment.contains(e))){
             Virologist v = backpack.getVirologist();
             Field f = v.getField();
             if(f.canChangeEquipment()){
                 backpack.getEquipmentPocket().getEquipmentHolder().remove(e);
                 f.add(e);
+                return true;
             }
         }
+        return false;
     }
 
     public void toggle(Equipment e){

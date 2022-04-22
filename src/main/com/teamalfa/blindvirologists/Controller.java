@@ -1,12 +1,10 @@
 package main.com.teamalfa.blindvirologists;
 
+import jdk.jshell.spi.ExecutionControl;
 import main.com.teamalfa.blindvirologists.agents.Agent;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.*;
-import main.com.teamalfa.blindvirologists.agents.virus.AmnesiaVirus;
-import main.com.teamalfa.blindvirologists.agents.virus.BearVirus;
-import main.com.teamalfa.blindvirologists.agents.virus.DanceVirus;
-import main.com.teamalfa.blindvirologists.agents.virus.ParalyzeVirus;
+import main.com.teamalfa.blindvirologists.agents.virus.*;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 import main.com.teamalfa.blindvirologists.city.fields.Laboratory;
 import main.com.teamalfa.blindvirologists.city.fields.SafeHouse;
@@ -14,6 +12,7 @@ import main.com.teamalfa.blindvirologists.city.fields.StoreHouse;
 import main.com.teamalfa.blindvirologists.equipments.Bag;
 import main.com.teamalfa.blindvirologists.equipments.Cloak;
 import main.com.teamalfa.blindvirologists.equipments.Equipment;
+import main.com.teamalfa.blindvirologists.equipments.active_equipments.ActiveEquipment;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.Gloves;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.Axe;
 import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
@@ -46,6 +45,8 @@ public class Controller {
         IDcounters.put("EB", 0);
         IDcounters.put("GC", 0);
         IDcounters.put("A", 0);
+        IDcounters.put("V", 0);
+        IDcounters.put("E", 0);
     }
 
     /**
@@ -58,7 +59,7 @@ public class Controller {
         // get the next ID from the registry, and then increment the type's counter
         Integer idnum = IDcounters.get(IDtext);
         if (idnum == null)
-            return null; // if the letter is not found in the registry, don't do anything
+            throw new IllegalArgumentException(); // if the letter is not found in the registry, throw an exception
         idnum++;
         IDcounters.replace(IDtext, idnum);
 
@@ -82,7 +83,7 @@ public class Controller {
         return obj;
     }
 
-    private String checkGetByID(Object obj) throws IllegalArgumentException {
+    private String checkGetID(Object obj) throws IllegalArgumentException {
         for(var entry : objectNameDict.entrySet())
             if (entry.getValue().equals(obj))
                 return entry.getKey();
@@ -145,7 +146,7 @@ public class Controller {
             // print output
             System.out.println("Field created:");
             System.out.println("ID: " + ID);
-            System.out.println("Type: " + type.substring(0, 1).toUpperCase() + type.substring(1));
+            System.out.println("Type: " + (type.equals("") ? "Field" : capitalizeString(type)));
             System.out.println("Neighbours: " + String.join(", ", neighbourIDs));
         }
         catch (Exception e) {
@@ -353,13 +354,14 @@ public class Controller {
     public void move(String fieldID) {
         try {
             Virologist currentVirologist = TurnHandler.getInstance().getActiveVirologist();
-            String virologistID = checkGetByID(currentVirologist);
+            String virologistID = checkGetID(currentVirologist);
             if (currentVirologist == null) throw new IllegalStateException();
             Field target = (Field) checkGetFromRegistry(fieldID);
             currentVirologist.move(target);
 
             System.out.println("Virologist moved:");
             System.out.println("Virologist: " + virologistID);
+            System.out.println("Destination: " + fieldID);
         } catch (Exception e) {
             printErrorMessage();
         }
@@ -369,11 +371,20 @@ public class Controller {
         try {
             Equipment eq = (Equipment) checkGetFromRegistry(equipmentID);
             Virologist currentVirologist = TurnHandler.getInstance().getActiveVirologist();
-            String virologistID = checkGetByID(currentVirologist);
+            String virologistID = checkGetID(currentVirologist);
+            String fieldID = checkGetID(currentVirologist.getField());
 
             //check if the equipment is on the field the virologist stands on
             if(!((SafeHouse)(currentVirologist.getField())).getEquipments().contains(eq)) throw new IllegalArgumentException();
 
+            boolean result = currentVirologist.getBackpack().add(eq);
+
+            // print output
+            System.out.println("Equipment added to inventory:");
+            System.out.println("Virologist: " + virologistID);
+            System.out.println("Equipment: " + equipmentID);
+            System.out.println("Field: " + fieldID);
+            System.out.println("Result: " + (result ? "Successful" : "Failed"));
         }
         catch (Exception e) {
             printErrorMessage();
@@ -381,17 +392,61 @@ public class Controller {
     }
 
     public void dropequipment(String equipmentID) {
-        System.out.println(equipmentID);
+        try {
+            Equipment eq = (Equipment) checkGetFromRegistry(equipmentID);
+            Virologist currentVirologist = TurnHandler.getInstance().getActiveVirologist();
+            String virologistID = checkGetID(currentVirologist);
+            String fieldID = checkGetID(currentVirologist.getField());
+            boolean result = currentVirologist.toss(eq);
+
+            // print output
+            System.out.println("Equipment dropped:");
+            System.out.println("Virologist: " + virologistID);
+            System.out.println("Equipment: " + equipmentID);
+            System.out.println("Field: " + fieldID);
+
+            if (!result) {
+                System.out.println("\nDrop was unsuccessful!");
+            }
+        }
+        catch (Exception e) {
+            printErrorMessage();
+        }
     }
 
     public void learngeneticcode() {
-        System.out.println();
+        try {
+            Virologist currentVirologist = TurnHandler.getInstance().getActiveVirologist();
+            String virologistID = checkGetID(currentVirologist);
+            String labID = checkGetID(currentVirologist.getField());
+            String GCID = checkGetID(((Laboratory)currentVirologist.getField()).getGeneticCode());
+            boolean result = currentVirologist.learn(((Laboratory)currentVirologist.getField()).getGeneticCode());
+
+            // print output
+            System.out.println("Genetic code learned:");
+            System.out.println("Virologist: " + virologistID);
+            System.out.println("Laboratory: " + labID);
+            System.out.println("GeneticCode: " + GCID);
+            System.out.println("Result: " + (result ? "Successful" : "Failed"));
+        } catch (Exception e) {
+            printErrorMessage();
+        }
     }
 
-    public void useequipment(String equipmentID, String targetID, String virusID) {
-        System.out.println(equipmentID);
-        System.out.println(targetID);
-        System.out.println(virusID);
+    public void useequipment(String equipmentID, String targetID, String virusID) throws ExecutionControl.NotImplementedException {
+        throw new ExecutionControl.NotImplementedException("Ez még nincs kész!");
+        // HOGY MŰKÖDIK A USE????
+        /*try {
+            ActiveEquipment activeEquipment = (ActiveEquipment) checkGetFromRegistry(equipmentID);
+            Virologist target = (Virologist) checkGetFromRegistry(targetID);
+
+            if (activeEquipment instanceof Gloves) {
+                Gloves gloves = (Gloves) activeEquipment;
+                Virus virus = (Virus) checkGetFromRegistry(virusID);
+            }
+        } catch (Exception e) {
+            printErrorMessage();
+        }*/
     }
 
     public void craftagent(String agentType, String geneticCodeType) {
@@ -416,11 +471,42 @@ public class Controller {
     }
 
     public void startturn(String virologistID) {
-        System.out.println(virologistID);
+        try {
+            TurnHandler.getInstance().setActiveVirologist((Virologist) checkGetFromRegistry(virologistID));
+            System.out.println(virologistID + "'s turn started.");
+        }
+        catch (Exception e) {
+            printErrorMessage();
+        }
     }
 
     public void status(String[] IDs) {
-        System.out.println(IDs);
+        Object[] objects = objectNameDict.values().toArray();
+        for(var entry : objectNameDict.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (value instanceof Field) {
+                Field field = (Field) value;
+                System.out.println("Field:");
+                System.out.println("ID: " + key);
+
+                ArrayList<String> neighbourIDs = new ArrayList<String>();
+                for (var n : field.getNeighbours()) {
+                    neighbourIDs.add(checkGetID(n));
+                }
+                System.out.println("Neighbours: " + String.join(", ", (String[]) neighbourIDs.toArray()));
+
+                ArrayList<String> virologistIDs = new ArrayList<String>();
+                for (var v : field.getVirologists())
+                    virologistIDs.add(checkGetID(v));
+                System.out.println("Virologists: " + String.join(", ", (String[]) virologistIDs.toArray()));
+
+                System.out.println("GeneticCodes: " + (field instanceof Laboratory ? checkGetID(((Laboratory) field).getGeneticCode()) : "null"));
+                //System.out.println("Equipments: " + (field instanceof SafeHouse ? (((SafeHouse) field).getEquipments()).forEach(eq -> {checkGetID(eq);}) : "null"));
+
+
+            }
+        }
     }
 
     public void toggle(String equipmentID) {
@@ -480,6 +566,8 @@ public class Controller {
                     }
                 }
 
+                for (int i = 0; i < neighbours.length; i++)
+                    neighbours[i] = neighbours[i].toUpperCase();
                 createfield(neighbours, fieldType);
                 return;
             }
@@ -676,6 +764,9 @@ public class Controller {
                 setrandom(parts[1], Integer.parseInt(parts[2]));
                 return;
             }
+
+            if (parts[0].equals("init"))
+                init();
 
             // if we have gotten here without matching any command, then the input is invalid!
             throw new IllegalArgumentException();
