@@ -17,4 +17,9 @@ public class Gloves extends ActiveEquipment {
         //AController.printReturn(null);
          */
     }
+
+    @Override
+    public void wornOut() {
+        // TODO:
+    }
 }
