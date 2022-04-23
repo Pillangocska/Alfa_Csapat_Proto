@@ -6,6 +6,7 @@ import main.com.teamalfa.blindvirologists.virologist.Virologist;
 public class BearVirus extends DanceVirus{
 
     public BearVirus(){
+        priority = 1;
         geneticCode = new BearCode();
     }
 
@@ -27,5 +28,6 @@ public class BearVirus extends DanceVirus{
      * This method doesn't do anything,
      * because the BearVirus(unlike the other viruses) doesn't expire.
      */
+    @Override
     public void step(){}
 }

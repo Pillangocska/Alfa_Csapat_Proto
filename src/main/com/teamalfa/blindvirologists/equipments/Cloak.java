@@ -11,10 +11,15 @@ public class Cloak extends Equipment{
         protectionRate = 82.3;
     }
 
+    //setter
     public void setRandom (MyRandom random) {
         this.random = random;
     }
 
+    /**
+     * Tells if the cloak protected the virologist from an infection.
+     * @return true if it did, false if it did not.
+     */
     public boolean protect(){
        return random.YorN(protectionRate);
     }

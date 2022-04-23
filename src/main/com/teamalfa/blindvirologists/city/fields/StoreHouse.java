@@ -20,10 +20,14 @@ public class StoreHouse extends Field {
         //todo
     }
 
+    //setter
     public void setElements(ElementBank elements) {
         this.elements = elements;
     }
 
+    /**
+     * Removes all elements from the safehouse.
+     */
     public void destroy() {
        elements.removeAll();
     }

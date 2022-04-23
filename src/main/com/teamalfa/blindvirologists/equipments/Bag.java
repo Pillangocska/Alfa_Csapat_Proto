@@ -14,6 +14,9 @@ public class Bag extends Equipment{
         extraSize = 20;
     }
 
+    /**
+     * Increases the size of the virologist's elementbank with extrasize.
+     */
     public void equip(){
         Backpack b = virologist.getBackpack();
         ElementBank e = b.getElementBank();
@@ -21,6 +24,9 @@ public class Bag extends Equipment{
         virologist.addWorn(this);
     }
 
+    /**
+     * Decreases the size of the virologist's elementbank with extrasize.
+     */
     public void unEquip(){
         Backpack b = virologist.getBackpack();
         ElementBank e = b.getElementBank();

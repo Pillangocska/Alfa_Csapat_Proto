@@ -13,6 +13,7 @@ public class Gloves extends ActiveEquipment {
         cooldown = 0;
     }
 
+    //setters
     public void setUseTime(int num) {
         usetime = num;
     }
@@ -21,6 +22,13 @@ public class Gloves extends ActiveEquipment {
         usedVirus = virus;
     }
 
+    /**
+     * Removes the virus from the virologist and applies it to the target virologist.
+     * Only if the usetime is greater than 0, and the cooldown is at zero.
+     * Usetime-1;
+     * And starts the cooldown.
+     * @param target
+     */
     public void use(Virologist target){
         if(usedVirus != null && usetime > 0 && cooldown == 0) {
             virologist.removeVirus(usedVirus);
@@ -29,18 +37,24 @@ public class Gloves extends ActiveEquipment {
             usetime--;
             usedVirus = null;
         }
-        else if(usetime == 0) {
-            wornOut();
-        }
     }
 
+    /**
+     * Removes the equipment from the virologist.
+     */
     public void wornOut() {
         virologist.removeWorn(this);
         virologist.removeActive(this);
     }
 
-    @Override
-    public void wornOut() {
-        // TODO:
+    /**
+     * If the cooldown is greater than zero, decreases it.
+     * If the usetime is zero calls the wornout methond.
+     */
+    public void step() {
+        if(usetime == 0)
+            wornOut();
+        else if(cooldown > 0)
+            cooldown--;
     }
 }

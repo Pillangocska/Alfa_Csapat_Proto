@@ -10,9 +10,11 @@ public class Field {
     //Neighbouring fields
     protected ArrayList<Field> neighbours = new ArrayList<>();
 
-    //Constructor todo
-    public Field(){
-
+    //Constructor without parameter
+    public Field(){ }
+    //Constructor with neighbours
+    public Field(ArrayList<Field> nbrs){
+        this.setNeighbours(nbrs);
     }
 
     //Getters&Setters
@@ -29,13 +31,23 @@ public class Field {
         virologist.setField(this);
     }
 
+    /**
+     * removes the virologist from the field
+     * @param virologist the virologist that's being removed.
+     */
     public void remove(Virologist virologist){
         virologists.remove(virologist);
     }
 
-    //Gives back the virologists on the field
-    //except the one calling it todo
-    public ArrayList<Virologist> searchForVirologist(){ return virologists; }
+    /**
+     * Gives back the virologists on the field
+     * except the one calling it
+     */
+    public ArrayList<Virologist> searchForVirologist(Virologist v){
+        virologists.remove(v);
+        ArrayList<Virologist> result = virologists;
+        return result;
+    }
 
     /**
      * This method is called when a virologist searches a Field.
@@ -50,24 +62,30 @@ public class Field {
      * @return false
      */
     public boolean canChangeEquipment() {
-        // print method call
-        // print return value
         return false;
     }
 
     /**
-     * doesnt do anything
+     * doesn't do anything
      * @param e the equipment that gets put down to the field.
      */
     public void add(Equipment e) { }
 
+    //setters
     public void setNeighbour(Field f1) {
         this.neighbours.add(f1);
     }
 
     public void setNeighbours(ArrayList<Field> neighbours) {
         this.neighbours = neighbours;
+        for (Field neighbour : neighbours) {
+            neighbour.setNeighbour(this);
+        }
     }
 
+    /**
+     * doesn't do anything
+     * only have effect in StoreHouse
+     */
     public void destroy() {}
 }

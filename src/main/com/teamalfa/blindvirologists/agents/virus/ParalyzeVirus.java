@@ -6,6 +6,8 @@ import main.com.teamalfa.blindvirologists.city.fields.Field;
 public class ParalyzeVirus extends Virus {
 
     public ParalyzeVirus() {
+        priority = 2;
+        expiry = duration = 5;
         geneticCode = new ParalyzeCode();
     }
 

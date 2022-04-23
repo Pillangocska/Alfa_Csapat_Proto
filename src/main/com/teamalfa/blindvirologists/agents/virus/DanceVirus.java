@@ -10,10 +10,13 @@ public class DanceVirus extends Virus {
     public MyRandom random;
 
     public DanceVirus(){
+        priority = 3;
+        expiry = duration = 5;
         this.random = new TrueRandom();
         geneticCode = new DanceCode();
     }
 
+    //setter
     public void setRandom(MyRandom random){
         this.random = random;
     }

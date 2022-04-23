@@ -22,6 +22,7 @@ public class GeneticCodeBank {
         instance = new GeneticCodeBank();
     }
 
+    //getters
     public ArrayList<GeneticCode> getCodes() {
         return codes;
     }

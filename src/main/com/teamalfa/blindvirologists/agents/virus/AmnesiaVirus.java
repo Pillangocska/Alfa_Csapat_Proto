@@ -6,6 +6,8 @@ import main.com.teamalfa.blindvirologists.virologist.Virologist;
 public class AmnesiaVirus extends Virus {
 
     public AmnesiaVirus() {
+        priority = 4;
+        expiry = duration = 5;
         geneticCode = new AmnesiaCode();
     }
 
