@@ -1,6 +1,7 @@
 package main.com.teamalfa.blindvirologists.virologist;
 
 import main.com.teamalfa.blindvirologists.agents.Agent;
+import main.com.teamalfa.blindvirologists.agents.GeneticCodeBank;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
@@ -117,20 +118,23 @@ public class Virologist {
      * @return true if rhe infection was successful, otherwise it returns false.
      */
     public boolean infectedBy(Virus virus) {
-        Boolean ret = true;
 
-        // check if protected by any vaccine
-        if(protectionBank.contains(virus.getGeneticCode())) {
-            ret = false;
-        }else {
-            // check if protected by any equipment
-            for(Equipment equipment : wornEquipment)
-                if(equipment.protect())
-                    ret = false;
+        // check vaccine protection
+        for(GeneticCode code : protectionBank) {
+            if(code.equals(virus.getGeneticCode())) {
+                return false;
+            }
         }
-        //activeViruses.add(virus);
 
-        return ret;
+        // check equipment protection
+        for(Equipment equipment : wornEquipment) {
+            if(equipment.protect()) {
+                return false;
+            }
+        }
+
+        activeViruses.add(virus);
+        return true;
     }
 
     /**

@@ -1,8 +1,13 @@
 package main.com.teamalfa.blindvirologists.agents.virus;
 
+import main.com.teamalfa.blindvirologists.agents.genetic_code.ParalyzeCode;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 
 public class ParalyzeVirus extends Virus {
+
+    public ParalyzeVirus() {
+        geneticCode = new ParalyzeCode();
+    }
 
     /**
      * This method doesnt let the Virologist leave their current Field while being affected by the Virus.

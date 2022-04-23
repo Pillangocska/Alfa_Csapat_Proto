@@ -5,6 +5,11 @@ import main.com.teamalfa.blindvirologists.agents.virus.AmnesiaVirus;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
 public class AmnesiaCode extends GeneticCode {
+
+    public AmnesiaCode(){
+        this.type = "amnesia";
+    }
+
     /**
      * This method creates a Virus with the amnesia geneticcode.
      *
