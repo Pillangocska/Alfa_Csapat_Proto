@@ -39,11 +39,16 @@ public class SafeHouse extends Field{
         //todo
     }
 
+    /**
+     * Tells if player's can change their equipment on the field.
+     * @return Always returns true.
+     */
     @Override
     public boolean canChangeEquipment(){
         return true;
     }
 
+    //getter
     public ArrayList<Equipment> getEquipments() {
         return equipments;
     }

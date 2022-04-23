@@ -10,12 +10,15 @@ public class Axe extends ActiveEquipment{
         blunt = false;
     }
 
+    /**
+     * If the axe is sharp it kills the virologist, otherwise it doesn't do anything.
+     * @param v
+     */
     @Override
     public void use(Virologist v) {
         if(usetime == 1 && !(blunt)){
 
             virologist.die();
-            startCooldown();
             usetime--;
         }
         else if(blunt && usetime < 1) {
@@ -23,6 +26,12 @@ public class Axe extends ActiveEquipment{
         }
     }
 
+    /**
+     * Doesn't do anything.
+     */
     @Override
     public void wornOut() {}
+
+    @Override
+    public void step() {}
 }

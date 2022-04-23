@@ -31,15 +31,22 @@ public class Field {
         virologist.setField(this);
     }
 
+    /**
+     * removes the virologist from the field
+     * @param virologist the virologist that's being removed.
+     */
     public void remove(Virologist virologist){
         virologists.remove(virologist);
     }
 
-    /**Gives back the virologists on the field
+    /**
+     * Gives back the virologists on the field
      * except the one calling it
      */
-    public ArrayList<Virologist> searchForVirologist(){
-        return virologists; 
+    public ArrayList<Virologist> searchForVirologist(Virologist v){
+        virologists.remove(v);
+        ArrayList<Virologist> result = virologists;
+        return result;
     }
 
     /**
@@ -64,6 +71,7 @@ public class Field {
      */
     public void add(Equipment e) { }
 
+    //setters
     public void setNeighbour(Field f1) {
         this.neighbours.add(f1);
     }
@@ -74,6 +82,7 @@ public class Field {
             neighbour.setNeighbour(this);
         }
     }
+
     /**
      * doesn't do anything
      * only have effect in StoreHouse
