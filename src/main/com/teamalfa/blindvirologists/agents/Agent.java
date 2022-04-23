@@ -1,13 +1,14 @@
 package main.com.teamalfa.blindvirologists.agents;
 
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
+import main.com.teamalfa.blindvirologists.turn_handler.Steppable;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
 /**
  * Abstract class that represents the agents in the game.
  */
-abstract public class Agent {
+abstract public class Agent implements Steppable {
     /**
      * The cost of the Agent.
      */

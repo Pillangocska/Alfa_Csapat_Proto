@@ -10,11 +10,21 @@ public class DetRandom extends MyRandom{
         chosenNumber = num;
     }
 
+    /**
+     * returns the choice
+     * @param num irrelevant
+     * @return choice
+     */
     @Override
     public boolean YorN(double num) {
         return choice;
     }
 
+    /**
+     * return the chosen number
+     * @param num irrelevant
+     * @return chosenNumber
+     */
     @Override
     public int PickRandom(int num) {
         return chosenNumber;

@@ -21,17 +21,29 @@ public class ElementBank {
         aminoAcidMaxSize = aminoSize;
     }
 
+    /**
+     * Increases the maxsize with the parameter.
+     * @param extraSize The number the maxsize is increased with.
+     */
     public void increaseMaxSize(int extraSize) {
         aminoAcidMaxSize += extraSize;
         nucleotideMaxSize += extraSize;
     }
 
-
+    /**
+     * Decreases the maxsize with the parameter.
+     * @param extraSize The number the maxsize is decreased by.
+     */
     public void decreaseMaxSize(int extraSize) {
         aminoAcidMaxSize -= extraSize;
         nucleotideMaxSize -= extraSize;
     }
 
+    /**
+     * Adds the element if they fit.
+     * @param elements The elements that needs to be added-
+     * @return The amount that were added to the element bank.
+     */
     public ElementBank add(ElementBank elements) {
        nucleotide += elements.nucleotide;
        aminoAcid += elements.aminoAcid;
@@ -43,6 +55,11 @@ public class ElementBank {
        return added;
     }
 
+    /**
+     * Removes the elements if there were enough in the element bank.
+     * @param added The amount that needs to be removed.
+     * @return True if it was successful, false if it wasn't.
+     */
     public boolean remove(ElementBank added) {
 
         Boolean ret = false;
@@ -52,6 +69,14 @@ public class ElementBank {
         return ret;
     }
 
+    /**
+     * Sets the number of the nucleotides and the amino acids to zero.
+     */
+    public void removeAll() {
+        nucleotide = aminoAcid = 0;
+    }
+
+    //getters, setters
     public int getAminoAcid() {
         return aminoAcid;
     }
@@ -67,7 +92,5 @@ public class ElementBank {
         nucleotide = num;
     }
 
-    public void removeAll() {
-        nucleotide = aminoAcid = 0;
-    }
+
 }

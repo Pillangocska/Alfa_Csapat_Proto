@@ -1,6 +1,7 @@
 package main.com.teamalfa.blindvirologists.agents.virus;
 
 import main.com.teamalfa.blindvirologists.agents.genetic_code.BearCode;
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 public class BearVirus extends DanceVirus{
@@ -8,6 +9,8 @@ public class BearVirus extends DanceVirus{
     public BearVirus(){
         priority = 1;
         geneticCode = new BearCode();
+
+        TurnHandler.getInstance().accept(this);
     }
 
     /**

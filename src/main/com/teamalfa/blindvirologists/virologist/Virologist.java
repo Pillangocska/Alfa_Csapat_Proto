@@ -47,6 +47,11 @@ public class Virologist {
         return backpack;
     }
 
+    //todo
+    public void startTurn() {}
+    //todo
+    private void endTurn() {}
+
     /**
      * The method is called when the virologist moves to another field,
      * it checks if the virologist is affected by any viruses, if yes
@@ -67,6 +72,11 @@ public class Virologist {
         field = destination;
     }
 
+    /**
+     * Calls the equipment's use method.
+     * @param a The equipment that's being used.
+     * @param v The virologist that the wuipment needs to be used on.
+     */
     public void use(ActiveEquipment a, Virologist v) {
         a.use(v);
     }
@@ -78,12 +88,23 @@ public class Virologist {
      * @param v The virologist the agent is used on.
      */
     public void use(Agent a, Virologist v){
-        if (a != null && !checkUsageAffect())
+        if (a != null && !checkUsageAffect()){
             a.apply(v);
+            backpack.getAgentPocket().removeAgent(a);
+        }
     }
 
+    /**
+     * Learns the genetic code that's on the laboratory's wall.
+     * @param gc The genetic that's on the laboratory's wall.
+     * @return True if it was learned, false otherwise.
+     */
     public boolean learn(GeneticCode gc) {
         if(!(this.checkUsageAffect())) {
+            for(GeneticCode geneticCode: backpack.getGeneticCodePocket().getGeneticCodes()) {
+                if((gc.equals(geneticCode)))
+                    return false;
+            }
             backpack.add(gc);
             return true;
         }
@@ -242,6 +263,8 @@ public class Virologist {
         Collections.sort(activeViruses, new VirusComparator());
     }
 
+
+    //getters
     public ArrayList<Virus> getViruses() {
         return activeViruses;
     }
@@ -250,10 +273,16 @@ public class Virologist {
         return wornEquipment;
     }
 
+    /**
+     * Calls the field's (the one the virologist is currently standing on) destroy method.
+     */
     public void destroy() {
         field.destroy();
     }
 
+    /**
+     * Removes the virologist from the turnhandler or from the game.
+     */
     public void die() {
         if(TurnHandler.getInstance().GetOrder().contains(this)) {
             TurnHandler.getInstance().remove(this);
@@ -263,6 +292,9 @@ public class Virologist {
         }
     }
 
+    /**
+     * Turns the virologist into bear. Removes them from the turnhandler and gives them to the virologist.
+     */
     public void turntoBear() {
         if(!(Game.getInstance().getBears().contains(this))) {
             TurnHandler.getInstance().remove(this);
@@ -270,8 +302,14 @@ public class Virologist {
         }
     }
 
+    /**
+     * Tosses the equipment to the ground if they are not wearing it,
+     * and currently standing on a safehouse, and is not paralyzed.
+     * @param e The tossed equipment.
+     * @return true if it was successful, false otherwise.
+     */
     public boolean toss(Equipment e){
-        if(!(wornEquipment.contains(e))){
+        if(!(wornEquipment.contains(e) && checkUsageAffect())){
             Virologist v = backpack.getVirologist();
             Field f = v.getField();
             if(f.canChangeEquipment()){
@@ -283,10 +321,14 @@ public class Virologist {
         return false;
     }
 
+    /**
+     * Wears/unwears the equipment if they are not paralyzed and standing in a safehouse.
+     * @param e The toggled equipment.
+     */
     public void toggle(Equipment e){
         Virologist v = backpack.getVirologist();
         Field f = v.getField();
-        if(f.canChangeEquipment()){
+        if(f.canChangeEquipment() && !(checkUsageAffect())){
             if(wornEquipment.contains(e))
                 e.unEquip();
             else
@@ -294,10 +336,15 @@ public class Virologist {
         }
     }
 
+    /**
+     * Calls the field's (the one the virologist is currently standing on searchforvirologists method)
+     * @return the method.
+     */
     public ArrayList<Virologist> searchForVirologist() {
         return field.searchForVirologist(this);
     }
 
+    //getter
     public ArrayList<GeneticCode> getProtectionBank() {
         return protectionBank;
     }

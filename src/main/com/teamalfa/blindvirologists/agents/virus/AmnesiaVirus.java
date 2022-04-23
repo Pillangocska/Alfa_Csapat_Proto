@@ -1,6 +1,7 @@
 package main.com.teamalfa.blindvirologists.agents.virus;
 
 import main.com.teamalfa.blindvirologists.agents.genetic_code.AmnesiaCode;
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 public class AmnesiaVirus extends Virus {
@@ -9,6 +10,8 @@ public class AmnesiaVirus extends Virus {
         priority = 4;
         expiry = duration = 5;
         geneticCode = new AmnesiaCode();
+
+        TurnHandler.getInstance().accept(this);
     }
 
     /**
