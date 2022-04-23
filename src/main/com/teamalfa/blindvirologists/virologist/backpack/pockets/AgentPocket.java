@@ -15,6 +15,11 @@ public class AgentPocket extends Pocket{
         maxSize = 7;
     }
 
+    /**
+     * Adds the agent to the packet if there's place.
+     * @param agent The added agent.
+     * @return False if it was unsuccessful, tru if it was successfull
+     */
     public boolean addAgent(Agent agent) {
         if(agentHolder.size() < maxSize) {
             agentHolder.add(agent);
@@ -23,10 +28,15 @@ public class AgentPocket extends Pocket{
         return false;
     }
 
+    /**
+     * Removes the agent from the agentHolder
+     * @param a The agent that has been removed.
+     */
     public void removeAgent(Agent a) {
         agentHolder.remove(a);
     }
 
+    //getters
     public int getCurrentSize() {
         return  agentHolder.size();
     }

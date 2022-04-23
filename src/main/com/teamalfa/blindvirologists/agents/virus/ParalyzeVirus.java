@@ -2,6 +2,7 @@ package main.com.teamalfa.blindvirologists.agents.virus;
 
 import main.com.teamalfa.blindvirologists.agents.genetic_code.ParalyzeCode;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 
 public class ParalyzeVirus extends Virus {
 
@@ -9,6 +10,8 @@ public class ParalyzeVirus extends Virus {
         priority = 2;
         expiry = duration = 5;
         geneticCode = new ParalyzeCode();
+
+        TurnHandler.getInstance().accept(this);
     }
 
     /**

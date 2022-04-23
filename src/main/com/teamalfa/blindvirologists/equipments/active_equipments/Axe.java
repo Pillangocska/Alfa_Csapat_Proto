@@ -1,5 +1,6 @@
 package main.com.teamalfa.blindvirologists.equipments.active_equipments;
 
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 public class Axe extends ActiveEquipment{
@@ -8,6 +9,8 @@ public class Axe extends ActiveEquipment{
     public Axe() {
         usetime = 1;
         blunt = false;
+
+        TurnHandler.getInstance().accept(this);
     }
 
     /**

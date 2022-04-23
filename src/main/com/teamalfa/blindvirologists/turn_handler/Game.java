@@ -28,13 +28,27 @@ public class Game implements Steppable{
 
     public void endGame(ArrayList<Virologist> winners) {}
 
+    /**
+     * Adds the virologist to the bears.
+     * @param v The virologist that turned into a bear.
+     */
     public void accept(Virologist v) {
         bears.add(v);
     }
 
+    /**
+     * Removes the virologist from the bears.
+     * @param v The bear that died.
+     */
     public void remove(Virologist v) {
         bears.remove(v);
     }
+
+    /**
+     * Controls the bears.
+     * Every bear steps into a new field, they infect every virologist on said field
+     * with bearvirus, then if they are inside a store they destroy every element in there.
+     */
 
     public void controlBears() {
         for (Virologist bear : bears) {
@@ -47,6 +61,9 @@ public class Game implements Steppable{
         }
     }
 
+    /**
+     * Calls the controlbears method.
+     */
     public void step() {
         controlBears();
     }

@@ -1,6 +1,7 @@
 package main.com.teamalfa.blindvirologists.equipments.active_equipments;
 
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 public class Gloves extends ActiveEquipment {
@@ -11,6 +12,8 @@ public class Gloves extends ActiveEquipment {
         cooldownDuration = 3;
         usetime = 3;
         cooldown = 0;
+
+        TurnHandler.getInstance().accept(this);
     }
 
     //setters
@@ -45,6 +48,7 @@ public class Gloves extends ActiveEquipment {
     public void wornOut() {
         virologist.removeWorn(this);
         virologist.removeActive(this);
+        TurnHandler.getInstance().remove(this);
     }
 
     /**

@@ -1,6 +1,7 @@
 package main.com.teamalfa.blindvirologists.agents;
 
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 public class Vaccine extends Agent {
@@ -8,6 +9,8 @@ public class Vaccine extends Agent {
     public Vaccine(GeneticCode geneticcode) {
         expiry = duration = 5;
         this.geneticCode = geneticcode;
+
+        TurnHandler.getInstance().accept(this);
     }
 
     /**
@@ -28,11 +31,15 @@ public class Vaccine extends Agent {
     public void step() {
         if(expiry > 0 && target.getBackpack().getAgentPocket().getAgentHolder().contains(this))
             expiry--;
-        else if(expiry == 0 && target.getBackpack().getAgentPocket().getAgentHolder().contains(this))
+        else if(expiry == 0 && target.getBackpack().getAgentPocket().getAgentHolder().contains(this)) {
             target.getBackpack().getAgentPocket().getAgentHolder().remove(this);
+            TurnHandler.getInstance().remove(this);
+        }
         else if(duration > 0 && target.getProtectionBank().contains(geneticCode))
             duration--;
-        else if(duration == 0 && target.getProtectionBank().contains(geneticCode))
-            target.getProtectionBank().remove(geneticCode);
+        else if(duration == 0 && target.getProtectionBank().contains(geneticCode)) {
+            target.removeVaccine(this);
+            TurnHandler.getInstance().remove(this);
+        }
     }
 }
