@@ -1,7 +1,6 @@
 package main.com.teamalfa.blindvirologists.virologist;
 
 import main.com.teamalfa.blindvirologists.agents.Agent;
-import main.com.teamalfa.blindvirologists.agents.GeneticCodeBank;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
@@ -184,7 +183,7 @@ public class Virologist {
     }
 
     /**
-     * This method is called when the virologist steps on a new field and choses to explore it.
+     * This method is called when the virologist steps on a new field and chooses to explore it.
      * It calls the current field's searchedBy method.
      */
     public void search() {
@@ -211,11 +210,6 @@ public class Virologist {
     public void addVirus(Virus virus) {
         activeViruses.add(virus);
         sortViruses();
-    }
-
-    private boolean checkRobbable() {
-        //todo ilyet sehol se használunk
-        return true;
     }
 
     /**
