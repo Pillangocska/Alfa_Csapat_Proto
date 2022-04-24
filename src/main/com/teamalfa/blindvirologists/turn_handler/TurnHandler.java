@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TurnHandler {
-    private static TurnHandler instance = null;
+    private static TurnHandler instance;
     private final ArrayList<Steppable> steppables;
     private ArrayList<Virologist> order;
     private Virologist activeVirologist; // the virologist, who's turn is active

@@ -17,10 +17,12 @@ public class StoreHouse extends Field {
      */
     @Override
     public void searchedBy(Virologist virologist) {
-        //todo
+        virologist.getBackpack().add(this.elements);
     }
 
-    //setter
+    /**
+     * setter
+     */
     public void setElements(ElementBank elements) {
         this.elements = elements;
     }

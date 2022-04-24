@@ -13,7 +13,7 @@ public class Laboratory extends Field{
      */
     @Override
     public void searchedBy(Virologist virologist) {
-        //todo
+        virologist.getBackpack().add(this.geneticCode);
     }
 
     /**

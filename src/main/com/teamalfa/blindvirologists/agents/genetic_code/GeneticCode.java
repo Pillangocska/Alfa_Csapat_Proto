@@ -23,6 +23,6 @@ abstract public class GeneticCode {
 
         // now it's safe to cast
         GeneticCode code = (GeneticCode) obj;
-        return code.getType() == type;
+        return code.getType().equals(type);
     }
 }
