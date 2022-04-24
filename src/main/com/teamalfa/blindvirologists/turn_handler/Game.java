@@ -26,7 +26,9 @@ public class Game implements Steppable{
         return instance;
     }
 
-    public void startGame() {}
+    public void startGame() {
+
+    }
 
     public void endGame(ArrayList<Virologist> winners) {}
 

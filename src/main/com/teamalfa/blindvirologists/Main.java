@@ -1,13 +1,16 @@
 package main.com.teamalfa.blindvirologists;
 
+import main.com.teamalfa.blindvirologists.city.City;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 import main.com.teamalfa.blindvirologists.turn_handler.Game;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
+import java.io.Console;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Controller controller = new Controller();
 
         System.out.println("Would you like to play the game or run tests?");
