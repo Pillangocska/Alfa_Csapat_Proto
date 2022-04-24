@@ -395,9 +395,24 @@ public class ControllerRefactor {
 
         Field field = virologist.getField();
         String fieldId = getObjectId(field, fieldHashMap);
+        String fieldType = getFieldTypeBasedOnId(fieldId);
 
+        boolean successful = false;
+        String geneticCodeId = "null";
 
+        if(fieldType.equals("Laboratory")) {
+            Laboratory laboratory = (Laboratory)field;
+            GeneticCode geneticCode = laboratory.getGeneticCode();
+            geneticCodeId = getObjectId(geneticCode, geneticCodeHashMap);
+            successful = virologist.learn(geneticCode);
+        }
 
+        // print result
+        System.out.println("Genetic code learned:");
+        System.out.println("Virologist:" + virologistId);
+        System.out.println("Field: " + fieldId);
+        System.out.println("GeneticCode: " + geneticCodeId );
+        System.out.println("Result: " + (successful ? "Successful" : "Failed"));
     }
 
     private void useEquipment(ArrayList<String> input) {
@@ -523,7 +538,7 @@ public class ControllerRefactor {
 
     private void printStatus(Field field) {
         String id = getObjectId(field, fieldHashMap);
-        String type = getFieldTypeBasedOnPrefix(id.replaceAll("\\d", "").toLowerCase());
+        String type = getFieldTypeBasedOnId(id);
 
         GeneticCode geneticCode = null; String geneticText = "null";
         ArrayList<Equipment> equipments = null; String equipmentText = "null";

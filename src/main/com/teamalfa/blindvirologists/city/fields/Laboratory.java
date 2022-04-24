@@ -13,22 +13,17 @@ public class Laboratory extends Field{
      */
     @Override
     public void searchedBy(Virologist virologist) {
-        virologist.getBackpack().add(this.geneticCode);
+        //todo
     }
 
-    /**
-     * Adds the virologist to the field, sets the field as the virologist's field
-     * The genetic code infects them.
-     * @param virologist The virologist that's stepped on the field.
-     */
     @Override
-    public void accept(Virologist virologist) {
-        virologists.add(virologist);
-        virologist.setField(this);
-        geneticCode.autoInfect(virologist);
+    public void accept(Virologist v) {
+        super.accept(v);
+        if(geneticCode != null) {
+            geneticCode.autoInfect(v);
+        }
     }
 
-    //setter, getter
     public void setGeneticCode(GeneticCode geneticCode) {
         this.geneticCode = geneticCode;
     }
