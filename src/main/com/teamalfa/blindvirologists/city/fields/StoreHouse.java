@@ -23,6 +23,9 @@ public class StoreHouse extends Field {
     public void setElements(ElementBank elements) {
         this.elements = elements;
     }
+    public ElementBank getElements() {
+        return elements;
+    }
 
     public void destroy() {
        elements.removeAll();

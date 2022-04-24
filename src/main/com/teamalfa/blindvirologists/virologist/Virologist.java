@@ -105,6 +105,7 @@ public class Virologist {
                 SafeHouse safeHouse = (SafeHouse) field;
                 if(safeHouse.getEquipments().contains(equipment)){
                     if(backpack.add(equipment)) {
+                        equipment.setVirologist(this);
                         return true;
                     }
                 }
@@ -318,7 +319,7 @@ public class Virologist {
         }
     }
 
-    private boolean isParalyzed(){
+    public boolean isParalyzed(){
         return !activeViruses.isEmpty() ? activeViruses.get(0).affectUsage() : false;
     }
 

@@ -78,10 +78,6 @@ public class Backpack {
         return (ElementBank) elementBank;
     }
 
-    public ArrayList<Object> getAgents() {
-        return agentPocket.getAgentHolder();
-    }
-
     public void setElementBank(ElementBank elementBank) {
         this.elementBank = elementBank;
     }

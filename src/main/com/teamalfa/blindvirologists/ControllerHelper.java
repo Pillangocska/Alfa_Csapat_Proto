@@ -9,6 +9,7 @@ import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,6 +44,8 @@ public class ControllerHelper {
     }
 
     public static <T> T handleDoesNotExistError(String idToCheck, HashMap<String, T> hashMap) {
+        if(idToCheck == null)
+            ErrorPrinter.printError("Missing object id.");
         T objectFound = hashMap.get(idToCheck);
         if(objectFound == null)
             ErrorPrinter.doesntExistError(idToCheck);
@@ -163,6 +166,26 @@ public class ControllerHelper {
     public static <T> String joinWithComma(ArrayList<T> objects, HashMap<String, T> hashMap) {
         return String.join(", ",getManyObjectIds(objects, hashMap));
     }
+
+    public static <T> ArrayList<T> createSuperArrayList(ArrayList<? extends T> list) {
+        ArrayList<T> listToReturn = new ArrayList<>();
+        for(T object : list)
+            listToReturn.add(object);
+
+        return listToReturn;
+    }
+
+    public static String getFieldTypeBasedOnPrefix(String prefix) {
+        String type;
+        switch (prefix) {
+            case "l":  type = "Laboratory"; break;
+            case "st": type = "StoreHouse"; break;
+            case "sa": type = "SafeHouse"; break;
+            default: type = "Field";
+        }
+        return type;
+    }
+
     public static boolean printHelp(ArrayList<String> input) {
         if(input.size() == 2 && input.get(1).equals("help")) {
             String helpMsg;
