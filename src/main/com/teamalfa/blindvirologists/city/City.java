@@ -42,7 +42,7 @@ public class City {
      * ctr
      */
     private City() {
-        this.GenerateMap();
+        //this.GenerateMap();
         allEquipment.add(new Gloves());
         allEquipment.add(new Axe());
         allEquipment.add(new Cloak());
@@ -56,10 +56,10 @@ public class City {
     //todo meg nem jo indexoutofrangeexception
     public void GenerateMap() {
         Random random = new Random();
-        int numberOfFields = random.nextInt(30-5+1)+5;
-        int numberOfLabs = random.nextInt(20-3+1)+3;
-        int numberOfStoreH = random.nextInt(25-5+1)+5;
-        int numberOfSafeH = random.nextInt(15-2+1)+2;
+        int numberOfFields = random.nextInt(200-5+1)+5;
+        int numberOfLabs = random.nextInt(50-3+1)+3;
+        int numberOfStoreH = random.nextInt(80-5+1)+5;
+        int numberOfSafeH = random.nextInt(50-2+1)+2;
         //Generating field numbers
         for(int i = 0; i < numberOfFields; i++){
             this.allFields.add(new Field());
@@ -113,8 +113,8 @@ public class City {
             //One field gets 1 to 5 normal field neighbours
             int numberOfFieldNeighbours = random.nextInt(5-1+1)+1;
             for(int j = 0; j < numberOfFieldNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfFields + 1);
-                if(!(allFields.get(i).getNeighbours().contains(this.allFields.get(addIndex))) && i != addIndex) {
+                int addIndex = random.nextInt(numberOfFields + 1)-1;
+                if(!(allFields.get(i).getNeighbours().contains(this.allFields.get(1))) && i != addIndex) {
                     this.allFields.get(i).setNeighbour(this.allFields.get(addIndex));
                     this.allFields.get(addIndex).setNeighbour(this.allFields.get(i));
                 }
@@ -122,8 +122,8 @@ public class City {
             //0 to 2 Laboratories
             int numberOfLabNeighbours = random.nextInt(2+1);
             for(int j = 0; j < numberOfLabNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfLabs+1);
-                if(!(this.allFields.get(i).getNeighbours().contains(this.allLaboratories.get(addIndex)))) {
+                int addIndex = random.nextInt(numberOfLabs-1+1)+1;//ezzel
+                if(!(this.allFields.get(i).getNeighbours().contains(this.allLaboratories.get(1)))) {
                     this.allFields.get(i).setNeighbour(this.allLaboratories.get(addIndex));
                     this.allLaboratories.get(addIndex).setNeighbour(this.allFields.get(i));
                 }
@@ -131,8 +131,8 @@ public class City {
             //0 to 2 SafeHouses
             int numberOfSafeHNeighbours = random.nextInt(2+1);
             for(int j = 0; j < numberOfSafeHNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfSafeH+1);
-                if(!(this.allFields.get(i).getNeighbours().contains(this.allSafeHouses.get(addIndex)))) {
+                int addIndex = random.nextInt(numberOfSafeH+1)-1;
+                if(!(this.allFields.get(i).getNeighbours().contains(this.allSafeHouses.get(1)))) {
                     this.allFields.get(i).setNeighbour(this.allSafeHouses.get(addIndex));
                     this.allSafeHouses.get(addIndex).setNeighbour(this.allFields.get(i));
                 }
@@ -140,10 +140,10 @@ public class City {
             //0 to 3 StoreHouses
             int numberOfStoreHNeighbours = random.nextInt(3+1);
             for(int j = 0; j < numberOfStoreHNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfStoreH+1);
-                if(!(this.allFields.get(i).getNeighbours().contains(this.allStoreHouses.get(addIndex)))) {
-                    this.allFields.get(i).setNeighbour(this.allStoreHouses.get(addIndex));
-                    this.allStoreHouses.get(addIndex).setNeighbour(this.allFields.get(i));
+                int addIndex = random.nextInt(numberOfStoreH+1)-1;
+                if(!(this.allFields.get(i).getNeighbours().contains(this.allStoreHouses.get(1)))) {//addIndex 1 re
+                    this.allFields.get(i).setNeighbour(this.allStoreHouses.get(1));
+                    this.allStoreHouses.get(1).setNeighbour(this.allFields.get(i));
                 }
             }
         }
@@ -152,7 +152,7 @@ public class City {
             //1 to 5 field neighbours
             int numberOfFieldNeighbours = random.nextInt(5-1+1)+1;
             for(int j = 0; j < numberOfFieldNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfFields + 1);
+                int addIndex = random.nextInt(numberOfFields + 1)-1;
                 if(!(allLaboratories.get(i).getNeighbours().contains(this.allFields.get(addIndex)))) {
                     this.allLaboratories.get(i).setNeighbour(this.allFields.get(addIndex));
                     this.allFields.get(addIndex).setNeighbour(this.allLaboratories.get(i));
@@ -161,7 +161,7 @@ public class City {
             //0 to 2 Laboratories
             int numberOfLabNeighbours = random.nextInt(2+1);
             for(int j = 0; j < numberOfLabNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfLabs+1);
+                int addIndex = random.nextInt(numberOfLabs+1)-1;
                 if(!(this.allLaboratories.get(i).getNeighbours().contains(this.allLaboratories.get(addIndex))) && i != addIndex) {
                     this.allLaboratories.get(i).setNeighbour(this.allLaboratories.get(addIndex));
                     this.allLaboratories.get(addIndex).setNeighbour(this.allLaboratories.get(i));
@@ -170,7 +170,7 @@ public class City {
             //0 to 2 SafeHouses
             int numberOfSafeHNeighbours = random.nextInt(2+1);
             for(int j = 0; j < numberOfSafeHNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfSafeH+1);
+                int addIndex = random.nextInt(numberOfSafeH+1)-1;
                 if(!(this.allLaboratories.get(i).getNeighbours().contains(this.allSafeHouses.get(addIndex)))) {
                     this.allLaboratories.get(i).setNeighbour(this.allSafeHouses.get(addIndex));
                     this.allSafeHouses.get(addIndex).setNeighbour(this.allLaboratories.get(i));
@@ -179,7 +179,7 @@ public class City {
             //0 to 3 StoreHouses
             int numberOfStoreHNeighbours = random.nextInt(3+1);
             for(int j = 0; j < numberOfStoreHNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfStoreH+1);
+                int addIndex = random.nextInt(numberOfStoreH+1)-1;
                 if(!(this.allLaboratories.get(i).getNeighbours().contains(this.allStoreHouses.get(addIndex)))) {
                     this.allLaboratories.get(i).setNeighbour(this.allStoreHouses.get(addIndex));
                     this.allStoreHouses.get(addIndex).setNeighbour(this.allLaboratories.get(i));
@@ -191,7 +191,7 @@ public class City {
             //1 to 5 field neighbours
             int numberOfFieldNeighbours = random.nextInt(5-1+1)+1;
             for(int j = 0; j < numberOfFieldNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfFields + 1);
+                int addIndex = random.nextInt(numberOfFields + 1)-1;
                 if(!(allSafeHouses.get(i).getNeighbours().contains(this.allFields.get(addIndex)))) {
                     this.allSafeHouses.get(i).setNeighbour(this.allFields.get(addIndex));
                     this.allFields.get(addIndex).setNeighbour(this.allSafeHouses.get(i));
@@ -200,7 +200,7 @@ public class City {
             //0 to 2 Laboratories
             int numberOfLabNeighbours = random.nextInt(2+1);
             for(int j = 0; j < numberOfLabNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfLabs+1);
+                int addIndex = random.nextInt(numberOfLabs+1)-1;
                 if(!(this.allSafeHouses.get(i).getNeighbours().contains(this.allLaboratories.get(addIndex)))) {
                     this.allSafeHouses.get(i).setNeighbour(this.allLaboratories.get(addIndex));
                     this.allLaboratories.get(addIndex).setNeighbour(this.allSafeHouses.get(i));
@@ -209,7 +209,7 @@ public class City {
             //0 to 2 SafeHouses
             int numberOfSafeHNeighbours = random.nextInt(2+1);
             for(int j = 0; j < numberOfSafeHNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfSafeH+1);
+                int addIndex = random.nextInt(numberOfSafeH+1)-1;
                 if(!(this.allSafeHouses.get(i).getNeighbours().contains(this.allSafeHouses.get(addIndex))) && i != addIndex ) {
                     this.allSafeHouses.get(i).setNeighbour(this.allSafeHouses.get(addIndex));
                     this.allSafeHouses.get(addIndex).setNeighbour(this.allSafeHouses.get(i));
@@ -218,7 +218,7 @@ public class City {
             //0 to 3 StoreHouses
             int numberOfStoreHNeighbours = random.nextInt(3+1);
             for(int j = 0; j < numberOfStoreHNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfStoreH+1);
+                int addIndex = random.nextInt(numberOfStoreH+1)-1;
                 if(!(this.allSafeHouses.get(i).getNeighbours().contains(this.allStoreHouses.get(addIndex)))) {
                     this.allSafeHouses.get(i).setNeighbour(this.allStoreHouses.get(addIndex));
                     this.allStoreHouses.get(addIndex).setNeighbour(this.allSafeHouses.get(i));
@@ -230,7 +230,7 @@ public class City {
             //1 to 5 field neighbours
             int numberOfFieldNeighbours = random.nextInt(5-1+1)+1;
             for(int j = 0; j < numberOfFieldNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfFields + 1);
+                int addIndex = random.nextInt(numberOfFields + 1)-1;
                 if(!(allStoreHouses.get(i).getNeighbours().contains(this.allFields.get(addIndex)))) {
                     this.allStoreHouses.get(i).setNeighbour(this.allFields.get(addIndex));
                     this.allFields.get(addIndex).setNeighbour(this.allStoreHouses.get(i));
@@ -239,7 +239,7 @@ public class City {
             //0 to 2 Laboratories
             int numberOfLabNeighbours = random.nextInt(2+1);
             for(int j = 0; j < numberOfLabNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfLabs+1);
+                int addIndex = random.nextInt(numberOfLabs+1)-1;
                 if(!(this.allStoreHouses.get(i).getNeighbours().contains(this.allLaboratories.get(addIndex)))) {
                     this.allStoreHouses.get(i).setNeighbour(this.allLaboratories.get(addIndex));
                     this.allLaboratories.get(addIndex).setNeighbour(this.allStoreHouses.get(i));
@@ -248,7 +248,7 @@ public class City {
             //0 to 2 SafeHouses
             int numberOfSafeHNeighbours = random.nextInt(2+1);
             for(int j = 0; j < numberOfSafeHNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfSafeH+1);
+                int addIndex = random.nextInt(numberOfSafeH+1)-1;
                 if(!(this.allStoreHouses.get(i).getNeighbours().contains(this.allSafeHouses.get(addIndex))) && i != addIndex ) {
                     this.allStoreHouses.get(i).setNeighbour(this.allSafeHouses.get(addIndex));
                     this.allSafeHouses.get(addIndex).setNeighbour(this.allStoreHouses.get(i));
@@ -257,7 +257,7 @@ public class City {
             //0 to 3 StoreHouses
             int numberOfStoreHNeighbours = random.nextInt(3+1);
             for(int j = 0; j < numberOfStoreHNeighbours; j++) {
-                int addIndex = random.nextInt(numberOfStoreH+1);
+                int addIndex = random.nextInt(numberOfStoreH+1)-1;
                 if(!(this.allStoreHouses.get(i).getNeighbours().contains(this.allStoreHouses.get(addIndex)))&& i != addIndex) {
                     this.allStoreHouses.get(i).setNeighbour(this.allStoreHouses.get(addIndex));
                     this.allStoreHouses.get(addIndex).setNeighbour(this.allStoreHouses.get(i));
