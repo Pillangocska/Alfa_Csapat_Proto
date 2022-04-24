@@ -1,5 +1,6 @@
 package main.com.teamalfa.blindvirologists.virologist;
 
+import main.com.teamalfa.blindvirologists.ControllerHelper;
 import main.com.teamalfa.blindvirologists.agents.Agent;
 import main.com.teamalfa.blindvirologists.agents.GeneticCodeBank;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
@@ -7,14 +8,18 @@ import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
 import main.com.teamalfa.blindvirologists.agents.virus.VirusComparator;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
+import main.com.teamalfa.blindvirologists.city.fields.SafeHouse;
 import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.ActiveEquipment;
 import main.com.teamalfa.blindvirologists.turn_handler.Game;
 import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.backpack.Backpack;
+import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class Virologist {
     private ArrayList<GeneticCode> protectionBank;
@@ -29,13 +34,17 @@ public class Virologist {
         activeViruses = new ArrayList<>();
         backpack = new Backpack(this);
 
-        TurnHandler.getInstance().accept(this);
+        TurnHandler.accept(this);
     }
 
 
 
     //getters setters
 
+
+    public ArrayList<GeneticCode> getProtectionBank() {
+        return protectionBank;
+    }
     public Field getField() {
         return field;
     }
@@ -46,11 +55,6 @@ public class Virologist {
     public Backpack getBackpack() {
         return backpack;
     }
-
-    //todo
-    public void startTurn() {}
-    //todo
-    private void endTurn() {}
 
     /**
      * The method is called when the virologist moves to another field,
@@ -72,11 +76,6 @@ public class Virologist {
         field = destination;
     }
 
-    /**
-     * Calls the equipment's use method.
-     * @param a The equipment that's being used.
-     * @param v The virologist that the wuipment needs to be used on.
-     */
     public void use(ActiveEquipment a, Virologist v) {
         a.use(v);
     }
@@ -107,6 +106,20 @@ public class Virologist {
             }
             backpack.add(gc);
             return true;
+        }
+        return false;
+    }
+
+    public boolean pickUpEquipment(Equipment equipment) {
+        if(!isParalyzed()) {
+            if(field.canChangeEquipment()) {
+                SafeHouse safeHouse = (SafeHouse) field;
+                if(safeHouse.getEquipments().contains(equipment)){
+                    if(backpack.add(equipment)) {
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }
@@ -272,6 +285,7 @@ public class Virologist {
     public ArrayList<Equipment> getWornEquipment() {
         return wornEquipment;
     }
+    public ArrayList<ActiveEquipment> getActiveEquipments() { return  activeEquipments; }
 
     /**
      * Calls the field's (the one the virologist is currently standing on) destroy method.
@@ -336,6 +350,10 @@ public class Virologist {
         }
     }
 
+    private boolean isParalyzed(){
+        return !activeViruses.isEmpty() ? activeViruses.get(0).affectUsage() : false;
+    }
+
     /**
      * Calls the field's (the one the virologist is currently standing on searchforvirologists method)
      * @return the method.
@@ -348,4 +366,5 @@ public class Virologist {
     public ArrayList<GeneticCode> getProtectionBank() {
         return protectionBank;
     }
+
 }
