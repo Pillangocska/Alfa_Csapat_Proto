@@ -18,7 +18,10 @@ public class Laboratory extends Field{
 
     @Override
     public void accept(Virologist v) {
-        geneticCode.autoInfect(v);
+        super.accept(v);
+        if(geneticCode != null) {
+            geneticCode.autoInfect(v);
+        }
     }
 
     public void setGeneticCode(GeneticCode geneticCode) {

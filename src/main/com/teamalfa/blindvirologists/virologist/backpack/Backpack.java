@@ -70,6 +70,8 @@ public class Backpack {
 
     public AgentPocket getAgentPocket() { return agentPocket; }
 
+    public GeneticCodePocket getGeneticCodePocket() { return geneticCodePocket;}
+
     public void deleteAllGeneticCodes() {
         geneticCodePocket.deleteAll();
     }

@@ -175,8 +175,9 @@ public class ControllerHelper {
         return listToReturn;
     }
 
-    public static String getFieldTypeBasedOnPrefix(String prefix) {
-        String type;
+    public static String getFieldTypeBasedOnId(String id) {
+        String prefix = id.replaceAll("\\d", "").toLowerCase();
+        String type = "";
         switch (prefix) {
             case "l":  type = "Laboratory"; break;
             case "st": type = "StoreHouse"; break;
