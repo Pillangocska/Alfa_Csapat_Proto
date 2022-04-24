@@ -48,19 +48,8 @@ public class ControllerRefactor {
     }
 
     private void initIdCounter(){
-        idCounter.put("F", 0); // field
-        idCounter.put("L", 0); // laboratory
-        idCounter.put("ST", 0); // storehouse
-        idCounter.put("SA", 0); // safe house
-
-        idCounter.put("V", 0); // virologist
-        idCounter.put("B", 0); // backpack
-
-        idCounter.put("EB", 0); // element bank
-        idCounter.put("GC", 0); // genetic code
-        idCounter.put("A", 0); // agent
-
-        idCounter.put("E", 0); // equipment
+        for(Prefixes prefix : Prefixes.values())
+            idCounter.put(prefix.toString(), 0);
     }
 
     public void startProgram() {
@@ -78,7 +67,7 @@ public class ControllerRefactor {
         try{
             if(!printHelp(input)){
                 // get command if not empty
-                String command = (input.isEmpty()) ? "" : input.remove(0);
+                String command = getNextArgument(input);
 
                 switch(command.toLowerCase()){
                     case "createfield": createField(input); break;
@@ -130,10 +119,10 @@ public class ControllerRefactor {
         String idPrefix = "";
 
         switch (type) {
-            case "field": field = new Field(); idPrefix = "F"; break;
-            case "laboratory": field = new Laboratory(); idPrefix = "L";  break;
-            case "storehouse": field = new StoreHouse(); idPrefix = "ST"; break;
-            case "safehouse": field = new SafeHouse(); idPrefix = "SA"; break;
+            case "field": field = new Field(); idPrefix = Prefixes.Field.toString(); break;
+            case "laboratory": field = new Laboratory(); idPrefix = Prefixes.Laboratory.toString();  break;
+            case "storehouse": field = new StoreHouse(); idPrefix = Prefixes.StoreHouse.toString(); break;
+            case "safehouse": field = new SafeHouse(); idPrefix = Prefixes.SafeHouse.toString(); break;
             default: handleWrongTypeError(type, FIELD_TYPES);
         }
 
@@ -153,7 +142,7 @@ public class ControllerRefactor {
         String fieldId = "";
 
         // Check if field is exists
-        fieldId = handleWrongArgumentCountError(0,1, input);
+        fieldId = getNextArgument(input);
         field = handleDoesNotExistError(fieldId, fieldHashMap);
 
         // create virologist and position on given field
@@ -162,8 +151,8 @@ public class ControllerRefactor {
         field.accept(virologist);
 
         // register objects and get ids
-        String virologistId = registerObject(virologist, virologistHashMap, idCounter, "V");
-        String backpackId = registerObject(backpack, backpackHashMap, idCounter, "B");
+        String virologistId = registerObject(virologist, virologistHashMap, idCounter, Prefixes.Virologist.toString());
+        String backpackId = registerObject(backpack, backpackHashMap, idCounter, Prefixes.Backpack.toString());
 
         // print creation
         System.out.println("Virologist created:");
@@ -189,17 +178,17 @@ public class ControllerRefactor {
         String storeHouseId = ""; StoreHouse storeHouse = null;
 
         if(flag.equals("-v")) {
-            virologistId = !input.isEmpty() ? input.remove(0) : "";
+            virologistId = getNextArgument(input);
             virologist = handleDoesNotExistError(virologistId, virologistHashMap);
             virologist.getBackpack().setElementBank(elementBank);
         }else {
-            storeHouseId = !input.isEmpty() ? input.remove(0) : "";
+            storeHouseId = getNextArgument(input);
             storeHouse = (StoreHouse) handleDoesNotExistError(storeHouseId, fieldHashMap);
             storeHouse.setElements(elementBank);
         }
 
         // register object
-        String elementId = registerObject(elementBank, elementBankHashMap, idCounter, "EB");
+        String elementId = registerObject(elementBank, elementBankHashMap, idCounter, Prefixes.ElementBank.toString());
         String destination = virologistId.isEmpty() ? storeHouseId : virologistId;
 
         // print creation
@@ -241,7 +230,7 @@ public class ControllerRefactor {
             safeHouse.add(equipment);
         }
 
-        String equipmentId = registerObject(equipment, equipmentHashMap, idCounter, "E");
+        String equipmentId = registerObject(equipment, equipmentHashMap, idCounter, Prefixes.Equipment.toString());
         String destination = virologistId.isEmpty() ? safeHouseId : virologistId;
 
         // print creation
@@ -284,7 +273,7 @@ public class ControllerRefactor {
         }
 
         // register object
-        String geneticCodeId = registerObject(geneticCode, geneticCodeHashMap, idCounter, "GC");
+        String geneticCodeId = registerObject(geneticCode, geneticCodeHashMap, idCounter, Prefixes.GeneticCode.toString());
         String destination = virologistId.isEmpty() ? laboratoryId : virologistId;
 
         // print creation
@@ -329,7 +318,7 @@ public class ControllerRefactor {
         boolean successful = virologist.getBackpack().getAgentPocket().addAgent(agent);
 
         // register object
-        String agentID = registerObject(agent, agentHashMap, idCounter, "A");
+        String agentID = registerObject(agent, agentHashMap, idCounter, Prefixes.Agent.toString());
 
         // print creation
         System.out.println("Agent created:");
