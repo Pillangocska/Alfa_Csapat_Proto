@@ -1,11 +1,14 @@
 package main.com.teamalfa.blindvirologists.virologist;
 
+import main.com.teamalfa.blindvirologists.ControllerHelper;
 import main.com.teamalfa.blindvirologists.agents.Agent;
+import main.com.teamalfa.blindvirologists.agents.GeneticCodeBank;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
 import main.com.teamalfa.blindvirologists.agents.virus.VirusComparator;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
+import main.com.teamalfa.blindvirologists.city.fields.SafeHouse;
 import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.ActiveEquipment;
 import main.com.teamalfa.blindvirologists.turn_handler.Game;
@@ -13,8 +16,10 @@ import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.backpack.Backpack;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class Virologist {
     private ArrayList<GeneticCode> protectionBank;
@@ -29,13 +34,17 @@ public class Virologist {
         activeViruses = new ArrayList<>();
         backpack = new Backpack(this);
 
-        TurnHandler.getInstance().accept(this);
+        TurnHandler.accept(this);
     }
 
 
 
     //getters setters
 
+
+    public ArrayList<GeneticCode> getProtectionBank() {
+        return protectionBank;
+    }
     public Field getField() {
         return field;
     }
@@ -46,11 +55,6 @@ public class Virologist {
     public Backpack getBackpack() {
         return backpack;
     }
-
-    //todo
-    public void startTurn() {}
-    //todo
-    private void endTurn() {}
 
     /**
      * The method is called when the virologist moves to another field,
@@ -72,11 +76,6 @@ public class Virologist {
         field = destination;
     }
 
-    /**
-     * Calls the equipment's use method.
-     * @param a The equipment that's being used.
-     * @param v The virologist that the wuipment needs to be used on.
-     */
     public void use(ActiveEquipment a, Virologist v) {
         a.use(v);
     }
@@ -88,25 +87,28 @@ public class Virologist {
      * @param v The virologist the agent is used on.
      */
     public void use(Agent a, Virologist v){
-        if (a != null && !checkUsageAffect()){
+        if (a != null && !checkUsageAffect())
             a.apply(v);
-            backpack.getAgentPocket().removeAgent(a);
-        }
     }
 
-    /**
-     * Learns the genetic code that's on the laboratory's wall.
-     * @param gc The genetic that's on the laboratory's wall.
-     * @return True if it was learned, false otherwise.
-     */
     public boolean learn(GeneticCode gc) {
         if(!(this.checkUsageAffect())) {
-            for(GeneticCode geneticCode: backpack.getGeneticCodePocket().getGeneticCodes()) {
-                if((gc.equals(geneticCode)))
-                    return false;
-            }
             backpack.add(gc);
             return true;
+        }
+        return false;
+    }
+
+    public boolean pickUpEquipment(Equipment equipment) {
+        if(!isParalyzed()) {
+            if(field.canChangeEquipment()) {
+                SafeHouse safeHouse = (SafeHouse) field;
+                if(safeHouse.getEquipments().contains(equipment)){
+                    if(backpack.add(equipment)) {
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }
@@ -184,7 +186,7 @@ public class Virologist {
     }
 
     /**
-     * This method is called when the virologist steps on a new field and chooses to explore it.
+     * This method is called when the virologist steps on a new field and choses to explore it.
      * It calls the current field's searchedBy method.
      */
     public void search() {
@@ -211,6 +213,11 @@ public class Virologist {
     public void addVirus(Virus virus) {
         activeViruses.add(virus);
         sortViruses();
+    }
+
+    private boolean checkRobbable() {
+        //todo ilyet sehol se használunk
+        return true;
     }
 
     /**
@@ -258,8 +265,6 @@ public class Virologist {
         Collections.sort(activeViruses, new VirusComparator());
     }
 
-
-    //getters
     public ArrayList<Virus> getViruses() {
         return activeViruses;
     }
@@ -267,17 +272,12 @@ public class Virologist {
     public ArrayList<Equipment> getWornEquipment() {
         return wornEquipment;
     }
+    public ArrayList<ActiveEquipment> getActiveEquipments() { return  activeEquipments; }
 
-    /**
-     * Calls the field's (the one the virologist is currently standing on) destroy method.
-     */
     public void destroy() {
         field.destroy();
     }
 
-    /**
-     * Removes the virologist from the turnhandler or from the game.
-     */
     public void die() {
         if(TurnHandler.getInstance().GetOrder().contains(this)) {
             TurnHandler.getInstance().remove(this);
@@ -287,9 +287,6 @@ public class Virologist {
         }
     }
 
-    /**
-     * Turns the virologist into bear. Removes them from the turnhandler and gives them to the virologist.
-     */
     public void turntoBear() {
         if(!(Game.getInstance().getBears().contains(this))) {
             TurnHandler.getInstance().remove(this);
@@ -297,14 +294,8 @@ public class Virologist {
         }
     }
 
-    /**
-     * Tosses the equipment to the ground if they are not wearing it,
-     * and currently standing on a safehouse, and is not paralyzed.
-     * @param e The tossed equipment.
-     * @return true if it was successful, false otherwise.
-     */
     public boolean toss(Equipment e){
-        if(!(wornEquipment.contains(e) && checkUsageAffect())){
+        if(!(wornEquipment.contains(e))){
             Virologist v = backpack.getVirologist();
             Field f = v.getField();
             if(f.canChangeEquipment()){
@@ -316,14 +307,10 @@ public class Virologist {
         return false;
     }
 
-    /**
-     * Wears/unwears the equipment if they are not paralyzed and standing in a safehouse.
-     * @param e The toggled equipment.
-     */
     public void toggle(Equipment e){
         Virologist v = backpack.getVirologist();
         Field f = v.getField();
-        if(f.canChangeEquipment() && !(checkUsageAffect())){
+        if(f.canChangeEquipment()){
             if(wornEquipment.contains(e))
                 e.unEquip();
             else
@@ -331,17 +318,12 @@ public class Virologist {
         }
     }
 
-    /**
-     * Calls the field's (the one the virologist is currently standing on searchforvirologists method)
-     * @return the method.
-     */
-    public ArrayList<Virologist> searchForVirologist() {
-        return field.searchForVirologist(this);
+    private boolean isParalyzed(){
+        return !activeViruses.isEmpty() ? activeViruses.get(0).affectUsage() : false;
     }
 
-    //getter
-    public ArrayList<GeneticCode> getProtectionBank() {
-        return protectionBank;
+    public ArrayList<Virologist> searchForVirologist() {
+        return field.searchForVirologist();
     }
 
 }
