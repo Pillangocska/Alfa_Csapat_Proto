@@ -3,16 +3,15 @@ package main.com.teamalfa.blindvirologists;
 import main.com.teamalfa.blindvirologists.agents.Agent;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
+import main.com.teamalfa.blindvirologists.city.fields.Laboratory;
 import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.MissingResourceException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -177,7 +176,7 @@ public class ControllerHelper {
 //                case "createagent": createAgent(input); break;
 //                case "move": move(input); break;
 //                case "pickupequipment": pickUpEquipment(input); break;
-//                case "dropequipment": dropEquipment(input); break;
+//                case "dropequipment": dropEquipment(input); brea
 //                case "learngeneticcode": learnGeneticCode(input); break;
 //                case "useequipment": useEquipment(input); break;
 //                case "craftagent": craftAgent(input); break;
