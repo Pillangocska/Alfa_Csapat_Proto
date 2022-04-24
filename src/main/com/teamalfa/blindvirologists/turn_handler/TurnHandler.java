@@ -79,7 +79,7 @@ public class TurnHandler {
     }
 
 
-    public Virologist getActiveVirologist() {
+    public static Virologist getActiveVirologist() {
         return activeVirologist;
     }
 
