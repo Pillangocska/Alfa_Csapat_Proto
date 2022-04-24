@@ -1,12 +1,18 @@
 package main.com.teamalfa.blindvirologists;
 
+import main.com.teamalfa.blindvirologists.agents.Agent;
+import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
+import main.com.teamalfa.blindvirologists.equipments.Equipment;
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
+import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.MissingResourceException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -15,6 +21,7 @@ public class ControllerHelper {
     public static final ArrayList<String> GENETIC_CODES = new ArrayList<>(Arrays.asList("paralyze", "amnesia", "dance", "bear"));
     public static final ArrayList<String> FIELD_TYPES = new ArrayList<>(Arrays.asList("laboratory", "safehouse", "storehouse"));
     public static final ArrayList<String> EQUIPMENT_TYPES = new ArrayList<>(Arrays.asList("cloak", "axe", "bag", "gloves"));
+    public static final ArrayList<String> FIELD_PREFIXES = new ArrayList<>(Arrays.asList("F", "L", "ST", "SA"));
 
     public static ArrayList<String> getParametersUntilFirstDash(ArrayList<String> parameters) {
         // this method slices the parameters which are before a - flag.
@@ -132,6 +139,31 @@ public class ControllerHelper {
         return !input.isEmpty() ? input.remove(0) : null;
     }
 
+    public static <T> String getObjectId(T object, HashMap<String, T> hashMap) {
+        for(String id : hashMap.keySet())
+            if(hashMap.get(id) != null)
+                return id;
+
+        return null;
+    }
+
+    public static <T> ArrayList<String> getManyObjectIds(ArrayList<T> objects, HashMap<String, T> hashMap) {
+        ArrayList<String> idsToReturn = new ArrayList<>();
+        for(T object : objects)
+            idsToReturn.add(getObjectId(object, hashMap));
+        return idsToReturn;
+    }
+
+    public static Virologist handleCurrentVirologistError() {
+        Virologist virologist = TurnHandler.getActiveVirologist();
+        if(virologist == null)
+            ErrorPrinter.printError("There are no virologists yet.");
+        return virologist;
+    }
+
+    public static <T> String joinWithComma(ArrayList<T> objects, HashMap<String, T> hashMap) {
+        return String.join(", ",getManyObjectIds(objects, hashMap));
+    }
     public static boolean printHelp(ArrayList<String> input) {
         if(input.size() == 2 && input.get(1).equals("help")) {
             String helpMsg;

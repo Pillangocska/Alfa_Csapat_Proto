@@ -6,18 +6,13 @@ import java.util.ArrayList;
 
 public class TurnHandler {
     private static TurnHandler instance = null;
-    private final ArrayList<Steppable> steppables;
-    private ArrayList<Virologist> order;
-    private Virologist activeVirologist; // the virologist, who's turn is active
+    private static final ArrayList<Steppable> steppables = new ArrayList<>();
+    private static ArrayList<Virologist> order = new ArrayList<>();
+    private static Virologist activeVirologist; // the virologist, who's turn is active
 
     // Needed for singleton design pattern.
     static {
       instance = new TurnHandler();
-    }
-
-    private TurnHandler(){
-        steppables = new ArrayList<>();
-        order = new ArrayList<>();
     }
 
     public static TurnHandler getInstance() {
@@ -31,11 +26,13 @@ public class TurnHandler {
         }
     }
 
-    public void accept(Steppable steppable) {
+    public static void accept(Steppable steppable) {
         steppables.add(steppable);
     }
 
-    public void accept(Virologist virologist) {
+    public static void accept(Virologist virologist) {
+        if(order.isEmpty())
+            activeVirologist = virologist;
         order.add(virologist);
     }
 
@@ -55,7 +52,7 @@ public class TurnHandler {
 
     }
 
-    public Virologist getActiveVirologist() {
+    public static Virologist getActiveVirologist() {
         return activeVirologist;
     }
 
