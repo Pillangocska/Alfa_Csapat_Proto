@@ -91,9 +91,11 @@ public class Field {
     }
 
     public void setNeighbours(ArrayList<Field> neighbours) {
-        this.neighbours = neighbours;
-        for (Field neighbour : neighbours) {
-            neighbour.setNeighbour(this);
+        if(neighbours != null) {
+            this.neighbours = neighbours;
+            for (Field neighbour : neighbours) {
+                neighbour.setNeighbour(this);
+            }
         }
     }
 
