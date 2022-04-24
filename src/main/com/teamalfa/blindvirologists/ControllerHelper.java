@@ -3,12 +3,18 @@ package main.com.teamalfa.blindvirologists;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class ControllerHelper {
+
+    public static final ArrayList<String> GENETIC_CODES = new ArrayList<>(Arrays.asList("paralyze", "amnesia", "dance", "bear"));
+    public static final ArrayList<String> FIELD_TYPES = new ArrayList<>(Arrays.asList("laboratory", "safehouse", "storehouse"));
+    public static final ArrayList<String> EQUIPMENT_TYPES = new ArrayList<>(Arrays.asList("cloak", "axe", "bag", "gloves"));
 
     public static ArrayList<String> getParametersUntilFirstDash(ArrayList<String> parameters) {
         // this method slices the parameters which are before a - flag.
@@ -27,8 +33,7 @@ public class ControllerHelper {
         for(String id : listOfIds) {
             existingObjects.add(handleDoesNotExistError(id, hashMap));
         }
-        boolean condition = existingObjects.contains(null) ||existingObjects.isEmpty();
-        return condition ? null : existingObjects;
+        return existingObjects;
     }
 
     public static <T> T handleDoesNotExistError(String idToCheck, HashMap<String, T> hashMap) {
@@ -96,6 +101,37 @@ public class ControllerHelper {
         return null;
     }
 
+    public static String handleMissingFlagError(String flags, ArrayList<String> input){
+        ArrayList<String> formattedFlags = new ArrayList<>();
+        String flagToReturn = null;
+
+        for(int i = 0; i < flags.length(); i++) {
+            formattedFlags.add("-" + flags.charAt(i));
+        }
+
+        if(!input.isEmpty()) {
+            for(String flag : formattedFlags) {
+                if(flag.equals(input.get(0))) {
+                    flagToReturn = input.remove(0);
+                }
+            }
+        }
+        if(flagToReturn == null)
+            ErrorPrinter.printError("Missing flag(s) " + formattedFlags + ".");
+        return flagToReturn;
+    }
+
+    public static String handleWrongArgumentCountError(Integer min, Integer max, ArrayList<String> input) {
+        if(input.size() < min || input.size() > max){
+            ErrorPrinter.printWrongArgumentCountError();
+        }
+        return !input.isEmpty() ? input.remove(0) : null;
+    }
+
+    public static String getNextArgument(ArrayList<String> input) {
+        return !input.isEmpty() ? input.remove(0) : null;
+    }
+
     public static boolean printHelp(ArrayList<String> input) {
         if(input.size() == 2 && input.get(1).equals("help")) {
             String helpMsg;
@@ -105,7 +141,7 @@ public class ControllerHelper {
                 case "createvirologist": helpMsg = "createvirologist <field ID>"; break;
                 case "createelements": helpMsg =  "createelements n<number>a<number> ns<number>as<number> <-v virolgoist Id or -s safehouse ID->"; break;
                 case "createequipment": helpMsg = "createequipment <cloak/bag/gloves/axe> <-s safehouse ID/-v virologist ID>"; break;
-//                case "creategeneticcode": createGeneticCode(input); break;
+                case "creategeneticcode": helpMsg = "creategeneticcode <paralyze/amnesia/dance/bear> <- laboratory ID/-v virologist ID>"; break;
 //                case "createagent": createAgent(input); break;
 //                case "move": move(input); break;
 //                case "pickupequipment": pickUpEquipment(input); break;
