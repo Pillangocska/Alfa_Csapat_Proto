@@ -12,6 +12,7 @@ import main.com.teamalfa.blindvirologists.equipments.active_equipments.ActiveEqu
 import main.com.teamalfa.blindvirologists.turn_handler.Game;
 import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.backpack.Backpack;
+import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -297,4 +298,5 @@ public class Virologist {
     public ArrayList<Virologist> searchForVirologist() {
         return field.searchForVirologist();
     }
+
 }
