@@ -1,8 +1,7 @@
 package main.com.teamalfa.blindvirologists.virologist;
 
-import main.com.teamalfa.blindvirologists.ControllerHelper;
+
 import main.com.teamalfa.blindvirologists.agents.Agent;
-import main.com.teamalfa.blindvirologists.agents.GeneticCodeBank;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
@@ -14,12 +13,9 @@ import main.com.teamalfa.blindvirologists.equipments.active_equipments.ActiveEqu
 import main.com.teamalfa.blindvirologists.turn_handler.Game;
 import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.backpack.Backpack;
-import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 public class Virologist {
     private ArrayList<GeneticCode> protectionBank;
@@ -77,7 +73,8 @@ public class Virologist {
     }
 
     public void use(ActiveEquipment a, Virologist v) {
-        a.use(v);
+        if(!(checkUsageAffect()))
+            a.use(v);
     }
 
     /**
@@ -99,7 +96,7 @@ public class Virologist {
      * @return True if it was learned, false otherwise.
      */
     public boolean learn(GeneticCode gc) {
-        if(!(this.checkUsageAffect())) {
+        if(!(checkUsageAffect())) {
             for(GeneticCode geneticCode: backpack.getGeneticCodePocket().getGeneticCodes()) {
                 if((gc.equals(geneticCode)))
                     return false;
@@ -110,6 +107,11 @@ public class Virologist {
         return false;
     }
 
+    /**
+     * Picks up the equipment, if not paralyzed
+     * @param equipment The picked up equipment
+     * @return true if it was successful, false if it wasn't
+     */
     public boolean pickUpEquipment(Equipment equipment) {
         if(!isParalyzed()) {
             if(field.canChangeEquipment()) {
@@ -143,7 +145,8 @@ public class Virologist {
      * @param v The virologist that is being robbed.
      */
     public void rob(Virologist v) {
-        v.robbed();
+        if(!(checkUsageAffect()))
+            v.robbed();
     }
 
     /**
@@ -224,11 +227,6 @@ public class Virologist {
     public void addVirus(Virus virus) {
         activeViruses.add(virus);
         sortViruses();
-    }
-
-    private boolean checkRobbable() {
-        //todo ilyet sehol se használunk
-        return true;
     }
 
     /**
@@ -323,7 +321,7 @@ public class Virologist {
      * @return true if it was successful, false otherwise.
      */
     public boolean toss(Equipment e){
-        if(!(wornEquipment.contains(e) && checkUsageAffect())){
+        if(!(wornEquipment.contains(e) && !(checkUsageAffect()))){
             Virologist v = backpack.getVirologist();
             Field f = v.getField();
             if(f.canChangeEquipment()){
@@ -350,6 +348,12 @@ public class Virologist {
         }
     }
 
+    /**
+     * Tells if the virologist is paralyzed or not, there's another method that does the exact same thing
+     * but that one is 3 lines long, while this one is only a line so ofc it's way cooler so we need to keep it
+     * just for that reason.
+     * @return True if paralyzed, false if not.
+     */
     private boolean isParalyzed(){
         return !activeViruses.isEmpty() ? activeViruses.get(0).affectUsage() : false;
     }
@@ -360,11 +364,6 @@ public class Virologist {
      */
     public ArrayList<Virologist> searchForVirologist() {
         return field.searchForVirologist(this);
-    }
-
-    //getter
-    public ArrayList<GeneticCode> getProtectionBank() {
-        return protectionBank;
     }
 
 }
