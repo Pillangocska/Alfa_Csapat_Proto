@@ -76,9 +76,10 @@ public class Virologist {
         field = destination;
     }
 
-    public void use(ActiveEquipment a, Virologist v) {
+    public boolean use(ActiveEquipment a, Virologist v) {
         if(!(checkUsageAffect()))
-            a.use(v);
+            return a.use(v);
+        return false;
     }
 
     /**
@@ -155,10 +156,12 @@ public class Virologist {
      * This method is called when the virologist tries to rob another virologist.
      * It calls the other virologist's robbed method.
      * @param v The virologist that is being robbed.
+     * @return the virologist's backpack or null.
      */
-    public void rob(Virologist v) {
+    public Backpack rob(Virologist v) {
         if(!(checkUsageAffect()))
-            v.robbed();
+            return v.robbed();
+        return null;
     }
 
     /**
@@ -373,7 +376,7 @@ public class Virologist {
      * just for that reason.
      * @return True if paralyzed, false if not.
      */
-    private boolean isParalyzed(){
+    public boolean isParalyzed(){
         return !activeViruses.isEmpty() ? activeViruses.get(0).affectUsage() : false;
     }
 

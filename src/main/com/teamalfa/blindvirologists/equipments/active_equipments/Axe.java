@@ -29,6 +29,12 @@ public class Axe extends ActiveEquipment{
     }
 
     /**
+     * doesn't do anything at all.
+     */
+    @Override
+    public void wornOut() {}
+
+    /**
      * Doesn't do anything.
      */
     @Override

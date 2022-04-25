@@ -3,20 +3,16 @@ package main.com.teamalfa.blindvirologists.agents.virus;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.DanceCode;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 import main.com.teamalfa.blindvirologists.random.MyRandom;
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
-import main.com.teamalfa.blindvirologists.random.TrueRandom;
-import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 
 public class DanceVirus extends Virus {
 
     public MyRandom random;
 
     public DanceVirus(){
-        priority = 3;
-        expiry = duration = 5;
-        this.random = new TrueRandom();
         geneticCode = new DanceCode();
 
         TurnHandler.getInstance().accept(this);

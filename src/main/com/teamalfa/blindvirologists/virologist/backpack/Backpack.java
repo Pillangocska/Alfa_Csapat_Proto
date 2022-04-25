@@ -4,7 +4,6 @@ import main.com.teamalfa.blindvirologists.agents.Agent;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
-import main.com.teamalfa.blindvirologists.city.fields.SafeHouse;
 import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.pockets.AgentPocket;
@@ -76,6 +75,7 @@ public class Backpack {
         if (vaccine != null) {
             agentPocket.addAgent(vaccine);
         }
+        return null;
     }
 
     /**
@@ -103,7 +103,7 @@ public class Backpack {
         return (ElementBank) elementBank;
     }
 
-    public ArrayList<Object> getAgents() {
+    public ArrayList<Agent> getAgents() {
         return agentPocket.getAgentHolder();
     }
 
