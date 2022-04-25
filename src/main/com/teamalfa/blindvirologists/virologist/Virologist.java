@@ -1,7 +1,8 @@
 package main.com.teamalfa.blindvirologists.virologist;
 
-
+import main.com.teamalfa.blindvirologists.ControllerHelper;
 import main.com.teamalfa.blindvirologists.agents.Agent;
+import main.com.teamalfa.blindvirologists.agents.GeneticCodeBank;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
@@ -13,9 +14,12 @@ import main.com.teamalfa.blindvirologists.equipments.active_equipments.ActiveEqu
 import main.com.teamalfa.blindvirologists.turn_handler.Game;
 import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.backpack.Backpack;
+import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class Virologist {
     private ArrayList<GeneticCode> protectionBank;
@@ -84,7 +88,7 @@ public class Virologist {
      * @param v The virologist the agent is used on.
      */
     public void use(Agent a, Virologist v){
-        if (a != null && !checkUsageAffect()){
+        if (a != null && !(checkUsageAffect())){
             a.apply(v);
             backpack.getAgentPocket().removeAgent(a);
         }
@@ -96,10 +100,11 @@ public class Virologist {
      * @return True if it was learned, false otherwise.
      */
     public boolean learn(GeneticCode gc) {
-        if(!(checkUsageAffect())) {
-            for(GeneticCode geneticCode: backpack.getGeneticCodePocket().getGeneticCodes()) {
-                if((gc.equals(geneticCode)))
+        if(!(this.checkUsageAffect()) && gc != null) {
+            for(GeneticCode alreadyLearnt : backpack.getGeneticCodePocket().getGeneticCodes()) {
+                if(gc.equals(alreadyLearnt)) {
                     return false;
+                }
             }
             backpack.add(gc);
             return true;
@@ -118,12 +123,19 @@ public class Virologist {
                 SafeHouse safeHouse = (SafeHouse) field;
                 if(safeHouse.getEquipments().contains(equipment)){
                     if(backpack.add(equipment)) {
+                        equipment.setVirologist(this);
                         return true;
                     }
                 }
             }
         }
         return false;
+    }
+
+    public void pickUpMaterial() {
+        if(!isParalyzed()) {
+            field.searchedBy(this);
+        }
     }
 
     /**
@@ -321,7 +333,7 @@ public class Virologist {
      * @return true if it was successful, false otherwise.
      */
     public boolean toss(Equipment e){
-        if(!(wornEquipment.contains(e) && !(checkUsageAffect()))){
+        if(!(wornEquipment.contains(e))){
             Virologist v = backpack.getVirologist();
             Field f = v.getField();
             if(f.canChangeEquipment()){
@@ -340,11 +352,18 @@ public class Virologist {
     public void toggle(Equipment e){
         Virologist v = backpack.getVirologist();
         Field f = v.getField();
-        if(f.canChangeEquipment() && !(checkUsageAffect())){
-            if(wornEquipment.contains(e))
-                e.unEquip();
-            else
-                e.equip();
+        if(f.canChangeEquipment()){
+            boolean isParalysed = false;
+            for (var vir : activeViruses) {
+                if (isParalysed = vir.affectUsage());
+                break;
+            }
+            if (!isParalysed) {
+                if (wornEquipment.contains(e))
+                    e.unEquip();
+                else
+                    e.equip();
+            }
         }
     }
 
@@ -356,6 +375,17 @@ public class Virologist {
      */
     private boolean isParalyzed(){
         return !activeViruses.isEmpty() ? activeViruses.get(0).affectUsage() : false;
+    }
+
+
+    public GeneticCode getCodeByType(String typeToMatch) {
+        ArrayList<GeneticCode> codes = backpack.getGeneticCodePocket().getGeneticCodes();
+        for(GeneticCode code : codes) {
+            if(code.getType().equals(typeToMatch)){
+                return code;
+            }
+        }
+        return null;
     }
 
     /**

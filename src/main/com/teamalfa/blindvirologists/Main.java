@@ -28,7 +28,7 @@ public class Main {
                     return;
                 }
                 if (choice == 2) {
-                    controller.runTest();
+                    controllerRefactor.runTest();
                     return;
                 } else {
                     throw new NumberFormatException("Invalid input!");

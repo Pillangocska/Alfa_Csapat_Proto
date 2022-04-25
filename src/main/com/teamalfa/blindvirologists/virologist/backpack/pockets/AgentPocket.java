@@ -41,10 +41,7 @@ public class AgentPocket extends Pocket{
         return  agentHolder.size();
     }
 
-    public ArrayList<Object> getAgentHolder() {
-        ArrayList<Object> agents = new ArrayList<>();
-        for(Agent agent : agentHolder)
-            agents.add(agent);
-        return agents;
+    public ArrayList<Agent> getAgentHolder() {
+        return agentHolder;
     }
 }

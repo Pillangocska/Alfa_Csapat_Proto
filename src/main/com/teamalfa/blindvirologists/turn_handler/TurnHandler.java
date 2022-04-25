@@ -26,7 +26,7 @@ public class TurnHandler {
     /**
      * Makes every steppable step.
      */
-    private void tick() {
+    public void tick() {
         for(Steppable steppable : steppables) {
             steppable.step();
         }
@@ -74,7 +74,7 @@ public class TurnHandler {
     }
 
     //getters, setters
-    public ArrayList<Virologist> GetOrder() {
+    public static ArrayList<Virologist> GetOrder() {
         return order;
     }
 
@@ -83,7 +83,7 @@ public class TurnHandler {
         return activeVirologist;
     }
 
-    public void setActiveVirologist(Virologist v) {
+    public static void setActiveVirologist(Virologist v) {
         activeVirologist = v;
     }
 }

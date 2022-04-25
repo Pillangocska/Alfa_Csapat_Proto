@@ -4,5 +4,5 @@ createvirologist F1
 createagent virus paralyze V1
 createagent virus dance V1
 startturn V1
-useagent PV1 V1
-useagent DV1 V2
+useagent A1 V1
+useagent A2 V2

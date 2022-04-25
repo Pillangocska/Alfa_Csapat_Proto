@@ -9,6 +9,7 @@ import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,6 +44,8 @@ public class ControllerHelper {
     }
 
     public static <T> T handleDoesNotExistError(String idToCheck, HashMap<String, T> hashMap) {
+        if(idToCheck == null)
+            ErrorPrinter.printError("Missing object id.");
         T objectFound = hashMap.get(idToCheck);
         if(objectFound == null)
             ErrorPrinter.doesntExistError(idToCheck);
@@ -73,7 +76,7 @@ public class ControllerHelper {
         return matcher.matches();
     }
 
-    public static int[] handleNucleotideAminoAcidQuantityFormat(ArrayList<String> input){
+    public static int[] handleNucleotideAminoAcidQuantityFormat(ArrayList<String> input) {
         if(!input.isEmpty() && checkCorrectFormat("n\\d+a\\d+", input.get(0))) {
             String parameter = input.remove(0);
 
@@ -140,7 +143,7 @@ public class ControllerHelper {
 
     public static <T> String getObjectId(T object, HashMap<String, T> hashMap) {
         for(String id : hashMap.keySet())
-            if(hashMap.get(id) != null)
+            if(hashMap.get(id) == object)
                 return id;
 
         return null;
@@ -161,8 +164,29 @@ public class ControllerHelper {
     }
 
     public static <T> String joinWithComma(ArrayList<T> objects, HashMap<String, T> hashMap) {
-        return String.join(", ",getManyObjectIds(objects, hashMap));
+        return objects.isEmpty() || objects == null ? "null" : String.join(", ",getManyObjectIds(objects, hashMap));
     }
+
+    public static <T> ArrayList<T> createSuperArrayList(ArrayList<? extends T> list) {
+        ArrayList<T> listToReturn = new ArrayList<>();
+        for(T object : list)
+            listToReturn.add(object);
+
+        return listToReturn;
+    }
+
+    public static String getFieldTypeBasedOnId(String id) {
+        String prefix = id.replaceAll("\\d", "").toLowerCase();
+        String type = "";
+        switch (prefix) {
+            case "l":  type = "Laboratory"; break;
+            case "st": type = "StoreHouse"; break;
+            case "sa": type = "SafeHouse"; break;
+            default: type = "Field";
+        }
+        return type;
+    }
+
     public static boolean printHelp(ArrayList<String> input) {
         if(input.size() == 2 && input.get(1).equals("help")) {
             String helpMsg;

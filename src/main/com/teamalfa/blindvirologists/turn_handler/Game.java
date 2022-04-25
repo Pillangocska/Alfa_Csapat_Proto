@@ -1,6 +1,7 @@
 package main.com.teamalfa.blindvirologists.turn_handler;
 
 import main.com.teamalfa.blindvirologists.agents.virus.BearVirus;
+import main.com.teamalfa.blindvirologists.city.City;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 public class Game implements Steppable{
     private static Game instance;
+    private City city;
     private ArrayList<Virologist> bears;
 
     static {
@@ -24,7 +26,9 @@ public class Game implements Steppable{
         return instance;
     }
 
-    public void startGame() {}
+    public void startGame() {
+
+    }
 
     public void endGame(ArrayList<Virologist> winners) {}
 

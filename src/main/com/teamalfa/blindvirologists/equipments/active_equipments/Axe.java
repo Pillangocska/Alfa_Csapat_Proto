@@ -18,23 +18,26 @@ public class Axe extends ActiveEquipment{
      * @param v
      */
     @Override
-    public void use(Virologist v) {
-        if(usetime == 1 && !(blunt)){
-
-            virologist.die();
+    public boolean use(Virologist v) {
+        if(usetime == 1){
+            v.die();
+            startCooldown();
             usetime--;
+            return true;
         }
-        else if(blunt && usetime < 1) {
-            wornOut();
-        }
+        return false;
     }
 
     /**
      * Doesn't do anything.
      */
     @Override
-    public void wornOut() {}
+    public void step() {
+        // Ennek is üresnek kell lennie, mert nincs rajta cooldown.
+    }
 
     @Override
-    public void step() {}
+    public String getType() {
+        return "Axe";
+    }
 }

@@ -1,5 +1,6 @@
 package main.com.teamalfa.blindvirologists.virologist.backpack;
 
+import main.com.teamalfa.blindvirologists.agents.Agent;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
@@ -34,12 +35,7 @@ public class Backpack {
      * @return true if it was successful, false otherwise.
      */
     public boolean add(Equipment equipment) {
-        if(equipmentPocket.add(equipment)){
-            SafeHouse safeHouse = (SafeHouse) virologist.getField();
-            safeHouse.remove(equipment);
-            return true;
-        }
-        return false;
+        return equipmentPocket.add(equipment);
     }
 
     /**
@@ -63,20 +59,21 @@ public class Backpack {
      * Adds the new virus to the agentpocket.
      * @param geneticCode The virus' genetic code.
      */
-    public void createVirus(GeneticCode geneticCode) {
+    public Agent createVirus(GeneticCode geneticCode) {
         Virus virus = geneticCode.createVirus(elementBank);
         if(virus != null) {
             agentPocket.addAgent(virus);
         }
+        return virus;
     }
 
     /**
      * Adds the vaccine to the AgentPocket.
      * @param geneticCode The vaccine's genetic code.
      */
-    public void createVaccine(GeneticCode geneticCode) {
+    public Agent createVaccine(GeneticCode geneticCode) {
         Vaccine vaccine = geneticCode.createVaccine(elementBank);
-        if(vaccine != null) {
+        if (vaccine != null) {
             agentPocket.addAgent(vaccine);
         }
     }
@@ -100,12 +97,10 @@ public class Backpack {
 
     public AgentPocket getAgentPocket() { return agentPocket; }
 
+    public GeneticCodePocket getGeneticCodePocket() { return geneticCodePocket;}
+
     public ElementBank getElementBank() {
         return (ElementBank) elementBank;
-    }
-
-    public GeneticCodePocket getGeneticCodePocket() {
-        return geneticCodePocket;
     }
 
     public ArrayList<Object> getAgents() {

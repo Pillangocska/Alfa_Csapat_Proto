@@ -5,19 +5,30 @@ import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import java.util.ArrayList;
 
 public class Field {
-    //Virologists on the field
+    /**
+     * Virologists on the field
+     */
     protected ArrayList<Virologist> virologists = new ArrayList<>();
-    //Neighbouring fields
+    /**
+     * Neighbouring fields
+     * */
     protected ArrayList<Field> neighbours = new ArrayList<>();
 
-    //Constructor without parameter
+    /**
+     * Constructor without parameter
+     */
     public Field(){ }
-    //Constructor with neighbours
+
+    /**
+     * Constructor with neighbours
+     */
     public Field(ArrayList<Field> nbrs){
         this.setNeighbours(nbrs);
     }
 
-    //Getters&Setters
+    /**
+     * Getters
+     */
     public ArrayList<Virologist> getVirologists(){
         return virologists;
     }
@@ -25,7 +36,9 @@ public class Field {
         return neighbours;
     }
 
-    //Adding and removing a virologist
+    /**
+     * Adding and removing a virologist
+     */
     public void accept(Virologist virologist){
         virologists.add(virologist);
         virologist.setField(this);
@@ -44,9 +57,9 @@ public class Field {
      * except the one calling it
      */
     public ArrayList<Virologist> searchForVirologist(Virologist v){
-        virologists.remove(v);
-        ArrayList<Virologist> result = virologists;
-        return result;
+        ArrayList<Virologist> v_copy = (ArrayList<Virologist>) virologists.clone();
+        v_copy.remove(v);
+        return v_copy;
     }
 
     /**
@@ -71,7 +84,9 @@ public class Field {
      */
     public void add(Equipment e) { }
 
-    //setters
+    /**
+     * Setters
+     */
     public void setNeighbour(Field f1) {
         this.neighbours.add(f1);
     }

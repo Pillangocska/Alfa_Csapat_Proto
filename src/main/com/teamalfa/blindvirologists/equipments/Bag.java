@@ -24,6 +24,11 @@ public class Bag extends Equipment{
         virologist.addWorn(this);
     }
 
+    @Override
+    public String getType() {
+        return "Bag";
+    }
+
     /**
      * Decreases the size of the virologist's elementbank with extrasize.
      */

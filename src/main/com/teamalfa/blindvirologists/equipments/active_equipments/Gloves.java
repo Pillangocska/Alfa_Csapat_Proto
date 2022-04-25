@@ -32,14 +32,16 @@ public class Gloves extends ActiveEquipment {
      * And starts the cooldown.
      * @param target
      */
-    public void use(Virologist target){
+    public boolean use(Virologist target){
         if(usedVirus != null && usetime > 0 && cooldown == 0) {
             virologist.removeVirus(usedVirus);
             usedVirus.apply(target);
             startCooldown();
             usetime--;
             usedVirus = null;
+            return true;
         }
+        return false;
     }
 
     /**
@@ -60,5 +62,10 @@ public class Gloves extends ActiveEquipment {
             wornOut();
         else if(cooldown > 0)
             cooldown--;
+    }
+
+    @Override
+    public String getType() {
+        return "Gloves";
     }
 }
