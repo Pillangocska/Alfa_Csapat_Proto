@@ -110,6 +110,7 @@ public class ControllerRefactor {
                     case "runscript": runScript(input); break;
                     case "search": search(input); break;
                     case "setrandom": setRandom(input); break;
+                    case "tick": tick(); break;
                     case "exit": return true;
                     default: System.out.println("Wrong command.");
                 }
@@ -472,12 +473,20 @@ public class ControllerRefactor {
         String targetId = getNextArgument(input);
         Virologist target = handleDoesNotExistError(targetId, virologistHashMap);
 
+        String virusID = getNextArgument(input);
+        if (virusID != null) {
+            Agent agentToApply = ControllerHelper.handleDoesNotExistError(virusID, agentHashMap);
+            if (activeEquipment instanceof Gloves && agentToApply instanceof Virus) {
+                ((Gloves) activeEquipment).setUsedVirus((Virus) agentToApply);
+            }
+        }
+
         boolean result = virologist.use(activeEquipment, target);
         boolean isWornOut = activeEquipment.isWornOut();
 
         // print result
         System.out.println("Equipment used on Virologist:");
-        System.out.println("Equipment:" + equipmentId);
+        System.out.println("Equipment: " + equipmentId);
         System.out.println("Virologist: " + virologistId);
         System.out.println("Target: " + targetId);
         System.out.println("Result: " + (result ? "Successful" : "Failed"));
@@ -724,6 +733,10 @@ public class ControllerRefactor {
         System.out.println("ActiveWearing: " + joinWithComma(activeWearing, equipmentHashMap));
         System.out.println("ActiveViruses: " + joinWithComma(activeViruses, agentHashMap));
         System.out.println("ProtectionBank: " + joinWithComma(virologist.getProtectionBank(), geneticCodeHashMap));
+    }
+
+    private void tick() {
+        TurnHandler.getInstance().tick();
     }
 
     private void handleBearCreated(Virologist virologist, Agent virus, boolean successful) {

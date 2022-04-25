@@ -1,8 +1,9 @@
 createfield -t safehouse
 createvirologist SA1
 createvirologist SA1
+createvirologist SA1
 createequipment axe -v V1
 startturn V1
 toggle E1
 useequipment E1 V2
-useequipment E1 V2
+useequipment E1 V3
