@@ -75,7 +75,7 @@ public class Backpack {
         if (vaccine != null) {
             agentPocket.addAgent(vaccine);
         }
-        return null;
+        return vaccine;
     }
 
     /**

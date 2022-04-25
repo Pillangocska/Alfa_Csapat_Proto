@@ -5,6 +5,7 @@ javac^
  main\com\teamalfa\blindvirologists\city\fields\*.java^ 
  main\com\teamalfa\blindvirologists\city\*.java^
  main\com\teamalfa\blindvirologists\equipments\*.java^
+ main\com\teamalfa\blindvirologists\random\*.java^
  main\com\teamalfa\blindvirologists\city\fields\active_equipments\*.java^
  main\com\teamalfa\blindvirologists\tun_handler\*.java^
  main\com\teamalfa\blindvirologists\virologist\*.java^

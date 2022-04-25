@@ -382,8 +382,7 @@ public class Virologist {
 
 
     public GeneticCode getCodeByType(String typeToMatch) {
-        ArrayList<GeneticCode> codes = backpack.getGeneticCodePocket().getGeneticCodes();
-        for(GeneticCode code : codes) {
+        for(GeneticCode code : backpack.getGeneticCodePocket().getGeneticCodes()) {
             if(code.getType().equals(typeToMatch)){
                 return code;
             }

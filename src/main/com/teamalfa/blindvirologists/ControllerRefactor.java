@@ -573,6 +573,7 @@ public class ControllerRefactor {
 
         // register agent
         if(agent != null) {
+            System.out.println("cica");
             agentId = registerObject(agent, agentHashMap, idCounter, Prefixes.Agent.toString());
         }
 
