@@ -59,9 +59,5 @@ public class BearCode extends GeneticCode {
         BearVirus bearVirus = new BearVirus();
         // infect the virologist
         bearVirus.apply(virologist);
-
-        boolean succesful = bearVirus.getTarget() == virologist;
-
-        ControllerRefactor.handleBearCreated(virologist, bearVirus, succesful);
     }
 }
