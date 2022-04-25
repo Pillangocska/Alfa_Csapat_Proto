@@ -34,6 +34,11 @@ public class Axe extends ActiveEquipment{
     }
 
     @Override
+    public void step() {
+
+    }
+
+    @Override
     public String getType() {
         return "Axe";
     }

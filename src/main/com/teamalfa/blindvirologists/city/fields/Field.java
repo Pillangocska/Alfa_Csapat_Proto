@@ -57,8 +57,9 @@ public class Field {
      * except the one calling it
      */
     public ArrayList<Virologist> searchForVirologist(Virologist v){
-        virologists.remove(v);
-        return virologists;
+        ArrayList<Virologist> v_copy = (ArrayList<Virologist>) virologists.clone();
+        v_copy.remove(v);
+        return v_copy;
     }
 
     /**
