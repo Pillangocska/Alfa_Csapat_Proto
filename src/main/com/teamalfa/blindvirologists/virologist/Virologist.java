@@ -345,7 +345,7 @@ public class Virologist {
     }
 
     public ArrayList<Virologist> searchForVirologist() {
-        return field.searchForVirologist();
+        return field.searchForVirologist(this);
     }
 
 }

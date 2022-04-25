@@ -27,6 +27,11 @@ public class Axe extends ActiveEquipment{
     public void wornOut() {}
 
     @Override
+    public void step() {
+
+    }
+
+    @Override
     public String getType() {
         return "Axe";
     }
