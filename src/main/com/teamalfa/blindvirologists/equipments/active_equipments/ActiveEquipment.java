@@ -13,7 +13,7 @@ abstract public class ActiveEquipment extends Equipment implements Steppable {
      * abstract method that tells what happens when the item is used.
      * @param v
      */
-    public abstract void use(Virologist v);
+    public abstract boolean use(Virologist v);
 
     /**
      * Adds the item to the virologist's worn items and also their active items.
@@ -47,5 +47,13 @@ abstract public class ActiveEquipment extends Equipment implements Steppable {
      * Handles the cooldown of the equipment.
      */
     public abstract void step();
+
+    /**
+     * Returns the worn-out status of the equipment.
+     * @return True, if the equipment is indeed worn out and cannot be objected to further use. False, if it can be used further.
+     */
+    public boolean isWornOut() {
+        return usetime < 1;
+    }
 
 }

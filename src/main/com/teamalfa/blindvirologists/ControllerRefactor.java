@@ -420,7 +420,7 @@ public class ControllerRefactor {
 
         // print result
         System.out.println( pickAction ? "Equipment added to inventory:" : "Equipment dropped:");
-        System.out.println("Virologist:" + virologistId);
+        System.out.println("Virologist: " + virologistId);
         System.out.println("Equipment: " + equipmentId);
         System.out.println("Field: " + fieldId);
         System.out.println("Result: " + (successful ? "Successful" : "Failed"));
@@ -472,15 +472,16 @@ public class ControllerRefactor {
         String targetId = getNextArgument(input);
         Virologist target = handleDoesNotExistError(targetId, virologistHashMap);
 
-        virologist.use(activeEquipment, target);
+        boolean result = virologist.use(activeEquipment, target);
+        boolean isWornOut = activeEquipment.isWornOut();
 
         // print result
         System.out.println("Equipment used on Virologist:");
         System.out.println("Equipment:" + equipmentId);
         System.out.println("Virologist: " + virologistId);
         System.out.println("Target: " + targetId);
-        System.out.println("Result: ");
-        System.out.println("Inf: ");
+        System.out.println("Result: " + (result ? "Successful" : "Failed"));
+        if (isWornOut && result) System.out.println("Inf: Last usage!");
     }
 
     private void craftAgent(ArrayList<String> input) {

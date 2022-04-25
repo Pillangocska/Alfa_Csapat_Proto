@@ -76,8 +76,8 @@ public class Virologist {
         field = destination;
     }
 
-    public void use(ActiveEquipment a, Virologist v) {
-        a.use(v);
+    public boolean use(ActiveEquipment a, Virologist v) {
+        return a.use(v);
     }
 
     /**
