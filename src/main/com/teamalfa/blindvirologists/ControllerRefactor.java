@@ -598,7 +598,10 @@ public class ControllerRefactor {
         Virologist target = handleDoesNotExistError(targetId, virologistHashMap);
 
         virologist.use(agent, target);
-        boolean successful = target.getViruses().contains(agent);
+        boolean successful = false;
+
+        if (agent instanceof Vaccine) successful = virologist.getProtectionBank().contains(agent.getGeneticCode());
+        if (agent instanceof Virus) successful = virologist.getViruses().contains(agent);
 
         // print result
         System.out.println("Agent used on virologist:");
@@ -911,7 +914,6 @@ public class ControllerRefactor {
                         "25: Virologist takes off a bag\n" +
                         "26: Virologist can’t take off bag\n" +
                         "27: Virologist can’t wear an axe, because worn equipments are full\n" +
-                        "28: Virologist uses glove for the third time\n" +
                         "29: Virologist uses a sharp axe on another virologist\n" +
                         "30: Virologist uses blunt axe on another virologist\n" +
                         "31: Virologist wants to toggle bag, but the Virologist isn't in a Safehouse\n" +
@@ -931,7 +933,7 @@ public class ControllerRefactor {
                 if (choice == 0)
                     return;
 
-                if (choice >= 1 && choice <= 38) {
+                if (choice >= 1 && choice <= 38 && choice != 28) {
                     // if the user's choice is valid read the test script from the corresponding file
                     ArrayList<String> args = new ArrayList<String>();
                     args.add("rcs" + fileSeparator + "testscripts" + fileSeparator + "test" + userInput + ".txt");

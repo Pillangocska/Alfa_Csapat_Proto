@@ -1,11 +1,11 @@
-createfield
-createvirologist F1
-createvirologist F1
+createfield -t safehouse
+createvirologist SA1
+createvirologist SA1
 createagent virus dance V1
 createequipment gloves -v V2
 startturn V2
-toggle G1
+toggle E1
 startturn V1
-useagent DV1 V2
+useagent A1 V2
 startturn V2
-useequipment G1 V1 DV1
+useequipment E1 V1 A1
