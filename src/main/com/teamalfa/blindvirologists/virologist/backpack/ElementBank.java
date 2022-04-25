@@ -52,6 +52,9 @@ public class ElementBank {
        added.nucleotide = nucleotide > nucleotideMaxSize ? added.nucleotide - (nucleotide - nucleotideMaxSize) : nucleotide;
        added.aminoAcid = aminoAcid > aminoAcidMaxSize ? added.aminoAcid - (aminoAcid - aminoAcidMaxSize) : aminoAcid;
 
+       nucleotide -= (elements.nucleotide + added.nucleotide);
+       aminoAcid -= (elements.aminoAcid + added.aminoAcid);
+
        return added;
     }
 

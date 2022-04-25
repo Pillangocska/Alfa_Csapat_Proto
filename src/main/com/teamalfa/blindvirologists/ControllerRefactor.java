@@ -442,13 +442,14 @@ public class ControllerRefactor {
         if(getFieldTypeBasedOnId(destinationId).equals("Laboratory")) {
             Laboratory laboratory = (Laboratory)handleDoesNotExistError(destinationId, fieldHashMap);
             boolean successful = virusCount != virologist.getViruses().size();
+            GeneticCode code = laboratory.getGeneticCode();
 
             Agent agent = new BearVirus();
 
             if(successful)
                 agent = virologist.getViruses().get(virusCount);
 
-            if(laboratory.getGeneticCode().getType().equals("bear")) {
+            if(code != null && code.getType().equals("bear")) {
                 handleBearCreated(virologist, agent, successful);
             }
         }
@@ -622,6 +623,7 @@ public class ControllerRefactor {
         System.out.println("Field: " + fieldId);
         System.out.println("Nucleotide: " + pickedNuc);
         System.out.println("AminoAcid: " + pickedAmi);
+        System.out.println("Virologist: " + virologistId);
     }
 
     private void startTurn(ArrayList<String> input) {
@@ -749,6 +751,7 @@ public class ControllerRefactor {
             MyRandom.getInstance().setChoiceDeterministic(false);
         }else {
             try {
+                MyRandom.getInstance().setChoiceDeterministic(false);
                 optionChoiceInt = Integer.parseInt(optionChoice);
             }catch (NumberFormatException e) {
                 printError("Possible choices are random or a number");

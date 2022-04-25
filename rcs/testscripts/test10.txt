@@ -1,5 +1,5 @@
 createfield -t storehouse
-createvirologist STH1
+createvirologist ST1
 startturn V1
 search
 pickupmaterial
