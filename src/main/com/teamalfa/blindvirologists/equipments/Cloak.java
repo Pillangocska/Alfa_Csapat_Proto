@@ -19,4 +19,9 @@ public class Cloak extends Equipment{
        return random.YorN(protectionRate);
     }
 
+    @Override
+    public String getType() {
+        return "Cloak";
+    }
+
 }

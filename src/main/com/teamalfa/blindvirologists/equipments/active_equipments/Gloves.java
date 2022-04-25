@@ -22,4 +22,9 @@ public class Gloves extends ActiveEquipment {
     public void wornOut() {
         // TODO:
     }
+
+    @Override
+    public String getType() {
+        return "Gloves";
+    }
 }

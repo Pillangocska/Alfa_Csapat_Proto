@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ErrorPrinter {
 
-    public static void printError(String msg) {
+    public static void printError(String msg) throws IllegalArgumentException {
         throw new IllegalArgumentException("ERROR: " + msg);
     }
 

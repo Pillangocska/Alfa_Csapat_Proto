@@ -76,7 +76,7 @@ public class ControllerHelper {
         return matcher.matches();
     }
 
-    public static int[] handleNucleotideAminoAcidQuantityFormat(ArrayList<String> input){
+    public static int[] handleNucleotideAminoAcidQuantityFormat(ArrayList<String> input) {
         if(!input.isEmpty() && checkCorrectFormat("n\\d+a\\d+", input.get(0))) {
             String parameter = input.remove(0);
 
@@ -143,7 +143,7 @@ public class ControllerHelper {
 
     public static <T> String getObjectId(T object, HashMap<String, T> hashMap) {
         for(String id : hashMap.keySet())
-            if(hashMap.get(id) != null)
+            if(hashMap.get(id) == object)
                 return id;
 
         return null;
@@ -164,7 +164,7 @@ public class ControllerHelper {
     }
 
     public static <T> String joinWithComma(ArrayList<T> objects, HashMap<String, T> hashMap) {
-        return String.join(", ",getManyObjectIds(objects, hashMap));
+        return objects.isEmpty() || objects == null ? "null" : String.join(", ",getManyObjectIds(objects, hashMap));
     }
 
     public static <T> ArrayList<T> createSuperArrayList(ArrayList<? extends T> list) {

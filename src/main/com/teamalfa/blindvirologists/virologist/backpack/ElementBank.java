@@ -58,6 +58,12 @@ public class ElementBank {
     public int getNucleotide() {
         return  nucleotide;
     }
+    public int getAminoAcidMaxSize() {
+        return nucleotideMaxSize;
+    }
+    public int getNucleotideMaxSize() {
+        return aminoAcidMaxSize;
+    }
 
     public void setAminoAcid(int num) {
         aminoAcid = num;

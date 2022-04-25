@@ -21,6 +21,11 @@ public class Bag extends Equipment{
         virologist.addWorn(this);
     }
 
+    @Override
+    public String getType() {
+        return "Bag";
+    }
+
     public void unEquip(){
         Backpack b = virologist.getBackpack();
         ElementBank e = b.getElementBank();
