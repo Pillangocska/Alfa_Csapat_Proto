@@ -1,15 +1,11 @@
 package test.com.teamalfa.blindvirologists.agents.genetic_code;
 
-import main.com.teamalfa.blindvirologists.agents.genetic_code.AmnesiaCode;
-import main.com.teamalfa.blindvirologists.agents.genetic_code.BearCode;
-import main.com.teamalfa.blindvirologists.agents.genetic_code.DanceCode;
-import main.com.teamalfa.blindvirologists.agents.genetic_code.ParalyzeCode;
+import main.com.teamalfa.blindvirologists.agents.genetic_code.*;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GeneticCodeTest {
     static AmnesiaCode a1, a2;

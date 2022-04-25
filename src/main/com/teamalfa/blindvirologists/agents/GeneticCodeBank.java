@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class GeneticCodeBank {
     private static GeneticCodeBank instance;
-    private final ArrayList<GeneticCode> codes;
+    private ArrayList<GeneticCode> codes;
 
     private GeneticCodeBank() {
         codes = new ArrayList<>();
@@ -22,7 +22,6 @@ public class GeneticCodeBank {
         instance = new GeneticCodeBank();
     }
 
-    //getters
     public ArrayList<GeneticCode> getCodes() {
         return codes;
     }

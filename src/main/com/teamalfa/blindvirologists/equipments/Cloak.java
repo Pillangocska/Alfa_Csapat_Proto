@@ -2,18 +2,14 @@ package main.com.teamalfa.blindvirologists.equipments;
 
 import main.com.teamalfa.blindvirologists.random.MyRandom;
 
-public class Cloak extends Equipment{
-    MyRandom random;
+import java.util.Random;
 
-    private final double protectionRate;
+public class Cloak extends Equipment{
+
+    private final int protectionRate;
 
     public Cloak(){
-        protectionRate = 82.3;
-    }
-
-    //setter
-    public void setRandom (MyRandom random) {
-        this.random = random;
+        protectionRate = 823;
     }
 
     /**
@@ -21,12 +17,15 @@ public class Cloak extends Equipment{
      * @return true if it did, false if it did not.
      */
     public boolean protect(){
-       return random.YorN(protectionRate);
+       if(MyRandom.getInstance().isYesOrNoDeterministic()) {
+           return MyRandom.getInstance().getYesOrNo();
+       }else {
+           return new Random().nextInt(1001) < protectionRate;
+       }
     }
 
     @Override
     public String getType() {
         return "Cloak";
     }
-
 }
