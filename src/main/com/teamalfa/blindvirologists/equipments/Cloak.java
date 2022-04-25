@@ -12,6 +12,10 @@ public class Cloak extends Equipment{
         protectionRate = 823;
     }
 
+    /**
+     * Tells if the cloak protected the virologist from an infection.
+     * @return true if it did, false if it did not.
+     */
     public boolean protect(){
        if(MyRandom.getInstance().isYesOrNoDeterministic()) {
            return MyRandom.getInstance().getYesOrNo();
@@ -24,5 +28,4 @@ public class Cloak extends Equipment{
     public String getType() {
         return "Cloak";
     }
-
 }

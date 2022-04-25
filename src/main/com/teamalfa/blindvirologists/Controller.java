@@ -164,7 +164,6 @@ public class Controller {
         try {
             Virologist v = new Virologist();
             Field f = (Field) checkGetFromRegistry(fieldID);
-
             // set relations
             f.accept(v);
             v.setField(f);

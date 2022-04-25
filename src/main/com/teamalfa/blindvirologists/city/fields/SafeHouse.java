@@ -6,7 +6,7 @@ import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import java.util.ArrayList;
 
 public class SafeHouse extends Field{
-    private ArrayList<Equipment> equipments;
+    private final ArrayList<Equipment> equipments;
 
     public SafeHouse() {
         equipments = new ArrayList<>();
@@ -23,7 +23,7 @@ public class SafeHouse extends Field{
 
     /**
      * Removes an equipment from the SafeHouse.
-     * @param equipment The equipment that was picke up from the SafeHouse.
+     * @param equipment The equipment that was picked up from the SafeHouse.
      */
     public void remove(Equipment equipment) {
         equipments.remove(equipment);
@@ -36,14 +36,23 @@ public class SafeHouse extends Field{
      */
     @Override
     public void searchedBy(Virologist virologist) {
-        //todo
+        //Until graphic implementation this function adds the first equipment it finds to the virologists backpack
+        virologist.getBackpack().add(this.equipments.get(0));
     }
 
+    /**
+     * Tells if player's can change their equipment on the field.
+     * @return Always returns true.
+     */
     @Override
     public boolean canChangeEquipment(){
         return true;
     }
 
+    /**
+     * getter
+     * @return The array of equipments
+     */
     public ArrayList<Equipment> getEquipments() {
         return equipments;
     }

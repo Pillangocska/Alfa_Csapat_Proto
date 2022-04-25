@@ -10,22 +10,31 @@ public class GeneticCodePocket extends Pocket{
     private ArrayList<GeneticCode> geneticCodes = new ArrayList<GeneticCode>();
     private Backpack backpack;
 
+    public GeneticCodePocket(Backpack b) {
+        backpack = b;
+    }
+
+    //getter
     public ArrayList<GeneticCode> getGeneticCodes() {
         return geneticCodes;
     }
 
-    public GeneticCodePocket(Backpack b) {
-        backpack = b;
-    }
+    /**
+     * adds a new genetic code to the pocket.
+     */
 
     public void add(GeneticCode gc){
         geneticCodes.add(gc);
     }
 
+    /**
+     * Deletes every geneticCode from the pocket.
+     */
     public void deleteAll() {
         geneticCodes.clear();
     }
 
+    //getter
     public int getCurrentSize(){
         return geneticCodes.size();
     }

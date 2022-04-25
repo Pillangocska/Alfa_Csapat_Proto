@@ -5,19 +5,30 @@ import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import java.util.ArrayList;
 
 public class Field {
-    //Virologists on the field
+    /**
+     * Virologists on the field
+     */
     protected ArrayList<Virologist> virologists = new ArrayList<>();
-    //Neighbouring fields
+    /**
+     * Neighbouring fields
+     * */
     protected ArrayList<Field> neighbours = new ArrayList<>();
 
-    //Constructor without parameter
+    /**
+     * Constructor without parameter
+     */
     public Field(){ }
-    //Constructor with neighbours
+
+    /**
+     * Constructor with neighbours
+     */
     public Field(ArrayList<Field> nbrs){
         this.setNeighbours(nbrs);
     }
 
-    //Getters&Setters
+    /**
+     * Getters
+     */
     public ArrayList<Virologist> getVirologists(){
         return virologists;
     }
@@ -25,21 +36,29 @@ public class Field {
         return neighbours;
     }
 
-    //Adding and removing a virologist
+    /**
+     * Adding and removing a virologist
+     */
     public void accept(Virologist virologist){
         virologists.add(virologist);
         virologist.setField(this);
     }
 
+    /**
+     * removes the virologist from the field
+     * @param virologist the virologist that's being removed.
+     */
     public void remove(Virologist virologist){
         virologists.remove(virologist);
     }
 
-    /**Gives back the virologists on the field
+    /**
+     * Gives back the virologists on the field
      * except the one calling it
      */
-    public ArrayList<Virologist> searchForVirologist(){
-        return virologists; 
+    public ArrayList<Virologist> searchForVirologist(Virologist v){
+        virologists.remove(v);
+        return virologists;
     }
 
     /**
@@ -64,6 +83,9 @@ public class Field {
      */
     public void add(Equipment e) { }
 
+    /**
+     * Setters
+     */
     public void setNeighbour(Field f1) {
         this.neighbours.add(f1);
     }
@@ -76,6 +98,7 @@ public class Field {
             }
         }
     }
+
     /**
      * doesn't do anything
      * only have effect in StoreHouse

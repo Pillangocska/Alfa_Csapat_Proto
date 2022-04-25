@@ -2,6 +2,7 @@ package main.com.teamalfa.blindvirologists.agents.virus;
 
 import main.com.teamalfa.blindvirologists.agents.Agent;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
+import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 abstract public class Virus extends Agent {
@@ -55,5 +56,20 @@ abstract public class Virus extends Agent {
     //getter
     public int getPriority() {
         return priority;
+    }
+
+    public void step() {
+        if(expiry > 0 && target.getBackpack().getAgentPocket().getAgentHolder().contains(this))
+            expiry--;
+        else if(expiry == 0 && target.getBackpack().getAgentPocket().getAgentHolder().contains(this)) {
+            target.getBackpack().getAgentPocket().getAgentHolder().remove(this);
+            TurnHandler.getInstance().remove(this);
+        }
+        else if(duration > 0 && target.getViruses().contains(this))
+            duration--;
+        else if(duration == 0 && target.getViruses().contains(this)) {
+            target.removeVirus(this);
+            TurnHandler.getInstance().remove(this);
+        }
     }
 }

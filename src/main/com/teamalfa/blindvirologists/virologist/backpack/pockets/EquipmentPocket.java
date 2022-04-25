@@ -18,6 +18,7 @@ public class EquipmentPocket extends Pocket{
         maxSize = 5;
     }
 
+    //getters, setters
     public Backpack getBackpack() {
         return backpack;
     }
@@ -34,6 +35,11 @@ public class EquipmentPocket extends Pocket{
         equipmentHolder = e;
     }
 
+    /**
+     * Adds an equipment to the pocket, if there's enough place.
+     * @param equipment The new equipment
+     * @return true if it was successful, false if it wasn't.
+     */
     public boolean add(Equipment equipment) {
         Boolean ret = false;
         if(equipmentHolder.size() < maxSize){
@@ -43,6 +49,7 @@ public class EquipmentPocket extends Pocket{
         return ret;
     }
 
+    //getter
     @Override
     public int getCurrentSize() {
         return equipmentHolder.size();
