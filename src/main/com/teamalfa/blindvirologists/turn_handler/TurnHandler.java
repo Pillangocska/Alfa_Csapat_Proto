@@ -21,7 +21,7 @@ public class TurnHandler {
         return instance;
     }
 
-    private void tick() {
+    public void tick() {
         for(Steppable steppable : steppables) {
             steppable.step();
         }

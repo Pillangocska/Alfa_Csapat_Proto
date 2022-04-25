@@ -3,34 +3,30 @@ package main.com.teamalfa.blindvirologists.equipments.active_equipments;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 public class Axe extends ActiveEquipment{
-    boolean blunt;
 
     public Axe() {
         usetime = 1;
-        blunt = false;
     }
 
     @Override
-    public void use(Virologist v) {
-        if(usetime == 1 && !(blunt)){
-
-            virologist.die();
+    public boolean use(Virologist v) {
+        if(usetime == 1){
+            v.die();
             startCooldown();
             usetime--;
+            return true;
         }
-        else if(blunt && usetime < 1) {
-            wornOut();
-        }
+        return false;
     }
 
     @Override
     public void wornOut() {
-        // TODO missing axe wornout
+        // Ennek üresnek kell lennie, mert nem dobódik el magától, foglalja a helyet.
     }
 
     @Override
     public void step() {
-        //TODO missing axe step
+        // Ennek is üresnek kell lennie, mert nincs rajta cooldown.
     }
 
     @Override

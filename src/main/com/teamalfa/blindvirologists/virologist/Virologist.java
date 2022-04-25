@@ -76,8 +76,8 @@ public class Virologist {
         field = destination;
     }
 
-    public void use(ActiveEquipment a, Virologist v) {
-        a.use(v);
+    public boolean use(ActiveEquipment a, Virologist v) {
+        return a.use(v);
     }
 
     /**
@@ -323,10 +323,17 @@ public class Virologist {
         Virologist v = backpack.getVirologist();
         Field f = v.getField();
         if(f.canChangeEquipment()){
-            if(wornEquipment.contains(e))
-                e.unEquip();
-            else
-                e.equip();
+            boolean isParalysed = false;
+            for (var vir : activeViruses) {
+                if (isParalysed = vir.affectUsage());
+                break;
+            }
+            if (!isParalysed) {
+                if (wornEquipment.contains(e))
+                    e.unEquip();
+                else
+                    e.equip();
+            }
         }
     }
 
