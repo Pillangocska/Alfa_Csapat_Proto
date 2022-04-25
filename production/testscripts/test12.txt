@@ -1,6 +1,6 @@
 createfield -t safehouse
-createequipment axe -s SH1
-createvirologist SH1
+createequipment axe -s SA1
+createvirologist SA1
 startturn V1
 search
-pickupequipment A1
+pickupequipment E1

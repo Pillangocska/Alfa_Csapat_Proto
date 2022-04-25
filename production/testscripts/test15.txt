@@ -5,5 +5,5 @@ createvirologist F1
 createagent virus dance V1
 setrandom random 1
 startturn V1
-useagent DV1 V1
+useagent A1 V1
 move F2
