@@ -365,6 +365,8 @@ public class ControllerRefactor {
         // get destination or print error
         Field destination = handleDoesNotExistError(destinationId, fieldHashMap);
 
+        int virusCount = virologist.getViruses().size();
+
         virologist.move(destination);
 
         // check if virologist moved
@@ -377,6 +379,21 @@ public class ControllerRefactor {
         System.out.println("Virologist: " + getObjectId(virologist, virologistHashMap));
         System.out.println("Origin: " + startId);
         System.out.println("Destination: " + destinationId);
+
+        // handle bear infection
+        if(getFieldTypeBasedOnId(destinationId).equals("Laboratory")) {
+            Laboratory laboratory = (Laboratory)handleDoesNotExistError(destinationId, fieldHashMap);
+            boolean successful = virusCount != virologist.getViruses().size();
+
+            Agent agent = new BearVirus();
+
+            if(successful)
+                agent = virologist.getViruses().get(virusCount);
+
+            if(laboratory.getGeneticCode().getType().equals("bear")) {
+                handleBearCreated(virologist, agent, successful);
+            }
+        }
     }
 
     private void pickDropEquipment(ArrayList<String> input, String command) {
@@ -674,7 +691,7 @@ public class ControllerRefactor {
         System.out.println("ProtectionBank: " + joinWithComma(virologist.getProtectionBank(), geneticCodeHashMap));
     }
 
-    public static void handleBearCreated(Virologist virologist, Agent virus, boolean successful) {
+    private void handleBearCreated(Virologist virologist, Agent virus, boolean successful) {
         String virusId = registerObject(virus, agentHashMap, idCounter, Prefixes.Agent.toString());
 
         System.out.println("Agent created:");
@@ -687,7 +704,6 @@ public class ControllerRefactor {
         System.out.println("Agent: " + virusId);
         System.out.println("Target: " + getObjectId(virologist, virologistHashMap));
         System.out.println("Result: " + (successful ? "Successful" : "Failed"));
-        System.out.println();
     }
 
     private void printStatus(Field field, boolean searched) {
