@@ -111,7 +111,7 @@ public class ControllerRefactor {
                     case "runscript": runScript(input); break;
                     case "search": search(input); break;
                     case "setrandom": setRandom(input); break;
-                    case "tick": tick(); break;
+                    case "destroy": destroy(input); break;
                     case "exit": return true;
                     default: System.out.println("Wrong command.");
                 }
@@ -793,8 +793,16 @@ public class ControllerRefactor {
         System.out.println("ProtectionBank: " + joinWithComma(virologist.getProtectionBank(), geneticCodeHashMap));
     }
 
-    private void tick() {
-        TurnHandler.getInstance().tick();
+    private void destroy(ArrayList<String> input) {
+        String fieldId = getNextArgument(input);
+        Field field = handleDoesNotExistError(fieldId, fieldHashMap);
+
+        field.destroy();
+
+        boolean isStorehouse = false;
+        if(field instanceof StoreHouse)
+            isStorehouse = true;
+        System.out.println(isStorehouse ? "Elements in storehouse destroyed." : "Field is not storehouse.");
     }
 
     private void handleBearCreated(Virologist virologist, Agent virus, boolean successful) {
@@ -911,7 +919,7 @@ public class ControllerRefactor {
                         "25: Virologist takes off a bag\n" +
                         "26: Virologist can’t take off bag\n" +
                         "27: Virologist can’t wear an axe, because worn equipments are full\n" +
-                        "28: Virologist uses glove for the third time\n" +
+                        "28: Mandatory test\n" +
                         "29: Virologist uses a sharp axe on another virologist\n" +
                         "30: Virologist uses blunt axe on another virologist\n" +
                         "31: Virologist wants to toggle bag, but the Virologist isn't in a Safehouse\n" +
