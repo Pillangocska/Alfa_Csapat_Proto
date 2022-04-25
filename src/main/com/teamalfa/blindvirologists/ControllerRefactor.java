@@ -96,8 +96,9 @@ public class ControllerRefactor {
                     case "creategeneticcode": createGeneticCode(input); break;
                     case "createagent": createAgent(input); break;
                     case "move": move(input); break;
-                    case "pickupequipment": pickDropEquipment(input, command.toLowerCase()); break;
+                    case "pickupequipment":
                     case "dropequipment": pickDropEquipment(input, command.toLowerCase()); break;
+                    case "rob": rob(input); break;
                     case "learngeneticcode": learnGeneticCode(input); break;
                     case "useequipment": useEquipment(input); break;
                     case "craftagent": craftAgent(input); break;
@@ -119,6 +120,60 @@ public class ControllerRefactor {
         }
         System.out.println();
         return false;
+    }
+
+    private void rob(ArrayList<String> input) {
+        String output = "";
+
+        // get current virologist or print error
+        Virologist virologist = handleCurrentVirologistError();
+        String virologistId = getObjectId(virologist, virologistHashMap);
+
+        String targetId = getNextArgument(input);
+        Virologist target = handleDoesNotExistError(targetId, virologistHashMap);
+
+        Backpack targetBackpack = virologist.rob(target);
+        if(targetBackpack != null) {
+            ArrayList<Equipment> targetEquipments = targetBackpack.getEquipmentPocket().getEquipmentHolder();
+            ElementBank targetElementBank = targetBackpack.getElementBank();
+
+            String equipmentFlag = getNextArgument(input);
+
+            if(equipmentFlag.equals("-eq")) {
+                ArrayList<String> equipmentToStealIds = getParametersUntilFirstDash(input);
+                ArrayList<Equipment> equipmentsToSteal = handleManyDoNotExistError(equipmentToStealIds, equipmentHashMap);
+                if(targetEquipments.containsAll(equipmentsToSteal)) {
+                    ArrayList<Equipment> equipmentsWhichFit = new ArrayList<>();
+
+                    for(Equipment equipment : equipmentsToSteal) {
+                        if(virologist.getBackpack().add(equipment)) {
+                            equipmentsWhichFit.add(equipment);
+                        }
+                    }
+
+                    targetEquipments.removeAll(equipmentsWhichFit);
+
+                    output += "Virologist was robbed:\n";
+                    output += "Robber: " + virologistId + "\n";
+                    output += "Victim: " + targetId + "\n";
+                    output += "Equipments: " + joinWithComma(equipmentsWhichFit, equipmentHashMap) + "\n";
+                }
+            }
+            if(targetElementBank != null) {
+                int currentNuc = virologist.getBackpack().getElementBank().getNucleotide();
+                int currentAmi = virologist.getBackpack().getElementBank().getAminoAcid();
+
+                virologist.getBackpack().add(targetElementBank);
+
+                int pickedNuc = virologist.getBackpack().getElementBank().getNucleotide() - currentNuc;
+                int pickedAmi = virologist.getBackpack().getElementBank().getAminoAcid() -currentAmi;
+
+                output += "AminoAcid: " + pickedAmi + "\n";
+                output += "Nucleotide: " + pickedNuc + "\n";
+            }
+        }
+        String finalOut = output.isEmpty() ? "Virologist was not robbed" : output;
+        System.out.println(finalOut);
     }
 
     private void createField(ArrayList<String> input) {

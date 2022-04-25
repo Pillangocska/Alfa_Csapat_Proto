@@ -143,8 +143,8 @@ public class Virologist {
      * It calls the other virologist's robbed method.
      * @param v The virologist that is being robbed.
      */
-    public void rob(Virologist v) {
-        v.robbed();
+    public Backpack rob(Virologist v) {
+        return v.robbed();
     }
 
     /**

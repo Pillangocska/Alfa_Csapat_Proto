@@ -29,12 +29,7 @@ public class Backpack {
     }
 
     public boolean add(Equipment equipment) {
-        if(equipmentPocket.add(equipment)){
-            SafeHouse safeHouse = (SafeHouse) virologist.getField();
-            safeHouse.remove(equipment);
-            return true;
-        }
-        return false;
+        return equipmentPocket.add(equipment);
     }
 
     public void add(GeneticCode geneticCode) {
