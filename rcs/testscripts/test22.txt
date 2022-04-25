@@ -1,6 +1,5 @@
 createfield
 createvirologist F1
-creategeneticcode paralyze -v V1startturn V1
-crafteagent virus paralyze
+creategeneticcode paralyze -v V1
 startturn V1
-crafteagent virus paralyze
+craftagent virus paralyze
