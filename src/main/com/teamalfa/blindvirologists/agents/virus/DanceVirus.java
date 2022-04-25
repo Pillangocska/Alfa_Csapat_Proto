@@ -3,21 +3,15 @@ package main.com.teamalfa.blindvirologists.agents.virus;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.DanceCode;
 import main.com.teamalfa.blindvirologists.city.fields.Field;
 import main.com.teamalfa.blindvirologists.random.MyRandom;
-import main.com.teamalfa.blindvirologists.random.TrueRandom;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class DanceVirus extends Virus {
 
-    public MyRandom random;
-
     public DanceVirus(){
-        this.random = new TrueRandom();
         geneticCode = new DanceCode();
     }
-
-    public void setRandom(MyRandom random){
-        this.random = random;
-    }
-
 
     /**
      * This method makes the Virologist move to a random Field instead of the chosen one.
@@ -27,8 +21,18 @@ public class DanceVirus extends Virus {
      */
     @Override
     public Field affectMovement(Field current) {
-        int r = random.PickRandom(current.getNeighbours().size());
-        return current.getNeighbours().get(r);
+        return pickRandom(current.getNeighbours());
     }
 
+    private Field pickRandom(ArrayList<Field> neighbours){
+        int size = neighbours.size();
+
+        int idx = -1;
+        if(!MyRandom.getInstance().isChoiceDeterministic()) {
+            idx = new Random().nextInt(size);
+        }else {
+            idx = MyRandom.getInstance().getChoice() % size;
+        }
+        return neighbours.get(idx);
+    }
 }

@@ -14,6 +14,7 @@ import main.com.teamalfa.blindvirologists.equipments.Equipment;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.ActiveEquipment;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.Axe;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.Gloves;
+import main.com.teamalfa.blindvirologists.random.MyRandom;
 import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.Backpack;
@@ -669,10 +670,40 @@ public class ControllerRefactor {
     }
     
     private void setRandom(ArrayList<String> input) { // TODO
-        String yesOrNo = getNextArgument(input);
-        String choiceType = getNextArgument(input);
+        String yesOrNo = getNextArgument(input).toLowerCase();
 
+        Boolean yesOrNoBool = null;
+        Integer optionChoiceInt = null;
 
+        if(yesOrNo.equals("random")) {
+            MyRandom.getInstance().setChoiceDeterministic(false);
+        }else {
+            MyRandom.getInstance().setYesOrNoDeterministic(true);
+            switch (yesOrNo) {
+                case "true": yesOrNoBool = true; break;
+                case "false": yesOrNoBool = false; break;
+                default: yesOrNoBool = null;
+            }
+        }
+
+        String optionChoice = getNextArgument(input);
+        if(optionChoice.equals("random")) {
+            MyRandom.getInstance().setChoiceDeterministic(false);
+        }else {
+            try {
+                optionChoiceInt = Integer.parseInt(optionChoice);
+            }catch (NumberFormatException e) {
+                printError("Possible choices are random or a number");
+            }
+        }
+
+        if(yesOrNoBool != null) MyRandom.getInstance().setYesOrNo(yesOrNoBool);
+        if(optionChoiceInt != null) MyRandom.getInstance().setChosenNumber(optionChoiceInt);
+
+        // print result
+        System.out.println("Random behavior changed:");
+        System.out.println("yesOrNoType: " + capitalizeString(yesOrNo));
+        System.out.println("choiceType: " + capitalizeString(optionChoice));
     }
 
     // Status print help methods
@@ -694,7 +725,7 @@ public class ControllerRefactor {
     private void handleBearCreated(Virologist virologist, Agent virus, boolean successful) {
         String virusId = registerObject(virus, agentHashMap, idCounter, Prefixes.Agent.toString());
 
-        System.out.println("Agent created:");
+        System.out.println("\nAgent created:");
         System.out.println("ID: " + virusId);
         System.out.println("GeneticCode: Bear");
         System.out.println("Virologist: " + getObjectId(virologist, virologistHashMap));
