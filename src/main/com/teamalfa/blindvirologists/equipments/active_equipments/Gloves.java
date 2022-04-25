@@ -66,14 +66,4 @@ public class Gloves extends ActiveEquipment {
     public String getType() {
         return "Gloves";
     }
-
-    @Override
-    public void wornOut() {
-        // TODO:
-    }
-
-    @Override
-    public String getType() {
-        return "Gloves";
-    }
 }

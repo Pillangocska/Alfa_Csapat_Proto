@@ -24,7 +24,14 @@ public class Axe extends ActiveEquipment{
     }
 
     @Override
-    public void wornOut() {}
+    public void wornOut() {
+        // TODO missing axe wornout
+    }
+
+    @Override
+    public void step() {
+        //TODO missing axe step
+    }
 
     @Override
     public String getType() {
