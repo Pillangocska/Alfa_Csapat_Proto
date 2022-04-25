@@ -16,6 +16,11 @@ public class Laboratory extends Field{
         //todo
     }
 
+    /**
+     * Adds the virologist to the field, sets the field as the virologist's field
+     * The genetic code infects them.
+     * @param v The virologist that's stepped on the field.
+     */
     @Override
     public void accept(Virologist v) {
         super.accept(v);
@@ -24,6 +29,7 @@ public class Laboratory extends Field{
         }
     }
 
+    //setter, getter
     public void setGeneticCode(GeneticCode geneticCode) {
         this.geneticCode = geneticCode;
     }

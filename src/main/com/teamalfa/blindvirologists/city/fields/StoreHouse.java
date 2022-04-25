@@ -20,6 +20,7 @@ public class StoreHouse extends Field {
         virologist.getBackpack().add(elements);
     }
 
+    //setter
     public void setElements(ElementBank elements) {
         this.elements = elements;
     }
@@ -27,6 +28,9 @@ public class StoreHouse extends Field {
         return elements;
     }
 
+    /**
+     * Removes all elements from the safehouse.
+     */
     public void destroy() {
        elements.removeAll();
     }

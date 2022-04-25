@@ -5,6 +5,7 @@ import main.com.teamalfa.blindvirologists.random.MyRandom;
 import java.util.Random;
 
 public class Cloak extends Equipment{
+    MyRandom random;
 
     private final int protectionRate;
 

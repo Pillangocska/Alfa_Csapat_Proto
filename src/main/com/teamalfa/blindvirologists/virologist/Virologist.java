@@ -77,7 +77,9 @@ public class Virologist {
     }
 
     public boolean use(ActiveEquipment a, Virologist v) {
-        return a.use(v);
+        if(!(checkUsageAffect()))
+            return a.use(v);
+        return false;
     }
 
     /**
@@ -87,10 +89,17 @@ public class Virologist {
      * @param v The virologist the agent is used on.
      */
     public void use(Agent a, Virologist v){
-        if (a != null && !checkUsageAffect())
+        if (a != null && !(checkUsageAffect())){
             a.apply(v);
+            backpack.getAgentPocket().removeAgent(a);
+        }
     }
 
+    /**
+     * Learns the genetic code that's on the laboratory's wall.
+     * @param gc The genetic that's on the laboratory's wall.
+     * @return True if it was learned, false otherwise.
+     */
     public boolean learn(GeneticCode gc) {
         if(!(this.checkUsageAffect()) && gc != null) {
             for(GeneticCode alreadyLearnt : backpack.getGeneticCodePocket().getGeneticCodes()) {
@@ -104,6 +113,11 @@ public class Virologist {
         return false;
     }
 
+    /**
+     * Picks up the equipment, if not paralyzed
+     * @param equipment The picked up equipment
+     * @return true if it was successful, false if it wasn't
+     */
     public boolean pickUpEquipment(Equipment equipment) {
         if(!isParalyzed()) {
             if(field.canChangeEquipment()) {
@@ -142,9 +156,12 @@ public class Virologist {
      * This method is called when the virologist tries to rob another virologist.
      * It calls the other virologist's robbed method.
      * @param v The virologist that is being robbed.
+     * @return the virologist's backpack or null.
      */
     public Backpack rob(Virologist v) {
-        return v.robbed();
+        if(!(checkUsageAffect()))
+            return v.robbed();
+        return null;
     }
 
     /**
@@ -227,11 +244,6 @@ public class Virologist {
         sortViruses();
     }
 
-    private boolean checkRobbable() {
-        //todo ilyet sehol se használunk
-        return true;
-    }
-
     /**
      * This method is called when the Virologist removes an equipment from themselves,
      * it removes the equipment from the wornEquipments list.
@@ -277,6 +289,8 @@ public class Virologist {
         Collections.sort(activeViruses, new VirusComparator());
     }
 
+
+    //getters
     public ArrayList<Virus> getViruses() {
         return activeViruses;
     }
@@ -286,10 +300,16 @@ public class Virologist {
     }
     public ArrayList<ActiveEquipment> getActiveEquipments() { return  activeEquipments; }
 
+    /**
+     * Calls the field's (the one the virologist is currently standing on) destroy method.
+     */
     public void destroy() {
         field.destroy();
     }
 
+    /**
+     * Removes the virologist from the turnhandler or from the game.
+     */
     public void die() {
         if(TurnHandler.getInstance().GetOrder().contains(this)) {
             TurnHandler.getInstance().remove(this);
@@ -299,6 +319,9 @@ public class Virologist {
         }
     }
 
+    /**
+     * Turns the virologist into bear. Removes them from the turnhandler and gives them to the virologist.
+     */
     public void turntoBear() {
         if(!(Game.getInstance().getBears().contains(this))) {
             TurnHandler.getInstance().remove(this);
@@ -306,6 +329,12 @@ public class Virologist {
         }
     }
 
+    /**
+     * Tosses the equipment to the ground if they are not wearing it,
+     * and currently standing on a safehouse, and is not paralyzed.
+     * @param e The tossed equipment.
+     * @return true if it was successful, false otherwise.
+     */
     public boolean toss(Equipment e){
         if(!(wornEquipment.contains(e))){
             Virologist v = backpack.getVirologist();
@@ -319,6 +348,10 @@ public class Virologist {
         return false;
     }
 
+    /**
+     * Wears/unwears the equipment if they are not paralyzed and standing in a safehouse.
+     * @param e The toggled equipment.
+     */
     public void toggle(Equipment e){
         Virologist v = backpack.getVirologist();
         Field f = v.getField();
@@ -337,9 +370,16 @@ public class Virologist {
         }
     }
 
+    /**
+     * Tells if the virologist is paralyzed or not, there's another method that does the exact same thing
+     * but that one is 3 lines long, while this one is only a line so ofc it's way cooler so we need to keep it
+     * just for that reason.
+     * @return True if paralyzed, false if not.
+     */
     public boolean isParalyzed(){
         return !activeViruses.isEmpty() ? activeViruses.get(0).affectUsage() : false;
     }
+
 
     public GeneticCode getCodeByType(String typeToMatch) {
         ArrayList<GeneticCode> codes = backpack.getGeneticCodePocket().getGeneticCodes();
@@ -351,6 +391,10 @@ public class Virologist {
         return null;
     }
 
+    /**
+     * Calls the field's (the one the virologist is currently standing on searchforvirologists method)
+     * @return the method.
+     */
     public ArrayList<Virologist> searchForVirologist() {
         return field.searchForVirologist(this);
     }

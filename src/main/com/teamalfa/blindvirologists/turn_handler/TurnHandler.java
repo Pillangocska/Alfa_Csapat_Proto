@@ -16,42 +16,68 @@ public class TurnHandler {
       instance = new TurnHandler();
     }
 
+    private TurnHandler(){}
+
     public static TurnHandler getInstance() {
         // Any class that wants to access the TurnHandler can call this method.
         return instance;
     }
 
+    /**
+     * Makes every steppable step.
+     */
     public void tick() {
         for(Steppable steppable : steppables) {
             steppable.step();
         }
     }
 
-    public static void accept(Steppable steppable) {
+    /**
+     * Adds the new steppable to the list.
+     * @param steppable The steppable that's added to the list.
+     */
+    public void accept(Steppable steppable) {
         steppables.add(steppable);
     }
 
+    /**
+     * Adds the virologist to the list.
+     * @param virologist The new Virologist.
+     */
     public static void accept(Virologist virologist) {
         if(order.isEmpty())
             activeVirologist = virologist;
         order.add(virologist);
     }
 
+    /**
+     * Removes the steppable from the list.
+     * @param steppable
+     */
     public void remove(Steppable steppable) {
         steppables.remove(steppable);
     }
 
+    /**
+     * Removes the virologist from the list.
+     * @param virologist
+     */
     public void remove(Virologist virologist) {
         order.remove(virologist);
     }
 
+    /**
+     * Reorders the virologists list.
+     */
+    private void reOrderVirologists() {
+        Collections.shuffle(order);
+    }
+
+    //getters, setters
     public static ArrayList<Virologist> GetOrder() {
         return order;
     }
 
-    private static void reOrderVirologists() {
-        Collections.shuffle(order);
-    }
 
     public static Virologist getActiveVirologist() {
         return activeVirologist;
