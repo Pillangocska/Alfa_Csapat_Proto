@@ -598,7 +598,7 @@ public class ControllerRefactor {
         Virologist target = handleDoesNotExistError(targetId, virologistHashMap);
 
         virologist.use(agent, target);
-        boolean successful = target.getViruses().contains(agent);
+        boolean successful = target.getViruses().contains(agent) || target.getProtectionBank().contains(agent.getGeneticCode());
 
         // print result
         System.out.println("Agent used on virologist:");
