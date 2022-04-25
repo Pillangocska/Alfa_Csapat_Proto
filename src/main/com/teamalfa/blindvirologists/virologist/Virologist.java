@@ -92,7 +92,12 @@ public class Virologist {
     }
 
     public boolean learn(GeneticCode gc) {
-        if(!(this.checkUsageAffect())) {
+        if(!(this.checkUsageAffect()) && gc != null) {
+            for(GeneticCode alreadyLearnt : backpack.getGeneticCodePocket().getGeneticCodes()) {
+                if(gc.equals(alreadyLearnt)) {
+                    return false;
+                }
+            }
             backpack.add(gc);
             return true;
         }
@@ -112,6 +117,12 @@ public class Virologist {
             }
         }
         return false;
+    }
+
+    public void pickUpMaterial() {
+        if(!isParalyzed()) {
+            field.searchedBy(this);
+        }
     }
 
     /**
@@ -321,6 +332,16 @@ public class Virologist {
 
     public boolean isParalyzed(){
         return !activeViruses.isEmpty() ? activeViruses.get(0).affectUsage() : false;
+    }
+
+    public GeneticCode getCodeByType(String typeToMatch) {
+        ArrayList<GeneticCode> codes = backpack.getGeneticCodePocket().getGeneticCodes();
+        for(GeneticCode code : codes) {
+            if(code.getType().equals(typeToMatch)){
+                return code;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Virologist> searchForVirologist() {

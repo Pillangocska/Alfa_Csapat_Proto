@@ -29,4 +29,6 @@ abstract public class Equipment {
     public boolean protect() {
         return false;
     }
+
+    abstract public String getType();
 }

@@ -61,4 +61,9 @@ public class Gloves extends ActiveEquipment {
         else if(cooldown > 0)
             cooldown--;
     }
+
+    @Override
+    public String getType() {
+        return "Gloves";
+    }
 }

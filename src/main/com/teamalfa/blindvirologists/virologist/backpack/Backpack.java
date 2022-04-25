@@ -1,5 +1,6 @@
 package main.com.teamalfa.blindvirologists.virologist.backpack;
 
+import main.com.teamalfa.blindvirologists.agents.Agent;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.genetic_code.GeneticCode;
 import main.com.teamalfa.blindvirologists.agents.virus.Virus;
@@ -45,18 +46,20 @@ public class Backpack {
         elements.remove(added);
     }
 
-    public void createVirus(GeneticCode geneticCode) {
+    public Agent createVirus(GeneticCode geneticCode) {
         Virus virus = geneticCode.createVirus(elementBank);
         if(virus != null) {
             agentPocket.addAgent(virus);
         }
+        return virus;
     }
 
-    public void createVaccine(GeneticCode geneticCode) {
+    public Agent createVaccine(GeneticCode geneticCode) {
         Vaccine vaccine = geneticCode.createVaccine(elementBank);
         if(vaccine != null) {
             agentPocket.addAgent(vaccine);
         }
+        return vaccine;
     }
 
 

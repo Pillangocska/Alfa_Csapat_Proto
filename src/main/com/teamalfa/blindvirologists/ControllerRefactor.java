@@ -23,25 +23,25 @@ import static main.com.teamalfa.blindvirologists.ControllerHelper.*;
 import static main.com.teamalfa.blindvirologists.ErrorPrinter.*;
 
 import java.awt.image.AreaAveragingScaleFilter;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class ControllerRefactor {
-    // test
-    private HashMap<String, Object> objectHashMap = new HashMap<>();
+    private static HashMap<String,Field> fieldHashMap = new HashMap<>();
+    private static HashMap<String, Virologist> virologistHashMap = new HashMap<>();
+    private static HashMap<String, Backpack> backpackHashMap = new HashMap<>();
+    private static HashMap<String, ElementBank> elementBankHashMap = new HashMap<>();
+    private static HashMap<String, Equipment> equipmentHashMap = new HashMap<>();
+    private static HashMap<String, GeneticCode> geneticCodeHashMap = new HashMap<>();
+    private static HashMap<String, Agent> agentHashMap = new HashMap<>();
 
-    private HashMap<String,Field> fieldHashMap = new HashMap<>();
-    private HashMap<String, Virologist> virologistHashMap = new HashMap<>();
-    private HashMap<String, Backpack> backpackHashMap = new HashMap<>();
-    private HashMap<String, ElementBank> elementBankHashMap = new HashMap<>();
-    private HashMap<String, Equipment> equipmentHashMap = new HashMap<>();
-    private HashMap<String, GeneticCode> geneticCodeHashMap = new HashMap<>();
-    private HashMap<String, Agent> agentHashMap = new HashMap<>();
-
-    private HashMap<String, Integer> idCounter = new HashMap<>();
+    private static HashMap<String, Integer> idCounter = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
     public ControllerRefactor() {
@@ -50,7 +50,18 @@ public class ControllerRefactor {
 
     private void initIdCounter(){
         for(Prefixes prefix : Prefixes.values())
-            idCounter.put(prefix.toString(), 0);
+            idCounter.put(prefix.toString(), 1);
+    }
+    private void reset() {
+        fieldHashMap.clear();
+        virologistHashMap.clear();
+        backpackHashMap.clear();
+        elementBankHashMap.clear();
+        equipmentHashMap.clear();
+        geneticCodeHashMap.clear();
+        agentHashMap.clear();
+        idCounter.clear();
+        initIdCounter();
     }
 
     public void startProgram() {
@@ -61,7 +72,11 @@ public class ControllerRefactor {
 
     private ArrayList<String> readCommands() {
         // make array list from input string
-        return new ArrayList<>(Arrays.asList(scanner.nextLine().split(" ")));
+        return splitParameters(scanner.nextLine());
+    }
+
+    private ArrayList<String> splitParameters(String parameters) {
+        return new ArrayList<>(Arrays.asList(parameters.split(" ")));
     }
 
     private boolean handleCommands(ArrayList<String> input) {
@@ -86,6 +101,7 @@ public class ControllerRefactor {
                     case "useagent": useAgent(input); break;
                     case "pickupmaterial": pickUpMaterial(input); break;
                     case "startturn": startTurn(input); break;
+                    case "endturn": endTurn(input); break;
                     case "status": status(input); break;
                     case "toggle": toggle(input); break;
                     case "runscript": runScript(input); break;
@@ -98,6 +114,7 @@ public class ControllerRefactor {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println();
         return false;
     }
 
@@ -135,7 +152,7 @@ public class ControllerRefactor {
         System.out.println("Field created:");
         System.out.println("ID: " + id);
         System.out.println("Type: " + capitalizeString(type));
-        System.out.println("Neighbours: " + String.join(", ", neighbourIds));
+        System.out.println("Neighbours: " + joinWithComma(neighbours, fieldHashMap));
     }
 
     private void createVirologist(ArrayList<String> input) {
@@ -149,11 +166,13 @@ public class ControllerRefactor {
         // create virologist and position on given field
         Virologist virologist = new Virologist();
         Backpack backpack = virologist.getBackpack();
+        ElementBank elementBank = virologist.getBackpack().getElementBank();
         field.accept(virologist);
 
-        // register objects and get ids
+        // register virologist, backpack and element bank
         String virologistId = registerObject(virologist, virologistHashMap, idCounter, Prefixes.Virologist.toString());
         String backpackId = registerObject(backpack, backpackHashMap, idCounter, Prefixes.Backpack.toString());
+        registerObject(elementBank, elementBankHashMap, idCounter, Prefixes.ElementBank.toString());
 
         // print creation
         System.out.println("Virologist created:");
@@ -355,7 +374,8 @@ public class ControllerRefactor {
 
         // print result
         System.out.println("Virologist moved:");
-        System.out.println("Origin:" + startId);
+        System.out.println("Virologist: " + getObjectId(virologist, virologistHashMap));
+        System.out.println("Origin: " + startId);
         System.out.println("Destination: " + destinationId);
     }
 
@@ -409,13 +429,13 @@ public class ControllerRefactor {
 
         // print result
         System.out.println("Genetic code learned:");
-        System.out.println("Virologist:" + virologistId);
+        System.out.println("Virologist: " + virologistId);
         System.out.println("Field: " + fieldId);
         System.out.println("GeneticCode: " + geneticCodeId );
         System.out.println("Result: " + (successful ? "Successful" : "Failed"));
     }
 
-    private void useEquipment(ArrayList<String> input) {
+    private void useEquipment(ArrayList<String> input) { // TODO:
         // get current virologist or print error
         Virologist virologist = handleCurrentVirologistError();
         String virologistId = getObjectId(virologist, virologistHashMap);
@@ -444,19 +464,119 @@ public class ControllerRefactor {
     }
 
     private void craftAgent(ArrayList<String> input) {
-        System.out.println("Not yet implemented.");
+        // get current virologist or print error
+        Virologist virologist = handleCurrentVirologistError();
+        String virologistId = getObjectId(virologist, virologistHashMap);
+
+        // get agent and code types
+        String agentType = getNextArgument(input);
+        String codeType = getNextArgument(input);
+        GeneticCode code = virologist.getCodeByType(codeType);
+
+        Agent agent = null;
+        String agentId = null;
+
+        // if virologist owns code than try creating agent
+        if(code != null) {
+            if(agentType.equals("vaccine")) {
+                agent = virologist.getBackpack().createVaccine(code);
+            }else {
+                agent = virologist.getBackpack().createVirus(code);
+            }
+        }
+
+        // register agent
+        if(agent != null) {
+            agentId = registerObject(agent, agentHashMap, idCounter, Prefixes.Agent.toString());
+        }
+
+        // print result
+        System.out.println("Agent crafted:");
+        System.out.println("ID:" + agentId);
+        System.out.println("Type: " + agentType);
+        System.out.println("GeneticCode: " + codeType);
+        System.out.println("Result: " + (agent != null ? "Successful" : "Failed"));
     }
 
     private void useAgent(ArrayList<String> input) {
-        System.out.println("Not yet implemented.");
+        // get current virologist or print error
+        Virologist virologist = handleCurrentVirologistError();
+        String virologistId = getObjectId(virologist, virologistHashMap);
+
+        // check if agent exists
+        String agentId = getNextArgument(input);
+        Agent agent = handleDoesNotExistError(agentId, agentHashMap);
+
+        //check if target virologist exists
+        String targetId = getNextArgument(input);
+        Virologist target = handleDoesNotExistError(targetId, virologistHashMap);
+
+        virologist.use(agent, target);
+        boolean successful = target.getViruses().contains(agent);
+
+        // print result
+        System.out.println("Agent used on virologist:");
+        System.out.println("Agent: " + agentId);
+        System.out.println("Virologist: " + virologistId);
+        System.out.println("Target: " + targetId);
+        System.out.println("Result: " + (successful ? "Successful" : "Failed"));
     }
 
     private void pickUpMaterial(ArrayList<String> input) {
-        System.out.println("Not yet implemented.");
+        // get current virologist or print error
+        Virologist virologist = handleCurrentVirologistError();
+        String virologistId = getObjectId(virologist, virologistHashMap);
+
+        handleWrongArgumentCountError(0,0, input);
+
+        Field field = virologist.getField();
+        String fieldId = getObjectId(field, fieldHashMap);
+        String fieldType = getFieldTypeBasedOnId(fieldId);
+
+        int currentNuc = virologist.getBackpack().getElementBank().getNucleotide();
+        int currentAmi = virologist.getBackpack().getElementBank().getAminoAcid();
+
+        virologist.pickUpMaterial();
+
+        int pickedNuc = virologist.getBackpack().getElementBank().getNucleotide() - currentNuc;
+        int pickedAmi = virologist.getBackpack().getElementBank().getAminoAcid() -currentAmi;
+
+
+        // print result
+        System.out.println("Material picked up:");
+        System.out.println("Field: " + fieldId);
+        System.out.println("Nucleotide: " + pickedNuc);
+        System.out.println("AminoAcid: " + pickedAmi);
     }
 
     private void startTurn(ArrayList<String> input) {
-        System.out.println("Not yet implemented.");
+        // check if virologist exists
+        String virologistId = getNextArgument(input);
+        Virologist virologist = handleDoesNotExistError(virologistId, virologistHashMap);
+
+        // set current virologist and reorder
+        TurnHandler.setActiveVirologist(virologist);
+
+        System.out.println(virologistId + "'s turn started.");
+    }
+
+    private void endTurn(ArrayList<String> input) {
+        // get current virologist
+        Virologist current = TurnHandler.getActiveVirologist();
+        String currentId = getObjectId(current, virologistHashMap);
+        ArrayList<Virologist> order = TurnHandler.GetOrder();
+
+        // calculate next virologists idx
+        int idx = order.indexOf(current);
+        int nextIdx =  idx < order.size() - 1 ? idx+1 : 0;
+
+        Virologist next = order.get(nextIdx);
+        String nextId = getObjectId(next, virologistHashMap);
+
+        TurnHandler.setActiveVirologist(next);
+
+        // print result
+        System.out.println(currentId+"'s turn ended. Next virologist is " + nextId + ".");
     }
 
     private void status(ArrayList<String> input) {
@@ -464,7 +584,7 @@ public class ControllerRefactor {
             String prefix = id.replaceAll("\\d", "");
 
             if(FIELD_PREFIXES.contains(prefix))
-                printStatus(handleDoesNotExistError(id, fieldHashMap));
+                printStatus(handleDoesNotExistError(id, fieldHashMap), false);
 
             switch (prefix) {
                 case "V": printStatus(handleDoesNotExistError(id, virologistHashMap)); break;
@@ -493,13 +613,28 @@ public class ControllerRefactor {
 
         // print result
         System.out.println("Equipment toggled on Virologist:");
-        System.out.println("Equipment:" + equipmentId);
+        System.out.println("Equipment: " + equipmentId);
         System.out.println("Virologist: " + virologistId);
         System.out.println("Inf: " + info);
     }
 
     private void runScript(ArrayList<String> input) {
-        System.out.println("Not yet implemented.");
+        String path = getNextArgument(input);
+        String script = "";
+        String fullPath = System.getProperty("user.dir") + "/" + path;
+        try {
+            script = new String(Files.readAllBytes(Paths.get(fullPath)));
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading a testscript from " + fullPath + "!");
+        }
+
+        String[] lines = script.split("\n");
+        for(String line : lines){
+            if(!line.isEmpty()) {
+                handleCommands(splitParameters(line));
+            }
+        }
+        reset();
     }
 
     private void search(ArrayList<String> input) {
@@ -513,20 +648,23 @@ public class ControllerRefactor {
         if(virologist.isParalyzed())
             ErrorPrinter.printError("You are paralyzed.");
 
-        printStatus(field);
+        printStatus(field, true);
     }
     
-    private void setRandom(ArrayList<String> input) {
+    private void setRandom(ArrayList<String> input) { // TODO
+        String yesOrNo = getNextArgument(input);
+        String choiceType = getNextArgument(input);
 
 
     }
 
     // Status print help methods
     private void printStatus(Virologist virologist) {
+        // put derived classes into super arrays
         ArrayList<Equipment> activeWearing =  createSuperArrayList(virologist.getActiveEquipments());
         ArrayList<Agent> activeViruses = createSuperArrayList(virologist.getViruses());
 
-        System.out.println("Virologist created:");
+        System.out.println("Virologist:");
         System.out.println("ID: " + getObjectId(virologist, virologistHashMap));
         System.out.println("Field: " + getObjectId(virologist.getField(), fieldHashMap));
         System.out.println("Backpack: " + getObjectId(virologist.getBackpack(), backpackHashMap));
@@ -536,7 +674,23 @@ public class ControllerRefactor {
         System.out.println("ProtectionBank: " + joinWithComma(virologist.getProtectionBank(), geneticCodeHashMap));
     }
 
-    private void printStatus(Field field) {
+    public static void handleBearCreated(Virologist virologist, Agent virus, boolean successful) {
+        String virusId = registerObject(virus, agentHashMap, idCounter, Prefixes.Agent.toString());
+
+        System.out.println("Agent created:");
+        System.out.println("ID: " + virusId);
+        System.out.println("GeneticCode: Bear");
+        System.out.println("Virologist: " + getObjectId(virologist, virologistHashMap));
+        System.out.println("Result: Successful");
+        System.out.println();
+        System.out.println("Agent used on Virologist:");
+        System.out.println("Agent: " + virusId);
+        System.out.println("Target: " + getObjectId(virologist, virologistHashMap));
+        System.out.println("Result: " + (successful ? "Successful" : "Failed"));
+        System.out.println();
+    }
+
+    private void printStatus(Field field, boolean searched) {
         String id = getObjectId(field, fieldHashMap);
         String type = getFieldTypeBasedOnId(id);
 
@@ -544,23 +698,22 @@ public class ControllerRefactor {
         ArrayList<Equipment> equipments = null; String equipmentText = "null";
         ElementBank elements = null; String elementsText = "null";
 
-        if (type.equals("laboratory")) {
+        if (type.equals("Laboratory")) {
             Laboratory laboratory = (Laboratory) field;
             geneticCode = laboratory.getGeneticCode();
-            geneticText = getObjectId(geneticCode, objectHashMap);
+            geneticText = getObjectId(geneticCode, geneticCodeHashMap);
         }
-        else if(type.equals("safehouse")) {
+        else if(type.equals("SafeHouse")) {
             SafeHouse safeHouse = (SafeHouse) field;
             equipments = safeHouse.getEquipments();
             equipmentText = joinWithComma(equipments, equipmentHashMap);
-        }else {
+        }else if(type.equals("StoreHouse")){
             StoreHouse storeHouse = (StoreHouse) field;
             elements = storeHouse.getElements();
             elementsText = getObjectId(elements, elementBankHashMap);
         }
 
-
-        System.out.println("Field:");
+        System.out.println((searched ? "Virologist searched:" : "Field:"));
         System.out.println("ID: " + id);
         System.out.println("Type: " + capitalizeString(type));
         System.out.println("Neighbours: " + joinWithComma(field.getNeighbours(), fieldHashMap));
@@ -571,23 +724,34 @@ public class ControllerRefactor {
     }
 
     private void printStatus(ElementBank elementBank) {
-        System.out.println("Not yet implemented.");
+        System.out.println("ElementBank:");
+        System.out.println("ID: " + getObjectId(elementBank, elementBankHashMap));
+        System.out.println("Nucleotide: " + elementBank.getNucleotide());
+        System.out.println("AminoAcid: " + elementBank.getAminoAcid());
+        System.out.println("NucleotideSize: " + elementBank.getNucleotideMaxSize());
+        System.out.println("AminoAcidSize: " + elementBank.getAminoAcidMaxSize());
     }
 
     private void printStatus(GeneticCode geneticCode) {
-        System.out.println("Not yet implemented.");
+        System.out.println("GeneticCode:");
+        System.out.println("ID: " + getObjectId(geneticCode, geneticCodeHashMap));
+        System.out.println("GeneticCode: " + capitalizeString(geneticCode.getType()));
     }
 
     private  void printStatus(Equipment equipment) {
-        System.out.println("Not yet implemented.");
+        System.out.println("Equipment:");
+        System.out.println("ID: " + getObjectId(equipment, equipmentHashMap));
+        System.out.println("Type: " + capitalizeString(equipment.getType()));
     }
 
     private void printStatus(Agent agent) {
-        System.out.println("Not yet implemented.");
+        System.out.println("Agent:");
+        System.out.println("ID: " + getObjectId(agent, agentHashMap));
+        System.out.println("Name:" + capitalizeString(agent.getGeneticCode().getType()));
     }
 
     private void printStatus(Backpack backpack) {
-        System.out.println("Backpack");
+        System.out.println("Backpack:");
         System.out.println("ID: " + getObjectId(backpack, backpackHashMap));
         System.out.println("Equipments: " + joinWithComma(backpack.getEquipmentPocket().getEquipmentHolder(), equipmentHashMap));
         System.out.println("Agents: " + joinWithComma(backpack.getAgentPocket().getAgentHolder(), agentHashMap));

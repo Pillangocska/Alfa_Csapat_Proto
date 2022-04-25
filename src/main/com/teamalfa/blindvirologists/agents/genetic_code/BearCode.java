@@ -1,5 +1,8 @@
 package main.com.teamalfa.blindvirologists.agents.genetic_code;
 
+import main.com.teamalfa.blindvirologists.Controller;
+import main.com.teamalfa.blindvirologists.ControllerHelper;
+import main.com.teamalfa.blindvirologists.ControllerRefactor;
 import main.com.teamalfa.blindvirologists.agents.Vaccine;
 import main.com.teamalfa.blindvirologists.agents.virus.BearVirus;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
@@ -53,8 +56,12 @@ public class BearCode extends GeneticCode {
     @Override
     public void autoInfect(Virologist virologist) {
         // create bear virus
-        BearVirus bv = new BearVirus();
+        BearVirus bearVirus = new BearVirus();
         // infect the virologist
-        virologist.addVirus(bv);
+        bearVirus.apply(virologist);
+
+        boolean succesful = bearVirus.getTarget() == virologist;
+
+        ControllerRefactor.handleBearCreated(virologist, bearVirus, succesful);
     }
 }

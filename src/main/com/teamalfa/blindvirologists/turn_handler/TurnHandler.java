@@ -3,6 +3,7 @@ package main.com.teamalfa.blindvirologists.turn_handler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TurnHandler {
     private static TurnHandler instance = null;
@@ -44,19 +45,19 @@ public class TurnHandler {
         order.remove(virologist);
     }
 
-    public ArrayList<Virologist> GetOrder() {
+    public static ArrayList<Virologist> GetOrder() {
         return order;
     }
 
-    private void reOrderVirologists() {
-
+    private static void reOrderVirologists() {
+        Collections.shuffle(order);
     }
 
     public static Virologist getActiveVirologist() {
         return activeVirologist;
     }
 
-    public void setActiveVirologist(Virologist v) {
+    public static void setActiveVirologist(Virologist v) {
         activeVirologist = v;
     }
 }
