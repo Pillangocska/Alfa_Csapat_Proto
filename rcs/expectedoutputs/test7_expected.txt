@@ -1,0 +1,53 @@
+Field created:
+ID: L1
+Type: Laboratory
+Neighbours: null
+
+Field created:
+ID: F1
+Type: Field
+Neighbours: L1
+
+Virologist created:
+ID: V1
+Field: F1
+Backpack: B1
+
+GeneticCode created:
+ID: BC1
+Type: Bear
+Destination: L1
+
+Equipment created:
+ID: C1 
+Type: Cloak
+Destination: V1
+Result: successful
+
+Random behavior changed:
+yesOrNoType: False
+choiceType: random
+
+V1’s turn started.
+
+Equipment toggled on Virologist:
+Equipment: C1
+Virologist: V1
+Inf: wear
+
+Virologist moved: 
+Virologist: V1
+Destination: L1
+
+Agent created:
+ID: BVI1
+Type: virus
+GeneticCode: Bear
+Virologist: V1
+Result: successful
+
+Agent used on Virologist:
+Agent: BVI1
+Virologist: V1
+Target: V1
+Result: successful

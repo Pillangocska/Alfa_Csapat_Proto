@@ -1,0 +1,34 @@
+Field created:
+ID: F1
+Type: Field
+Neighbours: null
+
+Field created:
+ID: F2
+Type: Field
+Neighbours: F1
+
+Virologist created:
+ID: V1
+Field: F1
+Backpack: B1
+
+Virologist created:
+ID: V2
+Field: F2
+Backpack: B2
+
+V1’s turn started.
+
+Virologist moved: 
+Virologist: V1
+Destination: F2
+
+Virologist searched:
+Field: F2
+Type: Field
+Neighbours: F1
+Virologists: V1, V2
+GeneticCodes: null
+Equipments: null
+Elements: null

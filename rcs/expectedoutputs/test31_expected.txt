@@ -1,0 +1,22 @@
+Field created:
+ID: F1
+Type: Field
+Neighbours: null
+
+Virologist created:
+ID: V1
+Field: F1
+Backpack: B1
+
+Equipment created:
+ID: E1
+Type: bag
+Destination: V1
+Result: Successful
+
+V1's turn started.
+
+Equipment toggled on Virologist:
+Equipment: E1
+Virologist: V1
+Inf: unwear

@@ -1,0 +1,33 @@
+Field created:
+ID: ST1
+Type: Storehouse
+Neighbours: null
+
+Virologist created:
+ID: V1
+Field: ST1
+Backpack: B1
+
+Elements created:
+ID: EB2
+Nucleotide: 10
+AminoAcid: 20
+AminoAcidSize: 30
+Destination: ST1
+
+V1’s turn started.
+
+  Virologist searched:
+Field: ST1
+Type: Storehouse
+Neighbours: null
+Virologists: V1
+GeneticCodes: null
+Equipments: null
+Elements: EB2
+
+Material picked up:
+Field: ST1
+Nucleotide: -10
+AminoAcid: -20
+Virologist: V1
