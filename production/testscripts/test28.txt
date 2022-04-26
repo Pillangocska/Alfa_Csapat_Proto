@@ -1,0 +1,21 @@
+createfield -t safehouse
+createvirologist SA1
+createvirologist SA1
+createequipment gloves -v V1
+createagent virus dance V1
+createagent virus dance V1
+createagent virus dance V1
+startturn V1
+toggle E1
+useagent A1 V1
+useagent A2 V1
+useagent A3 V1
+useequipment E1 V2 A1
+tick
+tick
+tick
+useequipment E1 V2 A2
+tick
+tick
+tick
+useequipment E1 V2 A3
