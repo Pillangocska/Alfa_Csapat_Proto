@@ -1,0 +1,30 @@
+Field created:
+ID: F1
+Type: Field
+Neighbours: null
+
+Virologist created:
+ID: V1
+Field: F1
+Backpack: B1
+
+Virologist created:
+ID: V2
+Field: F1
+Backpack: B2
+
+Agent created:
+ID: A1
+Type: virus
+GeneticCode: paralyze
+Virologist: V1
+Result: Successful
+
+V1's turn started.
+
+Agent used on virologist:
+Agent: A1
+Virologist: V1
+Target: V2
+Result: Successful
+

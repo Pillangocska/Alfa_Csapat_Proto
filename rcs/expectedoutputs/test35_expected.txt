@@ -1,0 +1,24 @@
+Field created: 
+ID: F1
+Type: Field
+Neighbours: null
+
+Virologist created:
+ID: V1
+Field: F1
+Backpack: B1
+
+Virologist created:
+ID: V2
+Field: F1
+Backpack: B2
+
+Equipment created:
+ID: E1
+Type: cloak
+Destination: V2
+Result: Successful
+
+V1’s turn started.
+
+Virologist was not robbed

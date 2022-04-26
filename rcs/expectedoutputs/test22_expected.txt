@@ -1,0 +1,22 @@
+Field created:
+ID: F1
+Type: Field
+Neighbours: null
+
+Virologist created:
+ID: V1
+Field: F1
+Backpack: B1
+
+GeneticCode created:
+ID: GC1
+Type: paralyze
+Destination: V1
+
+V1's turn started.
+
+Agent crafted:
+ID:null
+Type: virus
+GeneticCode: paralyze
+Result: Failed

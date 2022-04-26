@@ -1,0 +1,27 @@
+Field created:
+ID: L1
+Type: Laboratory
+Neighbours: null
+
+Virologist created:
+ID: V1
+Field: L1
+Backpack: B1
+
+V1's turn started.
+
+Virologist searched:
+Field: L1
+Type: Laboratory
+Neighbours: null
+Virologists: V1
+GeneticCodes: null
+Equipments: null
+Elements: null
+
+Genetic code learned:
+Virologist: V1
+Laboratory: L1
+GeneticCode: null
+Result: Failed
+

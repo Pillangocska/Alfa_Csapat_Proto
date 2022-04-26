@@ -1,0 +1,20 @@
+Field created:
+ID: SA1
+Type: Safehouse
+Neighbours: null
+
+Virologist created:
+ID: V1
+Field: SA1
+Backpack: B1
+
+V1’s turn started.
+
+  Virologist searched:
+Field: SA1
+Type: Safehouse
+Neighbours: null
+Virologists: V1
+GeneticCodes: null
+Equipments: null
+Elements: null

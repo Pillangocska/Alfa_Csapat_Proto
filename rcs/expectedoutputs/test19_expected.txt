@@ -1,0 +1,46 @@
+Field created:
+ID: F1
+Type: Field
+Neighbours: null
+
+Virologist created:
+ID: V1
+Field: F1
+Backpack: B1
+
+Virologist created:
+ID: V2
+Field: F1
+Backpack: B2
+
+Agent created:
+ID: AV1
+Type: virus
+GeneticCode: amnesia
+Virologist: V1
+Result: successful
+
+Equipment created:
+ID: C1 
+Type: Cloak
+Destination: V2
+Result: Successful
+
+Random behavior changed:
+yesOrNoType: True
+choiceType: random
+
+V2’s turn started.
+
+Equipment toggled on Virologist:
+Equipment: C1
+Virologist: V2
+Inf: wear
+
+V1’s turn started.
+
+Agent used on Virologist:
+Agent: AV1
+Virologist: V1
+Target: V2
+Result: failed

@@ -1,0 +1,174 @@
+Field created:
+ID: SA1
+Type: Safehouse
+Neighbours: null
+ 
+Field created:
+ID: F1
+Type: Field
+Neighbours: SA1
+ 
+Field created:
+ID: F2
+Type: Field
+Neighbours: F1
+ 
+Field created:
+ID: ST1
+Type: Storehouse
+Neighbours: F1, F2, SA1
+ 
+Field created:
+ID: ST2
+Type: Storehouse
+Neighbours: F1, F2
+ 
+Virologist created:
+ID: V1
+Field: SA1
+Backpack: B1
+ 
+Virologist created:
+ID: V2
+Field: F2
+Backpack: B2
+ 
+Virologist created:
+ID: V3
+Field: SA1
+Backpack: B3
+ 
+Equipment created:
+ID: E1
+Type: cloak
+Destination: V1
+Result: Successful
+ 
+Equipment created:
+ID: E2
+Type: gloves
+Destination: V3
+Result: Successful
+ 
+Agent created:
+ID: A1
+Type: virus
+GeneticCode: bear
+Virologist: V2
+Result: Successful
+ 
+Agent created:
+ID: A2
+Type: virus
+GeneticCode: bear
+Virologist: V2
+Result: Successful
+ 
+Agent created:
+ID: A3
+Type: virus
+GeneticCode: bear
+Virologist: V2
+Result: Successful
+ 
+Random behavior changed:
+yesOrNoType: True
+choiceType: 1
+ 
+V1's turn started.
+ 
+Equipment toggled on Virologist:
+Equipment: E1
+Virologist: V1
+Inf: wear
+ 
+Virologist moved:
+Virologist: V1
+Origin: SA1
+Destination: F1
+ 
+V3's turn started.
+ 
+Equipment toggled on Virologist:
+Equipment: E2
+Virologist: V3
+Inf: wear
+ 
+Virologist moved:
+Virologist: V3
+Origin: SA1
+Destination: ST1
+ 
+V2's turn started.
+ 
+Agent used on virologist:
+Agent: A1
+Virologist: V2
+Target: V2
+Result: Successful
+ 
+V1's turn started.
+ 
+Virologist moved:
+Virologist: V1
+Origin: F1
+Destination: ST2
+ 
+V2's turn started.
+ 
+Virologist moved:
+Virologist: V2
+Origin: F2
+Destination: ST2
+ 
+Elements in storehouse destroyed.
+ 
+Agent used on virologist:
+Agent: A2
+Virologist: V2
+Target: V1
+Result: Failed
+ 
+V1's turn started.
+ 
+Virologist moved:
+Virologist: V1
+Origin: ST2
+Destination: F1
+ 
+Random behavior changed:
+yesOrNoType: False
+choiceType: 1
+ 
+V2's turn started.
+ 
+Virologist moved:
+Virologist: V2
+Origin: ST2
+Destination: F1
+ 
+Agent used on virologist:
+Agent: A3
+Virologist: V2
+Target: V1
+Result: Successful
+ 
+Agent created:
+ID: A4
+Type: virus
+GeneticCode: bear
+Virologist: V1
+Result: Successful
+ 
+V1's turn started.
+ 
+Virologist moved:
+Virologist: V1
+Origin: F1
+Destination: ST1
+ 
+Agent used on virologist:
+Agent: A4
+Virologist: V1
+Target: V3
+Result: Successful

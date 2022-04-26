@@ -1,0 +1,36 @@
+Field created:
+ID: L1
+Type: Laboratory
+Neighbours: null
+
+Virologist created:
+ID: V1
+Field: L1
+Backpack: B1
+
+GeneticCode created:
+ID: GC1
+Type: Dance
+Destination: V1
+
+GeneticCode created:
+ID: GC2
+Type: Dance
+Destination: L1
+
+V1’s turn started.
+
+Virologist searched:
+Field: L1
+Type: Laboratory
+Neighbours: null
+Virologists: V1
+GeneticCodes: GC2
+Equipments: null
+Elements: null
+
+Genetic code learned:
+Virologist: V1
+Laboratory: L1
+GeneticCode: GC2
+Result: failed
