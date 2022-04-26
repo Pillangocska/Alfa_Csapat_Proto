@@ -130,11 +130,11 @@ class OutPutComparator:
                             except KeyError:
                                 print(f'🚧Error: could not parse output into json. File: {filename}')
                                 return None
-                    else:
-                        try:
-                            out[f'{line}-{line_counter}'] = dict()
-                        except UnboundLocalError:
-                            print(f'🚧Error: Line "{key}" in "{filename}" could not be parsed to JSON.')
+                    # else:
+                    #     try:
+                    #         out[f'{line}-{line_counter}'] = dict()
+                    #     except UnboundLocalError:
+                    #         print(f'🚧Error: Line "{key}" in "{filename}" could not be parsed to JSON.')
         return out
 
     def _dump_json(self, filename):
@@ -170,8 +170,8 @@ class OutPutComparator:
         return files
 
     def handle_input(self):
-        output_directory = 'rcs/testoutputs'
-        expected_directory = 'rcs/expectedoutputs'
+        output_directory = ''
+        expected_directory = ''
         argv = sys.argv[1:]
 
         try:
@@ -185,7 +185,6 @@ class OutPutComparator:
                 output_directory = join(pathlib.Path().resolve(), arg)
             elif opt in ['-e']:
                 expected_directory = join(pathlib.Path().resolve(), arg)
-
 
         self._run_tests(output_directory, expected_directory)
 
