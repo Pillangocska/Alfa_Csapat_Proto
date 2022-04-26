@@ -1,7 +1,0 @@
-createfield
-createfield F1
-createvirologist F1
-createagent virus amnesia V1
-startturn V1
-useagent A1 V1
-move F2

@@ -1,5 +1,0 @@
-createfield -t laboratory
-createvirologist L1
-startturn V1
-search
-learngeneticcode

@@ -1,6 +1,0 @@
-createfield -t safehouse
-createequipment axe -s SA1
-createvirologist SA1
-startturn V1
-search
-pickupequipment E1

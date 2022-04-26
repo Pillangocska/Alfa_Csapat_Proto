@@ -1,4 +1,0 @@
-createfield -t safehouse
-createvirologist SA1
-startturn V1
-search

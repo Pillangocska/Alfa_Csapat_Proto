@@ -1,5 +1,0 @@
-createfield -t storehouse
-createvirologist ST1
-startturn V1
-search
-pickupmaterial

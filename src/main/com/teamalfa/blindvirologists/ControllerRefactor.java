@@ -24,7 +24,7 @@ import static main.com.teamalfa.blindvirologists.ControllerHelper.*;
 import static main.com.teamalfa.blindvirologists.ErrorPrinter.*;
 
 import java.awt.image.AreaAveragingScaleFilter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -507,7 +507,7 @@ public class ControllerRefactor {
         // print result
         System.out.println("Genetic code learned:");
         System.out.println("Virologist: " + virologistId);
-        System.out.println("Field: " + fieldId);
+        System.out.println("Laboratory: " + fieldId);
         System.out.println("GeneticCode: " + geneticCodeId );
         System.out.println("Result: " + (successful ? "Successful" : "Failed"));
     }
@@ -811,12 +811,14 @@ public class ControllerRefactor {
 
         System.out.println("\nAgent created:");
         System.out.println("ID: " + virusId);
+        System.out.println("Type: Virus");
         System.out.println("GeneticCode: Bear");
         System.out.println("Virologist: " + getObjectId(virologist, virologistHashMap));
         System.out.println("Result: Successful");
         System.out.println();
         System.out.println("Agent used on Virologist:");
         System.out.println("Agent: " + virusId);
+        System.out.println("Virologist: " + getObjectId(virologist, virologistHashMap));
         System.out.println("Target: " + getObjectId(virologist, virologistHashMap));
         System.out.println("Result: " + (successful ? "Successful" : "Failed"));
     }
@@ -845,7 +847,7 @@ public class ControllerRefactor {
         }
 
         System.out.println((searched ? "Virologist searched:" : "Field:"));
-        System.out.println("ID: " + id);
+        System.out.println((searched ? "Field: " : "ID: ") + id);
         System.out.println("Type: " + capitalizeString(type));
         System.out.println("Neighbours: " + joinWithComma(field.getNeighbours(), fieldHashMap));
         System.out.println("Virologists: " + joinWithComma(field.getVirologists(), virologistHashMap));
@@ -932,27 +934,51 @@ public class ControllerRefactor {
                         "37: VirologistA infects VirologistB with BearVirus. The VirologistB is not vaccinated, and doesn’t wear any equipment. VirologistB turns to bear\n" +
                         "38: VirologistA infects VirologistB with BearVirus. The VirologistB doesn’t wear any equipment, but is vaccinated against bearvirus.");
 
-        while (true) {
+//        while (true) {
+//            try {
+//                String userInput = scanner.nextLine();
+//                int choice = Integer.parseInt(userInput);
+//
+//                if (choice == 0)
+//                    return;
+//
+//                if (choice >= 1 && choice <= 38) {
+//                    // if the user's choice is valid read the test script from the corresponding file
+//                    ArrayList<String> args = new ArrayList<String>();
+//                    args.add("rcs" + fileSeparator + "testscripts" + fileSeparator + "test" + userInput + ".txt");
+//                    runScript(args);
+//                }
+//                else {
+//                    // if the user's choice is invalid start the read process all over
+//                    throw new NumberFormatException("Invalid input! Enter a number between 0 and 38!");
+//                }
+//            } catch (NumberFormatException nfe) {
+//                System.out.println("Incorrect number format! Enter a number between 0 and 38!");
+//            }
+//        }
+
+        for(int i = 1; i < 39; i++) {
+            ArrayList<String> args = new ArrayList<String>();
+            args.add("rcs" + fileSeparator + "testscripts" + fileSeparator + "test" + i + ".txt");
+
+            String number = i >= 10 ? String.valueOf(i) : "0" + i;
+
             try {
-                String userInput = scanner.nextLine();
-                int choice = Integer.parseInt(userInput);
-
-                if (choice == 0)
-                    return;
-
-                if (choice >= 1 && choice <= 38) {
-                    // if the user's choice is valid read the test script from the corresponding file
-                    ArrayList<String> args = new ArrayList<String>();
-                    args.add("rcs" + fileSeparator + "testscripts" + fileSeparator + "test" + userInput + ".txt");
-                    runScript(args);
-                }
-                else {
-                    // if the user's choice is invalid start the read process all over
-                    throw new NumberFormatException("Invalid input! Enter a number between 0 and 38!");
-                }
-            } catch (NumberFormatException nfe) {
-                System.out.println("Incorrect number format! Enter a number between 0 and 38!");
+                File outFile = new File("rcs" + fileSeparator + "testoutputs" + fileSeparator + "test" + number + "_out.txt");
+                PrintStream fileStream = new PrintStream(new BufferedOutputStream(new FileOutputStream(outFile)), true);
+                System.setOut(fileStream);
+            }catch(IOException e) {
+                e.printStackTrace();
             }
+
+            runScript(args);
         }
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process pr = rt.exec("./output_comparator.py -o rcs/testoutputs -e rcs/expectedoutputs ");
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

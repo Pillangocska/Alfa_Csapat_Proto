@@ -1,5 +1,0 @@
-createfield
-createvirologist F1
-createequipment cloak -v V1
-startturn V1
-dropequipment E1

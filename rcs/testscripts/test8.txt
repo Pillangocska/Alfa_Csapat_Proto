@@ -1,8 +1,0 @@
-createfield -t laboratory
-createfield L1
-createvirologist F1
-createagent vaccine bear V1
-creategeneticcode bear -l L1
-startturn V1
-useagent A1 V1
-move L1

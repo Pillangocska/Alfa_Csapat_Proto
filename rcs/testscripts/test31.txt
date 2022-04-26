@@ -1,5 +1,0 @@
-createfield
-createvirologist F1
-createequipment bag -v V1
-startturn V1
-toggle E1
