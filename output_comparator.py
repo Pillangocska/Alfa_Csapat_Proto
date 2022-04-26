@@ -29,10 +29,11 @@ class OutPutComparator:
                 self._print_error(got_next, expected_next, got_line, output)
                 failed = True
                 break
-
-            if(self._handle_nested_dict(output_dict[got_key], expected_dict[expected_key], output, got_line)):
-                failed = True
-                break
+            
+            if(output_dict[got_key] and expected_dict[expected_key]):
+                if(self._handle_nested_dict(output_dict[got_key], expected_dict[expected_key], output, got_line)):
+                    failed = True
+                    break
 
         if(not failed):
             print(f"✅Test passed in {output}")
@@ -130,11 +131,11 @@ class OutPutComparator:
                             except KeyError:
                                 print(f'🚧Error: could not parse output into json. File: {filename}')
                                 return None
-                    # else:
-                    #     try:
-                    #         out[f'{line}-{line_counter}'] = dict()
-                    #     except UnboundLocalError:
-                    #         print(f'🚧Error: Line "{key}" in "{filename}" could not be parsed to JSON.')
+                    else:
+                        try:
+                            out[f'{line}-{line_counter}'] = dict()
+                        except UnboundLocalError:
+                            print(f'🚧Error: Line "{key}" in "{filename}" could not be parsed to JSON.')
         return out
 
     def _dump_json(self, filename):

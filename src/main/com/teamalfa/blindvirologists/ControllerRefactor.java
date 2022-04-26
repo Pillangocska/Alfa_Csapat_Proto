@@ -973,12 +973,5 @@ public class ControllerRefactor {
 
             runScript(args);
         }
-        try {
-            Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("./output_comparator.py -o rcs/testoutputs -e rcs/expectedoutputs ");
-        }catch(IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }
