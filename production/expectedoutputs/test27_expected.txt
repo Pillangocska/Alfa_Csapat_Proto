@@ -10,7 +10,7 @@ Backpack: B1
 
 Equipment created:
 ID: E1
-Type: glove
+Type: gloves
 Destination: V1
 Result: Successful
 

@@ -17,4 +17,5 @@ V1’s turn started.
 
 Virologist moved: 
 Virologist: V1
+Origin: F1
 Destination: F2

@@ -12,7 +12,7 @@ Elements created:
 ID: EB2
 Nucleotide: 10
 AminoAcid: 10
-AminoAcidSize: 20
+NucleotideSize: 20
 AminoAcidSize: 20
 Destination: V1
 

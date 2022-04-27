@@ -28,7 +28,7 @@ Destination: L1
 V1’s turn started.
 
 Agent used on Virologist:
-Agent: BVA1
+Agent: A1
 Virologist: V1
 Target: V1
 Result: successful
@@ -47,5 +47,6 @@ Result: successful
 
 Agent used on Virologist:
 Agent: A2
+Virologist: V1
 Target: V1
 Result: failed

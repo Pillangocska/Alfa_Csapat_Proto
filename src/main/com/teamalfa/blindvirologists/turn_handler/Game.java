@@ -65,6 +65,11 @@ public class Game implements Steppable{
         }
     }
 
+    private void printMovement(Virologist bear, Field origin, Field destination) {
+        System.out.println("Bear moved: ");
+        System.out.println("ID: ");
+    }
+
     /**
      * Calls the controlbears method.
      */

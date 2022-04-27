@@ -73,6 +73,7 @@ public class Virologist {
 
         field.remove(this);
         destination.accept(this);
+
         field = destination;
     }
 

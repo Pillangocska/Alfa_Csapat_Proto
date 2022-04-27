@@ -15,6 +15,7 @@ import main.com.teamalfa.blindvirologists.equipments.active_equipments.ActiveEqu
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.Axe;
 import main.com.teamalfa.blindvirologists.equipments.active_equipments.Gloves;
 import main.com.teamalfa.blindvirologists.random.MyRandom;
+import main.com.teamalfa.blindvirologists.turn_handler.Game;
 import main.com.teamalfa.blindvirologists.turn_handler.TurnHandler;
 import main.com.teamalfa.blindvirologists.virologist.Virologist;
 import main.com.teamalfa.blindvirologists.virologist.backpack.Backpack;
@@ -23,9 +24,8 @@ import main.com.teamalfa.blindvirologists.virologist.backpack.ElementBank;
 import static main.com.teamalfa.blindvirologists.ControllerHelper.*;
 import static main.com.teamalfa.blindvirologists.ErrorPrinter.*;
 
-import java.awt.image.AreaAveragingScaleFilter;
+
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -65,6 +65,7 @@ public class ControllerRefactor {
         agentHashMap.clear();
         idCounter.clear();
         initIdCounter();
+        System.setOut(System.out);
     }
 
     public void startProgram() {
@@ -88,32 +89,35 @@ public class ControllerRefactor {
                 // get command if not empty
                 String command = getNextArgument(input);
 
-                switch(command.toLowerCase()){
-                    case "createfield": createField(input); break;
-                    case "createvirologist": createVirologist(input); break;
-                    case "createelements": createElements(input); break;
-                    case "createequipment": createEquipment(input); break;
-                    case "creategeneticcode": createGeneticCode(input); break;
-                    case "createagent": createAgent(input); break;
-                    case "move": move(input); break;
-                    case "pickupequipment":
-                    case "dropequipment": pickDropEquipment(input, command.toLowerCase()); break;
-                    case "rob": rob(input); break;
-                    case "learngeneticcode": learnGeneticCode(input); break;
-                    case "useequipment": useEquipment(input); break;
-                    case "craftagent": craftAgent(input); break;
-                    case "useagent": useAgent(input); break;
-                    case "pickupmaterial": pickUpMaterial(input); break;
-                    case "startturn": startTurn(input); break;
-                    case "endturn": endTurn(input); break;
-                    case "status": status(input); break;
-                    case "toggle": toggle(input); break;
-                    case "runscript": runScript(input); break;
-                    case "search": search(input); break;
-                    case "setrandom": setRandom(input); break;
-                    case "destroy": destroy(input); break;
-                    case "exit": return true;
-                    default: System.out.println("Wrong command.");
+                if(!command.equals("#") && command != null) {
+                    switch(command.toLowerCase()){
+                        case "createfield": createField(input); break;
+                        case "createvirologist": createVirologist(input); break;
+                        case "createelements": createElements(input); break;
+                        case "createequipment": createEquipment(input); break;
+                        case "creategeneticcode": createGeneticCode(input); break;
+                        case "createagent": createAgent(input); break;
+                        case "move": move(input); break;
+                        case "pickupequipment":
+                        case "dropequipment": pickDropEquipment(input, command.toLowerCase()); break;
+                        case "rob": rob(input); break;
+                        case "learngeneticcode": learnGeneticCode(input); break;
+                        case "useequipment": useEquipment(input); break;
+                        case "craftagent": craftAgent(input); break;
+                        case "useagent": useAgent(input); break;
+                        case "pickupmaterial": pickUpMaterial(input); break;
+                        case "startturn": startTurn(input); break;
+                        case "endturn": endTurn(input); break;
+                        case "status": status(input); break;
+                        case "toggle": toggle(input); break;
+                        case "runscript": runScript(input); break;
+                        case "search": search(input); break;
+                        case "setrandom": setRandom(input); break;
+                        case "destroy": destroy(input); break;
+                        case "controlbears": controlBears(); break;
+                        case "exit": return true;
+                        default: System.out.println("Wrong command.");
+                    }
                 }
             }
         } catch (IllegalArgumentException e) {
@@ -121,6 +125,10 @@ public class ControllerRefactor {
         }
         System.out.println();
         return false;
+    }
+
+    private void controlBears() {
+        Game.getInstance().controlBears();
     }
 
     private void rob(ArrayList<String> input) {
@@ -275,7 +283,7 @@ public class ControllerRefactor {
         System.out.println("ID: " + elementId);
         System.out.println("Nucleotide: " + quantities[0]);
         System.out.println("AminoAcid: " + quantities[1]);
-        System.out.println("AminoAcidSize: " + maxSizes[0]);
+        System.out.println("NucleotideSize: " + maxSizes[0]);
         System.out.println("AminoAcidSize: " + maxSizes[1]);
         System.out.println("Destination: " + destination);
     }
@@ -573,7 +581,6 @@ public class ControllerRefactor {
 
         // register agent
         if(agent != null) {
-            System.out.println("cica");
             agentId = registerObject(agent, agentHashMap, idCounter, Prefixes.Agent.toString());
         }
 
@@ -598,8 +605,13 @@ public class ControllerRefactor {
         String targetId = getNextArgument(input);
         Virologist target = handleDoesNotExistError(targetId, virologistHashMap);
 
+        int virusCount = target.getViruses().size();
+        int vaccineCount = target.getProtectionBank().size();
         virologist.use(agent, target);
-        boolean successful = target.getViruses().contains(agent) || target.getProtectionBank().contains(agent.getGeneticCode());
+        int virusCountAfter = target.getViruses().size();
+        int vaccineCountAfter = target.getProtectionBank().size();
+
+        boolean successful = (virusCount != virusCountAfter) || (vaccineCount != vaccineCountAfter);
 
         // print result
         System.out.println("Agent used on virologist:");
@@ -708,8 +720,23 @@ public class ControllerRefactor {
 
     private void runScript(ArrayList<String> input) {
         String path = getNextArgument(input);
+        String outfile = getNextArgument(input);
+
+        if(outfile == null){
+            ErrorPrinter.printError("Please add filename for output.");
+        }
+
+        if(outfile.contains(fileSeparator)) {
+            ErrorPrinter.printError("File name cannot contain " + fileSeparator + "in it!");
+        }
+
+        outfile = "rcs" + fileSeparator + "customtestoutputs" + fileSeparator + outfile;
+
         String script = "";
         String fullPath = System.getProperty("user.dir") + fileSeparator + path;
+
+        System.setOut(new DoublePrintStream(System.out, outfile));
+
         try {
             script = new String(Files.readAllBytes(Paths.get(fullPath)));
         } catch (IOException e) {
@@ -773,7 +800,7 @@ public class ControllerRefactor {
         if(optionChoiceInt != null) MyRandom.getInstance().setChosenNumber(optionChoiceInt);
 
         // print result
-        System.out.println("Random behavior changed:");
+        System.out.println("Random behaviour changed:");
         System.out.println("yesOrNoType: " + capitalizeString(yesOrNo));
         System.out.println("choiceType: " + capitalizeString(optionChoice));
     }
@@ -922,7 +949,7 @@ public class ControllerRefactor {
                         "25: Virologist takes off a bag\n" +
                         "26: Virologist can’t take off bag\n" +
                         "27: Virologist can’t wear an axe, because worn equipments are full\n" +
-                        "28: Mandatory test\n" +
+                        "28: Virologist uses glove for the third time\n" +
                         "29: Virologist uses a sharp axe on another virologist\n" +
                         "30: Virologist uses blunt axe on another virologist\n" +
                         "31: Virologist wants to toggle bag, but the Virologist isn't in a Safehouse\n" +
@@ -934,44 +961,30 @@ public class ControllerRefactor {
                         "37: VirologistA infects VirologistB with BearVirus. The VirologistB is not vaccinated, and doesn’t wear any equipment. VirologistB turns to bear\n" +
                         "38: VirologistA infects VirologistB with BearVirus. The VirologistB doesn’t wear any equipment, but is vaccinated against bearvirus.");
 
-//        while (true) {
-//            try {
-//                String userInput = scanner.nextLine();
-//                int choice = Integer.parseInt(userInput);
-//
-//                if (choice == 0)
-//                    return;
-//
-//                if (choice >= 1 && choice <= 38) {
-//                    // if the user's choice is valid read the test script from the corresponding file
-//                    ArrayList<String> args = new ArrayList<String>();
-//                    args.add("rcs" + fileSeparator + "testscripts" + fileSeparator + "test" + userInput + ".txt");
-//                    runScript(args);
-//                }
-//                else {
-//                    // if the user's choice is invalid start the read process all over
-//                    throw new NumberFormatException("Invalid input! Enter a number between 0 and 38!");
-//                }
-//            } catch (NumberFormatException nfe) {
-//                System.out.println("Incorrect number format! Enter a number between 0 and 38!");
-//            }
-//        }
-
-        for(int i = 1; i < 39; i++) {
-            ArrayList<String> args = new ArrayList<String>();
-            args.add("rcs" + fileSeparator + "testscripts" + fileSeparator + "test" + i + ".txt");
-
-            String number = i >= 10 ? String.valueOf(i) : "0" + i;
-
+        while (true) {
             try {
-                File outFile = new File("rcs" + fileSeparator + "testoutputs" + fileSeparator + "test" + number + "_out.txt");
-                PrintStream fileStream = new PrintStream(new BufferedOutputStream(new FileOutputStream(outFile)), true);
-                System.setOut(fileStream);
-            }catch(IOException e) {
-                e.printStackTrace();
-            }
+                String userInput = scanner.nextLine();
+                int choice = Integer.parseInt(userInput);
 
-            runScript(args);
+                if (choice == 0)
+                    return;
+
+
+                if (choice >= 1 && choice <= 38) {
+                    // if the user's choice is valid read the test script from the corresponding file
+                    ArrayList<String> args = new ArrayList<String>();
+                    args.add("rcs" + fileSeparator + "testscripts" + fileSeparator + "test" + userInput + ".txt");
+                    String outfile = "rcs" + fileSeparator + "testoutputs" + fileSeparator + "test" + userInput + "_out.txt";
+                    System.setOut(new DoublePrintStream(System.out, outfile));
+                    runScript(args);
+                }
+                else {
+                    // if the user's choice is invalid start the read process all over
+                    throw new NumberFormatException("Invalid input! Enter a number between 0 and 38!");
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Incorrect number format! Enter a number between 0 and 38!");
+            }
         }
     }
 }

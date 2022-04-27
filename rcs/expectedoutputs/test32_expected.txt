@@ -20,3 +20,4 @@ Equipment dropped:
 Virologist: V1
 Equipment: E1
 Field: SA1
+Result: Successful

@@ -12,12 +12,13 @@ Elements created:
 ID: EB2
 Nucleotide: 10
 AminoAcid: 20
+NucleotideSize: 30
 AminoAcidSize: 30
 Destination: ST1
 
 V1’s turn started.
 
-  Virologist searched:
+Virologist searched:
 Field: ST1
 Type: Storehouse
 Neighbours: null

@@ -24,7 +24,7 @@ Type: Cloak
 Destination: V1
 Result: successful
 
-Random behavior changed:
+Random behaviour changed:
 yesOrNoType: False
 choiceType: random
 

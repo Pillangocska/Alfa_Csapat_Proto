@@ -30,7 +30,7 @@ class OutPutComparator:
                 failed = True
                 break
             
-            if(output_dict[got_key] and expected_dict[expected_key]):
+            if(output_dict[got_key].keys() and expected_dict[expected_key].keys()):
                 if(self._handle_nested_dict(output_dict[got_key], expected_dict[expected_key], output, got_line)):
                     failed = True
                     break
@@ -133,6 +133,7 @@ class OutPutComparator:
                                 return None
                     else:
                         try:
+                            line = line.replace("'", "’")
                             out[f'{line}-{line_counter}'] = dict()
                         except UnboundLocalError:
                             print(f'🚧Error: Line "{key}" in "{filename}" could not be parsed to JSON.')
@@ -171,8 +172,8 @@ class OutPutComparator:
         return files
 
     def handle_input(self):
-        output_directory = ''
-        expected_directory = ''
+        output_directory = 'testoutputs'
+        expected_directory = 'expectedoutputs'
         argv = sys.argv[1:]
 
         try:

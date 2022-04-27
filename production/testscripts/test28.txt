@@ -1,21 +1,35 @@
+# create safehosue with virologist on it and give cloak to virologist and put it on
 createfield -t safehouse
 createvirologist SA1
-createvirologist SA1
-createequipment gloves -v V1
-createagent virus dance V1
-createagent virus dance V1
-createagent virus dance V1
+createequipment cloak -v V1
 startturn V1
 toggle E1
-useagent A1 V1
-useagent A2 V1
-useagent A3 V1
-useequipment E1 V2 A1
-tick
-tick
-tick
-useequipment E1 V2 A2
-tick
-tick
-tick
-useequipment E1 V2 A3
+
+# create second safehouse with second virologist and turn him to bear, elements id should be EB4
+createfield SA1 -t safehouse
+createvirologist SA2
+createagent virus bear V2
+startturn V2
+useagent A1 V2
+
+# create storehouse with third virologist and give him a cloak
+createfield SA1 SA2 -t storehouse
+createvirologist ST1
+createelements n10a10 ns10as10 -s ST1
+createequipment gloves -v V3
+startturn V3
+toggle E2
+
+# create last storehouse field with elements ID should be EB5
+createfield SA1 SA2 -t storehouse
+createelements n10a10 ns10as10 -s ST2
+
+# move V1 to ST2
+startturn V1
+move ST2
+
+# move V2 (bear) to ST2, destroy elements, and V1 cloak blocks
+setrandom True
+startturn V2
+move ST2
+status EB5

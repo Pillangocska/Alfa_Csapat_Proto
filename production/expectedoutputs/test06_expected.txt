@@ -34,5 +34,6 @@ Result: successful
 
 Agent used on Virologist:
 Agent: A1
+Virologist: V1
 Target: V1
 Result: successful

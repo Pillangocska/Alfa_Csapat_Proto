@@ -1,1 +1,0 @@
-An error occurred while reading a testscript from /Users/krisztianszenasi/git/teamalfa-proto/rcs/testscripts/test32.txt!

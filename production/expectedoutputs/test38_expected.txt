@@ -33,7 +33,7 @@ Agent used on virologist:
 Agent: A2
 Virologist: V2
 Target: V2
-Result: Failed
+Result: Successful
 
 V1's turn started.
 
