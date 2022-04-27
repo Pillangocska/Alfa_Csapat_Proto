@@ -1,0 +1,5 @@
+createfield
+createvirologist F1
+creategeneticcode paralyze -v V1
+startturn V1
+craftagent virus paralyze

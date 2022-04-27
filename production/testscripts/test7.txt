@@ -1,0 +1,9 @@
+createfield -t laboratory
+createfield L1 -t safehouse
+createvirologist SA1
+creategeneticcode bear -l L1
+createequipment cloak -v V1
+setrandom False random
+startturn V1
+toggle E1
+move L1

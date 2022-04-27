@@ -1,0 +1,5 @@
+createfield -t safehouse
+createvirologist SA1
+createequipment bag -v V1
+startturn V1
+toggle E1
